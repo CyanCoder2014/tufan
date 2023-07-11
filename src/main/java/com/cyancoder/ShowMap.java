@@ -152,8 +152,11 @@ public class ShowMap {
 //        }
 //        LOGGER.config("File selected "+file);
 
-        File file = new File("E:\\Users\\Farid\\Downloads\\IRN_adm\\IRN_adm1.shp");
-        File file2 = new File("E:\\Users\\Farid\\Downloads\\IRN_adm\\IRN_adm2.shp");
+        File file = new File("C:\\Workspace\\untitled2\\maps\\IRN_adm\\IRN_adm1.shp");
+//        File file2 = new File("C:\\Workspace\\untitled2\\maps\\IRN_adm\\IRN_adm2.shp");
+//        File file2 = new File("C:\\Workspace\\untitled2\\maps\\IRN_wat\\IRN_water_areas_dcw.shp");
+//        File file2 = new File("C:\\Workspace\\untitled2\\maps\\IRN_wat\\IRN_water_lines_dcw.shp");
+        File file2 = new File("C:\\Workspace\\untitled2\\maps\\IRN_rds\\IRN_roads.shp");
 
 
         FileDataStore store = FileDataStoreFinder.getDataStore(file);
@@ -166,12 +169,15 @@ public class ShowMap {
         map.setTitle("Quickstart");
 
         Style style = SLD.createSimpleStyle(featureSource.getSchema());
-        Style style2 = SLD.createPolygonStyle(Color.ORANGE.darker(), Color.getColor("#aa0000"), 0.7f);
+//        Style style2 = SLD.createPolygonStyle(Color.ORANGE.darker(), Color.decode("#f9d19d"), 0.5f);
+//        Style style2 = SLD.createPolygonStyle(Color.decode("#0077ff"), Color.decode("#0099ff"), 0.8f); //water
+//        Style style2 = SLD.createPolygonStyle(Color.decode("#ccffff"), null, 0f); // water line
+        Style style2 = SLD.createPolygonStyle(Color.decode("#ccccaa"), null, 0f); // roads
 
 //        Style style2 = SLD.createPointStyle("Circle",Color.BLUE.brighter(), Color.RED, 0.5f, 10f);
 //        Style style2 = SLD.createPointStyle("Square",Color.BLUE.brighter(), Color.RED, 0.5f, 10f);
 //        Style style2 = SLD.createPointStyle("Triangle",Color.BLUE.brighter(), Color.RED, 0.5f, 10f);
-        Style style3 = SLD.createPointStyle("Cross",Color.BLUE.brighter(), Color.RED, 0.5f, 10f);
+        Style style3 = SLD.createPointStyle("Cross",Color.YELLOW, Color.RED, 0.7f, 12f);
 
         Layer layer = new FeatureLayer(featureSource, style);
         Layer layer2 = new FeatureLayer(featureSource2, style2);
