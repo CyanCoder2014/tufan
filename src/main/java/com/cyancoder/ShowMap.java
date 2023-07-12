@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.cyancoder.model.PointModel;
 import org.geotools.data.*;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
@@ -37,12 +38,9 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.style.Fill;
+import org.opengis.style.Stroke;
 
-/**
- * Prompts the user for a shapefile and displays the contents on the screen in a map frame.
- *
- * <p>This is the GeoTools Quickstart application used in documentationa and tutorials. *
- */
+
 public class ShowMap {
 
     public static ShowMap showMap;
@@ -55,142 +53,102 @@ public class ShowMap {
     }
 
     private static final Logger LOGGER = org.geotools.util.logging.Logging.getLogger(ShowMap.class);
-    /**
-     * GeoTools Quickstart demo application. Prompts the user for a shapefile and displays its
-     * contents on the screen in a map frame
-     */
+
+
+
     public static void main(String[] args) throws Exception {
         ShowMap.showMap();
-
     }
 
 
     public static void showMap() throws SchemaException, IOException {
 
-        /*
-         * We use the DataUtilities class to create a FeatureType that will describe the data in our
-         * shapefile.
-         *
-         * See also the createFeatureType method below for another, more flexible approach.
-         */
+        PointModel basePoint = new PointModel( 45.8,38.23);
+        basePoint.setName("موقعیت مبدأ");
+        basePoint.setElevation(232324);
+        Layer basePoinLayer = setPointLayer(basePoint,"Circle",Color.YELLOW, Color.RED, 0.7f, 12f);
+
+        PointModel targetPoint = new PointModel( 45.87159,38.13718);
+        targetPoint.setName("موقعیت هدف");
+        targetPoint.setElevation(232324);
+        Layer targetPoinLayer = setPointLayer(targetPoint,"Cross",Color.YELLOW, Color.RED, 0.7f, 12f);
+
+
+       Layer admLayer = setPolLayer("./maps/IRN_adm/IRN_adm2.shp",Color.ORANGE.darker(),Color.decode("#f9d19d"),0.3f);
+       Layer watAreaLayer = setPolLayer("./maps/IRN_wat/IRN_water_areas_dcw.shp",Color.decode("#0077ff"),Color.decode("#0099ff"),0.8f);
+       Layer watLineLayer = setPolLayer("./maps/IRN_wat/IRN_water_lines_dcw.shp",Color.decode("#ccffff"),null,0f);
+       Layer roadLayer = setPolLayer("./maps/IRN_rds/IRN_roads.shp",Color.decode("#ccccaa"),null,0f);
+       Layer borderLayer = setPolLayer("./maps/IRN_adm/IRN_adm1.shp",Color.decode("#000000"),null,0f);
+
+        MapContent map = new MapContent();
+        map.setTitle("Quickstart");
+
+        map.addLayer(admLayer);
+        map.addLayer(watAreaLayer);
+        map.addLayer(watLineLayer);
+        map.addLayer(roadLayer);
+        map.addLayer(borderLayer);
+
+        map.addLayer(basePoinLayer);
+        map.addLayer(targetPoinLayer);
+
+//        int doNothingOnClose = JMapFrame.DO_NOTHING_ON_CLOSE;
+//        JMapFrame jMapFrame = new JMapFrame(map);
+        JMapFrame.showMap(map);
+    }
+
+
+
+    private static Layer setPolLayer(String fileLoc, Color outlineColor, Color fillColor, float opacity) throws IOException {
+
+        File file = new File(fileLoc);
+
+        FileDataStore store = FileDataStoreFinder.getDataStore(file);
+
+        SimpleFeatureSource featureSource = store.getFeatureSource();
+
+        Style style = SLD.createPolygonStyle(outlineColor, fillColor, opacity);
+
+        Layer layer = new FeatureLayer(featureSource, style);
+
+        return layer;
+    }
+
+
+
+
+    private static Layer setPointLayer(PointModel pointObject, String shapeType, Color outlineColor, Color fillColor, float opacity, float size) throws SchemaException {
+
         final SimpleFeatureType TYPE =
                 DataUtilities.createType(
                         "Location",
                         "the_geom:Point:srid=4326,"
-                                + // <- the geometry attribute: Point type
+                                +
+                                "elevation:double,"
+                                +
                                 "name:String,"
-                                + // <- a String attribute
-                                "number:Integer" // a number attribute
+                                +
+                                "note:String"
                 );
-        System.out.println("TYPE:" + TYPE);
-
-
-
-
-
 
         List<SimpleFeature> features = new ArrayList<>();
 
-        /*
-         * GeometryFactory will be used to create the geometry attribute of each feature,
-         * using a Point object for the location.
-         */
         GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
         SimpleFeatureBuilder featureBuilder = new SimpleFeatureBuilder(TYPE);
 
-        double latitude = 45.85159;
-        double longitude = 38.23718;
-        String name = "sfsdfsdfsdfsd";
-        int number = 31212;
-
-        /* Longitude (= x coord) first ! */
-        Point point = geometryFactory.createPoint(new Coordinate(longitude, latitude));
+        Point point = geometryFactory.createPoint(new Coordinate(pointObject.getLongitude(), pointObject.getLatitude()));
 
         featureBuilder.add(point);
-        featureBuilder.add(name);
-        featureBuilder.add(number);
+        featureBuilder.add(pointObject.getName());
+        featureBuilder.add(pointObject.getElevation());
         SimpleFeature feature = featureBuilder.buildFeature(null);
 
         features.add(feature);
-
-
         DefaultFeatureCollection featureCollection = new DefaultFeatureCollection("internal", TYPE);
-
         featureCollection.add(features.get(0));
 
-
-
-
-
-
-        org.opengis.style.StyleFactory sf = CommonFactoryFinder.getStyleFactory();
-        FilterFactory2 ff = CommonFactoryFinder.getFilterFactory2();
-        //
-        // create the graphical mark used to represent a city
-        org.opengis.style.Stroke stroke = sf.stroke(ff.literal("#000000"), null, null, null, null, null, null);
-        Fill fill = sf.fill(null, ff.literal(Color.BLUE), ff.literal(1.0));
-
-
-
-        StyleFactory styleFactory = CommonFactoryFinder.getStyleFactory();
-        StyledLayerDescriptor sld = styleFactory.createStyledLayerDescriptor();
-
-
-
-
-
-
-
-
-//        // display a data store file chooser dialog for shapefiles
-//        LOGGER.info( "Quickstart");
-//        LOGGER.config( "Welcome Developers");
-//        LOGGER.info("java.util.logging.config.file="+System.getProperty("java.util.logging.config.file"));
-//        File file = JFileDataStoreChooser.showOpenFile("shp", null);
-//        if (file == null) {
-//            return;
-//        }
-//        LOGGER.config("File selected "+file);
-
-        File file = new File("C:\\Workspace\\untitled2\\maps\\IRN_adm\\IRN_adm1.shp");
-//        File file2 = new File("C:\\Workspace\\untitled2\\maps\\IRN_adm\\IRN_adm2.shp");
-//        File file2 = new File("C:\\Workspace\\untitled2\\maps\\IRN_wat\\IRN_water_areas_dcw.shp");
-//        File file2 = new File("C:\\Workspace\\untitled2\\maps\\IRN_wat\\IRN_water_lines_dcw.shp");
-        File file2 = new File("C:\\Workspace\\untitled2\\maps\\IRN_rds\\IRN_roads.shp");
-
-
-        FileDataStore store = FileDataStoreFinder.getDataStore(file);
-        FileDataStore store2 = FileDataStoreFinder.getDataStore(file2);
-        SimpleFeatureSource featureSource = store.getFeatureSource();
-        SimpleFeatureSource featureSource2 = store2.getFeatureSource();
-
-        // Create a map content and add our shapefile to it
-        MapContent map = new MapContent();
-        map.setTitle("Quickstart");
-
-        Style style = SLD.createSimpleStyle(featureSource.getSchema());
-//        Style style2 = SLD.createPolygonStyle(Color.ORANGE.darker(), Color.decode("#f9d19d"), 0.5f);
-//        Style style2 = SLD.createPolygonStyle(Color.decode("#0077ff"), Color.decode("#0099ff"), 0.8f); //water
-//        Style style2 = SLD.createPolygonStyle(Color.decode("#ccffff"), null, 0f); // water line
-        Style style2 = SLD.createPolygonStyle(Color.decode("#ccccaa"), null, 0f); // roads
-
-//        Style style2 = SLD.createPointStyle("Circle",Color.BLUE.brighter(), Color.RED, 0.5f, 10f);
-//        Style style2 = SLD.createPointStyle("Square",Color.BLUE.brighter(), Color.RED, 0.5f, 10f);
-//        Style style2 = SLD.createPointStyle("Triangle",Color.BLUE.brighter(), Color.RED, 0.5f, 10f);
-        Style style3 = SLD.createPointStyle("Cross",Color.YELLOW, Color.RED, 0.7f, 12f);
-
-        Layer layer = new FeatureLayer(featureSource, style);
-        Layer layer2 = new FeatureLayer(featureSource2, style2);
-        Layer layer3 = new FeatureLayer(featureCollection, style3);
-        map.addLayer(layer2);
-        map.addLayer(layer);
-        map.addLayer(layer3);
-
-
-//        MapViewport mapViewport = new MapViewport(map.getMaxBounds());
-
-        // Now display the map
-        JMapFrame.showMap(map);
+        Style style = SLD.createPointStyle(shapeType,outlineColor,fillColor, opacity, size);
+        return new FeatureLayer(featureCollection, style);
     }
 
 

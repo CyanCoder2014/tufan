@@ -41,11 +41,12 @@ public class ElevationFind
 
 
         // display a data store file chooser dialog for shapefiles
-        File file = JFileDataStoreChooser.showOpenFile("shp", null);
-        if (file == null) {
-            return;
-        }
+//        File file = JFileDataStoreChooser.showOpenFile("shp", null);
+//        if (file == null) {
+//            return;
+//        }
 
+        File file = new File("./maps/_demshp/Dem_100.shp");
 
 
         FileDataStore store = FileDataStoreFinder.getDataStore(file);

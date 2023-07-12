@@ -3,14 +3,11 @@ package com.cyancoder.panel;
 import com.cyancoder.ShowMap;
 import org.geotools.feature.SchemaException;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Objects;
 
 public class select1 extends JFrame{
 
@@ -29,6 +26,7 @@ public class select1 extends JFrame{
     private  JTextField textField1;
     private JTabbedPane tabbedPane1;
     private  JLabel wIcon;
+    private JPanel tab1;
 
 
     public static select1 StaticSelect1;
@@ -112,5 +110,9 @@ public class select1 extends JFrame{
 
 
 
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }

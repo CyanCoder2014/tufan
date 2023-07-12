@@ -20,7 +20,7 @@ public class newp  extends JFrame {
         setContentPane(panel1);
         setTitle("Tufan - G11 - انتخاب توپ");
         setSize(700,500);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
         button1.addActionListener(new ActionListener() {
             @Override
