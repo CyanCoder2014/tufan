@@ -48,7 +48,7 @@ public class Home extends JFrame{
 //        f.setVisible(true);
 
 //        JLabel label = new JLabel(); //JLabel Creation
-        wIcon.setIcon(new ImageIcon("C:\\Workspace\\untitled2\\images\\Interface & UI\\add_new_plus-01.png")); //Sets the image to be displayed as an icon
+        wIcon.setIcon(new ImageIcon("./images/icons/add_new_plus-01.png")); //Sets the image to be displayed as an icon
         Dimension size = wIcon.getPreferredSize(); //Gets the size of the image
         wIcon.setBounds(50, 30, size.width, size.height); //Sets the location of the image
 
