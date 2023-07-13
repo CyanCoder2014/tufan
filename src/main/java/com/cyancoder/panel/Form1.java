@@ -4,18 +4,18 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class newp  extends JFrame {
+public class Form1 extends JFrame {
     private JButton button1;
     private JPanel panel1;
     private JCheckBox checkBox1;
     private JTextField textField1;
 
-    public static newp StaticNewp;
+    public static Form1 staticForm1;
 
-    public newp(){
+    public Form1(){
 
 
-        StaticNewp = this;
+        staticForm1 = this;
 
         setContentPane(panel1);
         setTitle("Tufan - G11 - انتخاب توپ");
@@ -26,8 +26,8 @@ public class newp  extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                select1.StaticSelect1.getTextField1().setText(textField1.getText());
-                StaticNewp.setVisible(false);
+                Home.staticHome.getTextField1().setText(textField1.getText());
+                staticForm1.setVisible(false);
 
             }
         });

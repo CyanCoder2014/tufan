@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class select1 extends JFrame{
+public class Home extends JFrame{
 
     private JPanel adas;
     private JButton button1;
@@ -29,10 +29,10 @@ public class select1 extends JFrame{
     private JPanel tab1;
 
 
-    public static select1 StaticSelect1;
+    public static Home staticHome;
 
-    public select1() {
-        StaticSelect1 = this;
+    public Home() {
+        staticHome = this;
 
         setContentPane(adas);
         setTitle("Tufan - G11");
@@ -48,7 +48,7 @@ public class select1 extends JFrame{
 //        f.setVisible(true);
 
 //        JLabel label = new JLabel(); //JLabel Creation
-        wIcon.setIcon(new ImageIcon("E:\\\\Users\\\\Farid\\\\Downloads\\\\Map-of-Iran-with-the-Digital-Elevation-Model-DEM.png")); //Sets the image to be displayed as an icon
+        wIcon.setIcon(new ImageIcon("C:\\Workspace\\untitled2\\images\\Interface & UI\\add_new_plus-01.png")); //Sets the image to be displayed as an icon
         Dimension size = wIcon.getPreferredSize(); //Gets the size of the image
         wIcon.setBounds(50, 30, size.width, size.height); //Sets the location of the image
 
@@ -75,7 +75,7 @@ public class select1 extends JFrame{
             public void actionPerformed(ActionEvent e) {
 //                JOptionPane.showMessageDialog(button1, textField1.getText());
 
-                new newp().setVisible(true);
+                new Form1().setVisible(true);
 //                new newp().AccessibleJFrame;
 //                CardLayout cl = (CardLayout)(cards.getLayout());
 //                cl.show(cards, (String)textField1.getText());
@@ -104,7 +104,7 @@ public class select1 extends JFrame{
 
 
     public static void main(String[] args) {
-        select1 s = new select1();
+        Home s = new Home();
 
 
 
