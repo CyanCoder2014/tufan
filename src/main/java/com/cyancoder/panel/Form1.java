@@ -6,6 +6,15 @@ import java.awt.event.ActionListener;
 
 public class Form1 extends JFrame {
     private JButton button1;
+
+    public JPanel getPanel1() {
+        return panel1;
+    }
+
+    public void setPanel1(JPanel panel1) {
+        this.panel1 = panel1;
+    }
+
     private JPanel panel1;
     private JCheckBox checkBox1;
     private JTextField textField1;

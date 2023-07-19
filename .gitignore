@@ -31,9 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### maps ###
 /maps/IRN_adm/
 /maps/IRN_alt/
 /maps/IRN_cov/
 /maps/IRN_rds/
 /maps/IRN_wat/
 /maps/_demshp/
+/maps/provinces_dem/

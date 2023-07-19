@@ -13,7 +13,7 @@ public class Home extends JFrame{
 
     private JPanel adas;
     private JButton button1;
-    private JButton button2;
+    private JButton btnShowMap;
 
     public JTextField getTextField1() {
         return textField1;
@@ -26,6 +26,10 @@ public class Home extends JFrame{
     private  JTextField textField1;
     private JTabbedPane tabbedPane1;
     private  JLabel wIcon;
+    private JButton button3;
+    private JPanel topPanel;
+    private JButton ویرایشعملیاتButton;
+    private JButton انتخابنقشهمنطقهButton;
     private JPanel tab1;
 
 
@@ -40,6 +44,11 @@ public class Home extends JFrame{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
+        applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+
+
+
+
 
 //        JFrame f = new JFrame("Add an image to JFrame");
 //        ImageIcon icon = new ImageIcon("E:\\\\Users\\\\Farid\\\\Downloads\\\\Map-of-Iran-with-the-Digital-Elevation-Model-DEM.png");
@@ -48,7 +57,9 @@ public class Home extends JFrame{
 //        f.setVisible(true);
 
 //        JLabel label = new JLabel(); //JLabel Creation
-        wIcon.setIcon(new ImageIcon("./images/icons/add_new_plus-01.png")); //Sets the image to be displayed as an icon
+//        wIcon.setIcon(new ImageIcon("./images/icons/add_new_plus-01.png")); //Sets the image to be displayed as an icon
+//        wIcon.setIcon(new ImageIcon("./images/icons/lightning_thunder_power_energy_flash-01.png")); //Sets the image to be displayed as an icon
+        wIcon.setIcon(new ImageIcon("./images/icons/map_location_pin_marker-01.png")); //Sets the image to be displayed as an icon
         Dimension size = wIcon.getPreferredSize(); //Gets the size of the image
         wIcon.setBounds(50, 30, size.width, size.height); //Sets the location of the image
 
@@ -82,7 +93,7 @@ public class Home extends JFrame{
 
             }
         });
-        button2.addActionListener(new ActionListener() {
+        btnShowMap.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -96,7 +107,35 @@ public class Home extends JFrame{
 
             }
         });
+        button3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                this.addPanel();
+            }
+
+
+            public void addPanel()
+            {
+                System.out.println("new machinePanel added");
+
+                JPanel panel1 = new MachinePanel();
+
+                tabbedPane1.add("آتشبار 1",panel1);
+
+            }
+
+
+
+
+
+
+        });
+
+
+
     }
+
+
 
 
 //    image = ImageIO.read(new File("E:\\Users\\Farid\\Downloads\\Map-of-Iran-with-the-Digital-Elevation-Model-DEM.png"));
@@ -104,10 +143,27 @@ public class Home extends JFrame{
 
 
     public static void main(String[] args) {
+
+
+
+
         Home s = new Home();
 
 
 
+//        Component[] component = s.getComponents();
+//        for(int i=0; i<component.length; i++){
+//            component[i].applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+//            Component[] cp = ((Container) component[i]).getComponents();
+//            for(int j=0; j<cp.length; j++){
+//                try{
+//                    ((Component) ((JComboBox) cp[j]).getRenderer()).applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+//                }catch(Exception e){
+//                    continue;
+//
+//                }
+//            }
+//        }
 
 
     }
