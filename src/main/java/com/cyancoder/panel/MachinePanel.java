@@ -14,6 +14,85 @@ import java.text.ParseException;
 public class MachinePanel extends JPanel {
 
 
+
+    JLabel labelLocTitle = new JLabel("مختصات آتشبار و هدف:");
+
+    JLabel labelMacX = new JLabel("طول جغرافیایی آتشبار:");
+    JFormattedTextField fieldMacX = new JFormattedTextField(getMaskFormatter("##.###"));
+    JLabel labelMacY = new JLabel("عرض جغرافیایی آتشبار:");
+    JFormattedTextField fieldMacY = new JFormattedTextField(getMaskFormatter("##.###"));
+    JLabel labelAimX = new JLabel("طول جغرافیایی هدف:");
+    JFormattedTextField fieldAimX = new JFormattedTextField(getMaskFormatter("##.###"));
+    JLabel labelAimY = new JLabel("عرض جغرافیایی هدف:");
+    JFormattedTextField fieldAimY = new JFormattedTextField(getMaskFormatter("##.###"));
+
+    JButton btnCalDir = new JButton("محاسبه برد و گرا (سمت نقشه‌ای)");
+
+    JLabel labelCheckBoxLoc = new JLabel("اجازه ویرایش مختصات");
+
+    JLabel labelElvMac = new JLabel("ارتفاع آتشبار:");
+    JTextField fieldElvMac = new JIntegerField(false);
+    JLabel labelElvAim = new JLabel("ارتفاع هدف:");
+    JTextField fieldElvAim = new JIntegerField(false);
+    JLabel labelDiffElv = new JLabel("اختلاف ارتفاع:");
+    JTextField fieldDiffElv = new JIntegerField(false);
+    JLabel labelTElv = new JLabel("تراز:");
+    JTextField fieldTElv = new JIntegerField(false);
+
+    JLabel labelDist = new JLabel("برد (مسافت):");
+    JTextField fieldDist = new JIntegerField(false);
+    JLabel labelDir = new JLabel("سمت نقشه ای (گرا):");
+    JTextField fieldDir = new JIntegerField(false);
+
+
+
+
+    JLabel labelMacSelectTitle = new JLabel("اطلاعات توپ و خرج گلوله:");
+
+    JLabel labelSelectMac = new JLabel("انتخاب توپ:");
+    String[] macSelectArray = new String[] {"توپ 10 ام 46"};
+    JComboBox<String> selectMac = new JComboBox<>(macSelectArray);
+
+    JLabel labelSelectType = new JLabel("انتخاب خرج گلوله:");
+    String[] typeSelectArray = new String[] {"خرج کامل"};
+    JComboBox<String> selectType = new JComboBox<>(typeSelectArray);
+
+    JButton btnCalDirAndDeg = new JButton("محاسبه سمت و زاویه توپ");
+    JCheckBox checkBoxMac = new JCheckBox();
+    JLabel labelCheckBoxMac = new JLabel("اجازه ویرایش توپ و خرج");
+
+    JLabel labelCorrectionDir = new JLabel("تصحیح سمت:");
+    JPasswordField fieldCorrectionDir = new JPasswordField();
+    JLabel labelMacDir = new JLabel("سمت توپ:");
+    JPasswordField fieldMacDir = new JPasswordField();
+
+
+    JLabel labelDeg = new JLabel("درجه:");
+    JPasswordField fieldDeg = new JPasswordField();
+    JLabel labelArrDir = new JLabel("سمت تیر:");
+    JPasswordField fieldArrDir = new JPasswordField();
+
+
+    JLabel labelLandingTop = new JLabel("قله مسیر گلوله:");
+    JPasswordField fieldLandingTop = new JPasswordField();
+    JLabel labelLandingDeg = new JLabel("زاویه فرود:");
+    JPasswordField fieldLandingDeg = new JPasswordField();
+
+    JLabel labelMaxSpeed = new JLabel("سرعت نهایی:");
+    JPasswordField fieldMaxSpeed = new JPasswordField();
+
+    JLabel labelFlightTime = new JLabel("زمان پرواز:");
+    JPasswordField fieldFlightTime = new JPasswordField();
+
+
+
+    JLabel labelCorrectionTitle = new JLabel("تصحیحات:");
+
+    JButton btnCorrection = new JButton("ثبت تصحیحات");
+
+
+
+
     public MachinePanel() {
 
         setName("آتشبار 1");
@@ -22,101 +101,56 @@ public class MachinePanel extends JPanel {
         groupLayout.setAutoCreateContainerGaps(true);
         setLayout(groupLayout);
 
-        JLabel labelLocTitle = new JLabel("مختصات آتشبار و هدف:");
+//        JLabel labelLocTitle = new JLabel("مختصات آتشبار و هدف:");
         labelLocTitle.setFont(new FontUIResource(new Font("Tahoma", 0, 16)));
 
-        JLabel labelMacX = new JLabel("طول جغرافیایی آتشبار:");
-        JFormattedTextField fieldMacX = new JFormattedTextField(getMaskFormatter("##.###"));
-        JLabel labelMacY = new JLabel("عرض جغرافیایی آتشبار:");
-        JFormattedTextField fieldMacY = new JFormattedTextField(getMaskFormatter("##.###"));
-        JLabel labelAimX = new JLabel("طول جغرافیایی هدف:");
-        JFormattedTextField fieldAimX = new JFormattedTextField(getMaskFormatter("##.###"));
-        JLabel labelAimY = new JLabel("عرض جغرافیایی هدف:");
-        JFormattedTextField fieldAimY = new JFormattedTextField(getMaskFormatter("##.###"));
 
-        JButton btnCalDir = new JButton("محاسبه برد و گرا (سمت نقشه‌ای)");
+
         btnCalDir.setSize(320,40);
         btnCalDir.setHorizontalAlignment(SwingConstants.CENTER);
 
         JCheckBox checkBoxLoc = new JCheckBox();
-        JLabel labelCheckBoxLoc = new JLabel("اجازه ویرایش مختصات");
 
-        JLabel labelElvMac = new JLabel("ارتفاع آتشبار:");
-        JTextField fieldElvMac = new JIntegerField(false);
         fieldElvMac.setEnabled(false);
-        JLabel labelElvAim = new JLabel("ارتفاع هدف:");
-        JTextField fieldElvAim = new JIntegerField(false);
         fieldElvAim.setEnabled(false);
-        JLabel labelDiffElv = new JLabel("اختلاف ارتفاع:");
-        JTextField fieldDiffElv = new JIntegerField(false);
         fieldDiffElv.setEnabled(false);
-        JLabel labelTElv = new JLabel("تراز:");
-        JTextField fieldTElv = new JIntegerField(false);
         fieldTElv.setEnabled(false);
 
-        JLabel labelDist = new JLabel("برد (مسافت):");
-        JTextField fieldDist = new JIntegerField(false);
         fieldDist.setEnabled(false);
-        JLabel labelDir = new JLabel("سمت نقشه ای (گرا):");
-        JTextField fieldDir = new JIntegerField(false);
         fieldDir.setEnabled(false);
 
 
 
 
-        JLabel labelMacSelectTitle = new JLabel("اطلاعات توپ و خرج گلوله:");
         labelMacSelectTitle.setFont(new FontUIResource(new Font("Tahoma", 0, 16)));
 
-        JLabel labelSelectMac = new JLabel("انتخاب توپ:");
 //        MacSelectModel[] macSelectArray = new MacSelectModel[1];
 //        macSelectArray[0] = new MacSelectModel(1L,"توپ 10 ام 46");
-        String[] macSelectArray = new String[] {"توپ 10 ام 46"};
-        JComboBox<String> selectMac = new JComboBox<>(macSelectArray);
+//        JComboBox<String> selectMac = new JComboBox<>(macSelectArray);
 
-        JLabel labelSelectType = new JLabel("انتخاب خرج گلوله:");
-        String[] typeSelectArray = new String[] {"خرج کامل"};
-        JComboBox<String> selectType = new JComboBox<>(typeSelectArray);
+//        JComboBox<String> selectType = new JComboBox<>(typeSelectArray);
 
-        JButton btnCalDirAndDeg = new JButton("محاسبه سمت و زاویه توپ");
-        JCheckBox checkBoxMac = new JCheckBox();
-        JLabel labelCheckBoxMac = new JLabel("اجازه ویرایش توپ و خرج");
 
-        JLabel labelCorrectionDir = new JLabel("تصحیح سمت:");
-        JPasswordField fieldCorrectionDir = new JPasswordField();
         fieldCorrectionDir.setEnabled(false);
-        JLabel labelMacDir = new JLabel("سمت توپ:");
-        JPasswordField fieldMacDir = new JPasswordField();
         fieldMacDir.setEnabled(false);
 
 
-        JLabel labelDeg = new JLabel("درجه:");
-        JPasswordField fieldDeg = new JPasswordField();
         fieldDeg.setEnabled(false);
-        JLabel labelArrDir = new JLabel("سمت تیر:");
-        JPasswordField fieldArrDir = new JPasswordField();
         fieldArrDir.setEnabled(false);
 
 
-        JLabel labelLandingTop = new JLabel("قله مسیر گلوله:");
-        JPasswordField fieldLandingTop = new JPasswordField();
         fieldLandingTop.setEnabled(false);
-        JLabel labelLandingDeg = new JLabel("زاویه فرود:");
-        JPasswordField fieldLandingDeg = new JPasswordField();
         fieldLandingDeg.setEnabled(false);
 
-        JLabel labelMaxSpeed = new JLabel("سرعت نهایی:");
-        JPasswordField fieldMaxSpeed = new JPasswordField();
         fieldMaxSpeed.setEnabled(false);
 
-        JLabel labelFlightTime = new JLabel("زمان پرواز:");
-        JPasswordField fieldFlightTime = new JPasswordField();
         fieldFlightTime.setEnabled(false);
 
 
         labelMacSelectTitle.setFont(new FontUIResource(new Font("Tahoma", 0, 16)));
 
-        JLabel labelCorrectionTitle = new JLabel("تصحیحات:");
         labelCorrectionTitle.setFont(new FontUIResource(new Font("Tahoma", 0, 16)));
+
 
 
         groupLayout.setHorizontalGroup(groupLayout.createSequentialGroup()
@@ -201,6 +235,8 @@ public class MachinePanel extends JPanel {
                                         )
                                 .addGroup(groupLayout.createSequentialGroup()
                                         .addComponent(labelCorrectionTitle))
+                                .addGroup(groupLayout.createSequentialGroup()
+                                        .addComponent(btnCorrection))
                         )
         );
 
@@ -316,6 +352,8 @@ public class MachinePanel extends JPanel {
                                         .addGap(10, 20, 30)
                                         .addComponent(labelCorrectionTitle)
                                         .addGap(10, 20, 30))
+                                .addGroup(groupLayout.createParallelGroup()
+                                        .addComponent(btnCorrection))
 
 
 
@@ -326,18 +364,23 @@ public class MachinePanel extends JPanel {
 
 
 
-//        login.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-////                JOptionPane.showMessageDialog(button1, textField1.getText());
-//
+        btnCorrection.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                JOptionPane.showMessageDialog(button1, textField1.getText());
+
 //                new Form1().setVisible(true);
-////                new newp().AccessibleJFrame;
-////                CardLayout cl = (CardLayout)(cards.getLayout());
-////                cl.show(cards, (String)textField1.getText());
-//
-//            }
-//        });
+
+
+
+                callForm();
+
+//                new newp().AccessibleJFrame;
+//                CardLayout cl = (CardLayout)(cards.getLayout());
+//                cl.show(cards, (String)textField1.getText());
+
+            }
+        });
 
         setAlignmentX(SwingConstants.RIGHT);
         applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -356,6 +399,15 @@ public class MachinePanel extends JPanel {
             ex.printStackTrace();
         }
         return mask;
+    }
+
+
+
+    public void  callForm(){
+
+        Form1 form = new Form1(this);
+
+
     }
 
 }

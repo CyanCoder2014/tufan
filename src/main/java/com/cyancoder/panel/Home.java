@@ -92,7 +92,7 @@ public class Home extends JFrame{
             public void actionPerformed(ActionEvent e) {
 //                JOptionPane.showMessageDialog(button1, textField1.getText());
 
-                new Form1().setVisible(true);
+//                new Form1().setVisible(true);
 //                new newp().AccessibleJFrame;
 //                CardLayout cl = (CardLayout)(cards.getLayout());
 //                cl.show(cards, (String)textField1.getText());
