@@ -1,8 +1,10 @@
 package com.cyancoder.panel;
 
+import com.cyancoder.model.MacSelectModel;
 import org.geotools.swing.control.JIntegerField;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,30 +16,14 @@ public class MachinePanel extends JPanel {
 
     public MachinePanel() {
 
-
-        GroupLayout layout = new GroupLayout(this);
-//        layout.setAutoCreateGaps(true);
-//        layout.setAutoCreateContainerGaps(true);
-//
-//        JButton btn1 = new JButton("Button 1");
-//        JButton btn2 = new JButton("Button 2");
-//        JButton btn3 = new JButton("Button 3");
-
-
+        setName("آتشبار 1");
         GroupLayout groupLayout = new GroupLayout(this);
-
-
-//        setLayout(null);
-//        setName("آتشبار 1");
-//        FlowLayout  g1 = new FlowLayout ();
-//        GridLayout  g1 = new GridLayout ();
-//        g1.setVgap(30);
-
         groupLayout.setAutoCreateGaps(true);
         groupLayout.setAutoCreateContainerGaps(true);
         setLayout(groupLayout);
 
         JLabel labelLocTitle = new JLabel("مختصات آتشبار و هدف:");
+        labelLocTitle.setFont(new FontUIResource(new Font("Tahoma", 0, 16)));
 
         JLabel labelMacX = new JLabel("طول جغرافیایی آتشبار:");
         JFormattedTextField fieldMacX = new JFormattedTextField(getMaskFormatter("##.###"));
@@ -51,6 +37,9 @@ public class MachinePanel extends JPanel {
         JButton btnCalDir = new JButton("محاسبه برد و گرا (سمت نقشه‌ای)");
         btnCalDir.setSize(320,40);
         btnCalDir.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JCheckBox checkBoxLoc = new JCheckBox();
+        JLabel labelCheckBoxLoc = new JLabel("اجازه ویرایش مختصات");
 
         JLabel labelElvMac = new JLabel("ارتفاع آتشبار:");
         JTextField fieldElvMac = new JIntegerField(false);
@@ -73,28 +62,64 @@ public class MachinePanel extends JPanel {
         fieldDir.setEnabled(false);
 
 
-        JLabel clickMe = new JLabel("Click Here");
-        JButton button = new JButton("This Button");
 
 
-        JLabel label1 = new JLabel("مسافت:");
-        JTextField field = new JIntegerField(false);
-        field.setEnabled(false);
-        JLabel label2 = new JLabel("سمت:");
-        JPasswordField fieldPass = new JPasswordField();
+        JLabel labelMacSelectTitle = new JLabel("اطلاعات توپ و خرج گلوله:");
+        labelMacSelectTitle.setFont(new FontUIResource(new Font("Tahoma", 0, 16)));
 
-        JLabel label11 = new JLabel("مسافت:");
-        JTextField field1 = new JIntegerField(false);
-        JLabel label21 = new JLabel("سمت:");
-        JPasswordField fieldPass1 = new JPasswordField();
+        JLabel labelSelectMac = new JLabel("انتخاب توپ:");
+//        MacSelectModel[] macSelectArray = new MacSelectModel[1];
+//        macSelectArray[0] = new MacSelectModel(1L,"توپ 10 ام 46");
+        String[] macSelectArray = new String[] {"توپ 10 ام 46"};
+        JComboBox<String> selectMac = new JComboBox<>(macSelectArray);
 
-        JButton login = new JButton("ثبت مختصات (هدف/آتشبار)");
-        JButton login1 = new JButton("انتخاب توپ");
-//                                        .addGap(10, 20, 100)
+        JLabel labelSelectType = new JLabel("انتخاب خرج گلوله:");
+        String[] typeSelectArray = new String[] {"خرج کامل"};
+        JComboBox<String> selectType = new JComboBox<>(typeSelectArray);
+
+        JButton btnCalDirAndDeg = new JButton("محاسبه سمت و زاویه توپ");
+        JCheckBox checkBoxMac = new JCheckBox();
+        JLabel labelCheckBoxMac = new JLabel("اجازه ویرایش توپ و خرج");
+
+        JLabel labelCorrectionDir = new JLabel("تصحیح سمت:");
+        JPasswordField fieldCorrectionDir = new JPasswordField();
+        fieldCorrectionDir.setEnabled(false);
+        JLabel labelMacDir = new JLabel("سمت توپ:");
+        JPasswordField fieldMacDir = new JPasswordField();
+        fieldMacDir.setEnabled(false);
+
+
+        JLabel labelDeg = new JLabel("درجه:");
+        JPasswordField fieldDeg = new JPasswordField();
+        fieldDeg.setEnabled(false);
+        JLabel labelArrDir = new JLabel("سمت تیر:");
+        JPasswordField fieldArrDir = new JPasswordField();
+        fieldArrDir.setEnabled(false);
+
+
+        JLabel labelLandingTop = new JLabel("قله مسیر گلوله:");
+        JPasswordField fieldLandingTop = new JPasswordField();
+        fieldLandingTop.setEnabled(false);
+        JLabel labelLandingDeg = new JLabel("زاویه فرود:");
+        JPasswordField fieldLandingDeg = new JPasswordField();
+        fieldLandingDeg.setEnabled(false);
+
+        JLabel labelMaxSpeed = new JLabel("سرعت نهایی:");
+        JPasswordField fieldMaxSpeed = new JPasswordField();
+        fieldMaxSpeed.setEnabled(false);
+
+        JLabel labelFlightTime = new JLabel("زمان پرواز:");
+        JPasswordField fieldFlightTime = new JPasswordField();
+        fieldFlightTime.setEnabled(false);
+
+
+        labelMacSelectTitle.setFont(new FontUIResource(new Font("Tahoma", 0, 16)));
+
+        JLabel labelCorrectionTitle = new JLabel("تصحیحات:");
+        labelCorrectionTitle.setFont(new FontUIResource(new Font("Tahoma", 0, 16)));
 
 
         groupLayout.setHorizontalGroup(groupLayout.createSequentialGroup()
-//                .addComponent(clickMe)
                         .addGroup(groupLayout.createParallelGroup()
                                 .addComponent(labelLocTitle)
                                 .addGroup(groupLayout.createSequentialGroup()
@@ -114,6 +139,9 @@ public class MachinePanel extends JPanel {
 
                                 .addGroup(groupLayout.createSequentialGroup()
                                         .addComponent(btnCalDir)
+                                        .addGap(10, 20, 30)
+                                        .addComponent(checkBoxLoc)
+                                        .addComponent(labelCheckBoxLoc)
                                 )
                                 .addGroup(groupLayout.createSequentialGroup()
                                         .addComponent(labelElvMac)
@@ -137,19 +165,43 @@ public class MachinePanel extends JPanel {
                                         .addComponent(labelDir)
                                         .addComponent(fieldDir)
                                 )
-
                         )
-                        .addGap(10, 20, 100)
+                        .addGap(10, 20, 70)
                         .addGroup(groupLayout.createParallelGroup()
-
+                                .addComponent(labelMacSelectTitle)
                                 .addGroup(groupLayout.createSequentialGroup()
-                                        .addComponent(label11)
-                                        .addComponent(field1)
-                                        .addComponent(label21)
-                                        .addComponent(fieldPass1))
-                                .addGroup(groupLayout.createParallelGroup()
-                                        .addComponent(login1)
-                                        .addComponent(login)))
+                                        .addComponent(labelSelectMac)
+                                        .addComponent(selectMac)
+                                        .addComponent(labelSelectType)
+                                        .addComponent(selectType))
+                                .addGroup(groupLayout.createSequentialGroup()
+                                        .addComponent(btnCalDirAndDeg)
+                                        .addGap(20, 30, 40)
+                                        .addComponent(checkBoxMac)
+                                        .addComponent(labelCheckBoxMac))
+                                .addGroup(groupLayout.createSequentialGroup()
+                                        .addComponent(labelCorrectionDir)
+                                        .addComponent(fieldCorrectionDir)
+                                        .addComponent(labelMacDir)
+                                        .addComponent(fieldMacDir))
+                                .addGroup(groupLayout.createSequentialGroup()
+                                        .addComponent(labelDeg)
+                                        .addComponent(fieldDeg)
+                                        .addComponent(labelArrDir)
+                                        .addComponent(fieldArrDir))
+                                .addGroup(groupLayout.createSequentialGroup()
+                                                .addComponent(labelFlightTime)
+                                                .addComponent(fieldFlightTime)
+                                        .addComponent(labelLandingTop)
+                                        .addComponent(fieldLandingTop)
+                                        .addComponent(labelLandingDeg)
+                                        .addComponent(fieldLandingDeg)
+                                        .addComponent(labelMaxSpeed)
+                                        .addComponent(fieldMaxSpeed)
+                                        )
+                                .addGroup(groupLayout.createSequentialGroup()
+                                        .addComponent(labelCorrectionTitle))
+                        )
         );
 
         groupLayout.setVerticalGroup(groupLayout.createParallelGroup()
@@ -176,6 +228,8 @@ public class MachinePanel extends JPanel {
                         .addGap(10, 20, 30)
                         .addGroup(groupLayout.createParallelGroup()
                                 .addComponent(btnCalDir)
+                                .addComponent(checkBoxLoc)
+                                .addComponent(labelCheckBoxLoc)
                         )
                         .addGap(10, 20, 30)
                         .addGroup(groupLayout.createParallelGroup()
@@ -210,38 +264,85 @@ public class MachinePanel extends JPanel {
 
 
                 .addGroup(groupLayout.createSequentialGroup()
+                        .addGap(10, 20, 30)
+                        .addComponent(labelMacSelectTitle)
+                        .addGap(10, 20, 30)
                         .addGroup(groupLayout.createSequentialGroup()
 
                                 .addGroup(groupLayout.createParallelGroup()
-                                        .addComponent(label11)
-                                        .addComponent(field1, GroupLayout.DEFAULT_SIZE,
+                                        .addComponent(labelSelectMac)
+                                        .addComponent(selectMac, GroupLayout.DEFAULT_SIZE,
                                                 GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(label21)
-                                        .addComponent(fieldPass1, GroupLayout.DEFAULT_SIZE,
+                                        .addComponent(labelSelectType)
+                                        .addComponent(selectType, GroupLayout.DEFAULT_SIZE,
                                                 GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addGroup(groupLayout.createSequentialGroup()
-                                        .addComponent(login1, GroupLayout.DEFAULT_SIZE,
+                                .addGap(5, 10, 20)
+                                .addGroup(groupLayout.createParallelGroup()
+                                        .addComponent(btnCalDirAndDeg)
+                                        .addComponent(checkBoxMac)
+                                        .addComponent(labelCheckBoxMac))
+                                .addGap(5, 10, 20)
+                                .addGroup(groupLayout.createParallelGroup()
+                                        .addComponent(labelCorrectionDir)
+                                        .addComponent(fieldCorrectionDir, GroupLayout.DEFAULT_SIZE,
                                                 GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(login, GroupLayout.DEFAULT_SIZE,
-                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(labelMacDir)
+                                        .addComponent(fieldMacDir, GroupLayout.DEFAULT_SIZE,
+                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGroup(groupLayout.createParallelGroup()
+                                        .addComponent(labelDeg)
+                                        .addComponent(fieldDeg, GroupLayout.DEFAULT_SIZE,
+                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(labelArrDir)
+                                        .addComponent(fieldArrDir, GroupLayout.DEFAULT_SIZE,
+                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(5, 10, 20)
+                                .addGroup(groupLayout.createParallelGroup()
+                                        .addComponent(labelFlightTime)
+                                        .addComponent(fieldFlightTime, GroupLayout.DEFAULT_SIZE,
+                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(labelLandingTop)
+                                        .addComponent(fieldLandingTop, GroupLayout.DEFAULT_SIZE,
+                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(labelLandingDeg)
+                                        .addComponent(fieldLandingDeg, GroupLayout.DEFAULT_SIZE,
+                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(labelMaxSpeed)
+                                        .addComponent(fieldMaxSpeed, GroupLayout.DEFAULT_SIZE,
+                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                )
+                                .addGap(10, 20, 30)
+                                .addGroup(groupLayout.createParallelGroup()
+                                        .addGap(10, 20, 30)
+                                        .addComponent(labelCorrectionTitle)
+                                        .addGap(10, 20, 30))
+
+
+
+                        ))
         );
 
 
-        login.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                JOptionPane.showMessageDialog(button1, textField1.getText());
 
-                new Form1().setVisible(true);
-//                new newp().AccessibleJFrame;
-//                CardLayout cl = (CardLayout)(cards.getLayout());
-//                cl.show(cards, (String)textField1.getText());
 
-            }
-        });
+
+//        login.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+////                JOptionPane.showMessageDialog(button1, textField1.getText());
+//
+//                new Form1().setVisible(true);
+////                new newp().AccessibleJFrame;
+////                CardLayout cl = (CardLayout)(cards.getLayout());
+////                cl.show(cards, (String)textField1.getText());
+//
+//            }
+//        });
 
         setAlignmentX(SwingConstants.RIGHT);
         applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+
+
 
     }
 

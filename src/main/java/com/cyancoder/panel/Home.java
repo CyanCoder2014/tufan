@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class Home extends JFrame{
 
-    private JPanel adas;
+    private JPanel homePanel;
     private JButton button1;
     private JButton btnShowMap;
 
@@ -28,9 +28,11 @@ public class Home extends JFrame{
     private  JLabel wIcon;
     private JButton button3;
     private JPanel topPanel;
-    private JButton ویرایشعملیاتButton;
-    private JButton انتخابنقشهمنطقهButton;
+    private JButton Button11;
+    private JButton Button22;
     private JPanel tab1;
+    private JLabel labelHomeTitle;
+    private JButton دربارهنرمافزارButton;
 
 
     public static Home staticHome;
@@ -38,16 +40,20 @@ public class Home extends JFrame{
     public Home() {
         staticHome = this;
 
-        setContentPane(adas);
+
+
+        setContentPane(homePanel);
         setTitle("Tufan - G11");
-        setSize(1100,800);
+        setSize(1100,750);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-
         applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-
-
-
+        Font fontTahoma = new Font("Tahoma", 0, 12);
+        UIManager.put("Label.font", fontTahoma);
+        UIManager.put("Button.font", fontTahoma);
+        UIManager.put("Field.font", fontTahoma);
+        changeFont(homePanel,fontTahoma);
+        labelHomeTitle.setFont(new Font("Tahoma", 1, 16));
 
 
 //        JFrame f = new JFrame("Add an image to JFrame");
@@ -170,5 +176,19 @@ public class Home extends JFrame{
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+    }
+
+
+
+    public static void changeFont ( Component component, Font font )
+    {
+        component.setFont ( font );
+        if ( component instanceof Container )
+        {
+            for ( Component child : ( ( Container ) component ).getComponents () )
+            {
+                changeFont ( child, font );
+            }
+        }
     }
 }

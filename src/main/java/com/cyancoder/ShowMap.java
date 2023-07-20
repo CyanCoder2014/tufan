@@ -81,7 +81,7 @@ public class ShowMap {
        Layer borderLayer = setPolLayer("./maps/IRN_adm/IRN_adm1.shp",Color.decode("#000000"),null,0f);
 
         MapContent map = new MapContent();
-        map.setTitle("Quickstart");
+        map.setTitle("نمایش موقعیت آتشتبارها و اهداف روی نقشه");
 
         map.addLayer(admLayer);
         map.addLayer(watAreaLayer);

@@ -3,12 +3,12 @@ package com.cyancoder.panel;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class log extends JDialog {
+public class About extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
 
-    public log() {
+    public About() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -52,7 +52,7 @@ public class log extends JDialog {
     }
 
     public static void main(String[] args) {
-        log dialog = new log();
+        About dialog = new About();
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
