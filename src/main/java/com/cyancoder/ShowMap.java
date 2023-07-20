@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.cyancoder.frame.PointMapFrame;
 import com.cyancoder.model.PointModel;
 import org.geotools.data.*;
 import org.geotools.data.simple.SimpleFeatureSource;
@@ -92,9 +93,7 @@ public class ShowMap {
         map.addLayer(basePoinLayer);
         map.addLayer(targetPoinLayer);
 
-//        int doNothingOnClose = JMapFrame.DO_NOTHING_ON_CLOSE;
-//        JMapFrame jMapFrame = new JMapFrame(map);
-        JMapFrame.showMap(map);
+        new PointMapFrame(map);
     }
 
 

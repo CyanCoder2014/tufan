@@ -32,7 +32,7 @@ public class Home extends JFrame{
     private JButton Button22;
     private JPanel tab1;
     private JLabel labelHomeTitle;
-    private JButton دربارهنرمافزارButton;
+    private JButton btnAbout;
 
 
     public static Home staticHome;
@@ -138,7 +138,15 @@ public class Home extends JFrame{
         });
 
 
-
+        btnAbout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                About dialog = new About();
+                dialog.pack();
+                dialog.setVisible(true);
+//                System.exit(0);
+            }
+        });
     }
 
 
