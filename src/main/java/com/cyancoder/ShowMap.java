@@ -108,9 +108,7 @@ public class ShowMap {
 
         Style style = SLD.createPolygonStyle(outlineColor, fillColor, opacity);
 
-        Layer layer = new FeatureLayer(featureSource, style);
-
-        return layer;
+        return new FeatureLayer(featureSource, style);
     }
 
 
