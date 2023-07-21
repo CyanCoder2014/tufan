@@ -30,7 +30,7 @@ public class MachinePanel extends JPanel {
 
     JButton btnCalDir = new JButton("محاسبه برد و گرا (سمت نقشه‌ای)");
 
-    JLabel labelCheckBoxLoc = new JLabel("اجازه ویرایش مختصات");
+    JLabel labelCheckBoxLoc = new JLabel("قفل ویرایش مختصات");
     JCheckBox checkBoxLoc = new JCheckBox();
 
     JLabel labelElvMac = new JLabel("ارتفاع آتشبار:");
@@ -60,7 +60,7 @@ public class MachinePanel extends JPanel {
 
     JButton btnCalDirAndDeg = new JButton("محاسبه سمت و زاویه توپ");
     JCheckBox checkBoxMac = new JCheckBox();
-    JLabel labelCheckBoxMac = new JLabel("اجازه ویرایش توپ و خرج");
+    JLabel labelCheckBoxMac = new JLabel("قفل ویرایش توپ و خرج");
 
     JLabel labelCorrectionDir = new JLabel("تصحیح سمت:");
     JLabel fieldCorrectionDir = new JLabel();
@@ -91,9 +91,10 @@ public class MachinePanel extends JPanel {
     JButton btnCorrection = new JButton("ثبت تصحیحات");
 
 
-    private CalculateGisItems calculateGisItems;
-    private ElevationFind elevationFind;
-    private CalculateElevationItems calculateElevationItems;
+    private final CalculateGisItems calculateGisItems;
+    private final ElevationFind elevationFind;
+    private final CalculateElevationItems calculateElevationItems;
+
     public MachinePanel() {
 
         calculateGisItems = new CalculateGisItems();
@@ -103,13 +104,11 @@ public class MachinePanel extends JPanel {
         setName("آتشبار 1");
 
         formFeature();
-
         uiMake();
 
         setInvisibleElvFields(false);
         setInvisibleMacFields(false);
         setInvisibleCorrectionFields(false);
-
 
         btnCalDir.addActionListener(new ActionListener() {
             @Override
@@ -129,6 +128,28 @@ public class MachinePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 callCorrectionsForm();
+            }
+        });
+        checkBoxLoc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(checkBoxLoc.isSelected() ){
+                    setDisablePointFields(false);
+
+                }else{
+                    setDisablePointFields(true);
+                }
+            }
+        });
+        checkBoxMac.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(checkBoxMac.isSelected() ){
+                    setDisableMacFields(false);
+
+                }else{
+                    setDisableMacFields(true);
+                }
             }
         });
 
@@ -411,6 +432,19 @@ public class MachinePanel extends JPanel {
         applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
     }
 
+    private void setDisablePointFields(boolean isDisable) {
+
+        fieldMacX.setEnabled(isDisable);
+        fieldMacY.setEnabled(isDisable);
+        fieldAimX.setEnabled(isDisable);
+        fieldAimY.setEnabled(isDisable);
+
+    }
+    private void setDisableMacFields(boolean isDisable) {
+        selectMac.setEnabled(isDisable);
+        selectType.setEnabled(isDisable);
+    }
+
     private void setInvisibleElvFields(boolean isVisible) {
 
         labelElvMac.setVisible(isVisible);
@@ -477,25 +511,27 @@ public class MachinePanel extends JPanel {
         Double aimY = Double.valueOf(fieldAimY.getText());
 
 
-        Long distance = calculateGisItems.calculateDistance(macX,macY,aimX,aimY);//
-        Long direction = calculateGisItems.calculateMilDirection(macX,macY,aimX,aimY);//
+        Long distance = calculateGisItems.calculateDistance(macX, macY, aimX, aimY);
+        Long direction = calculateGisItems.calculateMilDirection(macX, macY, aimX, aimY);
 
-        Long macElv = elevationFind.findPointElevation(macX,macY);//
-        Long aimElv = elevationFind.findPointElevation(aimX,aimY);//
+        Long macElv = elevationFind.findPointElevation(macX, macY);//
+        Long aimElv = elevationFind.findPointElevation(aimX, aimY);//
 
-        Long elvDiff = calculateElevationItems.calculateElvDifference(macElv,aimElv);
-        Long levelDiff = calculateElevationItems.calculateLevelDifference(elvDiff,distance);
-
-
-//        checkBoxLoc
-        fieldElvMac.setText(fieldMacX.getText());
-        fieldElvAim.setText(String.valueOf(levelDiff));
-        fieldElvAim.setText(String.valueOf(levelDiff));
-        fieldElvAim.setText(String.valueOf(levelDiff));
-        fieldElvAim.setText(String.valueOf(levelDiff));
-        fieldElvAim.setText(String.valueOf(levelDiff));
+        Long elvDiff = calculateElevationItems.calculateElvDifference(macElv, aimElv);
+        Long levelDiff = calculateElevationItems.calculateLevelDifference(elvDiff, distance);
 
 
+        checkBoxLoc.setSelected(true);
+        setDisablePointFields(false);
+
+        fieldElvMac.setText(String.valueOf(macElv));
+        fieldElvAim.setText(String.valueOf(aimElv));
+        fieldDiffElv.setText(String.valueOf(elvDiff));
+        fieldTElv.setText(String.valueOf(levelDiff));
+        fieldDist.setText(String.valueOf(distance));
+//        fieldDist.setText(String.valueOf(distance));
+        fieldDir.setText(String.valueOf(direction));
+//        fieldDir.setText(String.valueOf(direction));
     }
 
     private void callBtnCalDirAndDeg() {
