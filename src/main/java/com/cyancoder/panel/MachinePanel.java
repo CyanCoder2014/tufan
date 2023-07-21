@@ -1,6 +1,9 @@
 package com.cyancoder.panel;
 
 import com.cyancoder.model.MacSelectModel;
+import com.cyancoder.service.CalculateElevationItems;
+import com.cyancoder.service.CalculateGisItems;
+import com.cyancoder.service.ElevationFind;
 import org.geotools.swing.control.JIntegerField;
 
 import javax.swing.*;
@@ -12,7 +15,6 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 
 public class MachinePanel extends JPanel {
-
 
 
     JLabel labelLocTitle = new JLabel("مختصات آتشبار و هدف:");
@@ -29,32 +31,31 @@ public class MachinePanel extends JPanel {
     JButton btnCalDir = new JButton("محاسبه برد و گرا (سمت نقشه‌ای)");
 
     JLabel labelCheckBoxLoc = new JLabel("اجازه ویرایش مختصات");
+    JCheckBox checkBoxLoc = new JCheckBox();
 
     JLabel labelElvMac = new JLabel("ارتفاع آتشبار:");
-    JTextField fieldElvMac = new JIntegerField(false);
+    JLabel fieldElvMac = new JLabel();
     JLabel labelElvAim = new JLabel("ارتفاع هدف:");
-    JTextField fieldElvAim = new JIntegerField(false);
+    JLabel fieldElvAim = new JLabel();
     JLabel labelDiffElv = new JLabel("اختلاف ارتفاع:");
-    JTextField fieldDiffElv = new JIntegerField(false);
+    JLabel fieldDiffElv = new JLabel();
     JLabel labelTElv = new JLabel("تراز:");
-    JTextField fieldTElv = new JIntegerField(false);
+    JLabel fieldTElv = new JLabel();
 
     JLabel labelDist = new JLabel("برد (مسافت):");
-    JTextField fieldDist = new JIntegerField(false);
+    JLabel fieldDist = new JLabel();
     JLabel labelDir = new JLabel("سمت نقشه ای (گرا):");
-    JTextField fieldDir = new JIntegerField(false);
-
-
+    JLabel fieldDir = new JLabel();
 
 
     JLabel labelMacSelectTitle = new JLabel("اطلاعات توپ و خرج گلوله:");
 
     JLabel labelSelectMac = new JLabel("انتخاب توپ:");
-    String[] macSelectArray = new String[] {"توپ 10 ام 46"};
+    String[] macSelectArray = new String[]{"توپ 10 ام 46"};
     JComboBox<String> selectMac = new JComboBox<>(macSelectArray);
 
     JLabel labelSelectType = new JLabel("انتخاب خرج گلوله:");
-    String[] typeSelectArray = new String[] {"خرج کامل"};
+    String[] typeSelectArray = new String[]{"خرج کامل"};
     JComboBox<String> selectType = new JComboBox<>(typeSelectArray);
 
     JButton btnCalDirAndDeg = new JButton("محاسبه سمت و زاویه توپ");
@@ -62,28 +63,27 @@ public class MachinePanel extends JPanel {
     JLabel labelCheckBoxMac = new JLabel("اجازه ویرایش توپ و خرج");
 
     JLabel labelCorrectionDir = new JLabel("تصحیح سمت:");
-    JPasswordField fieldCorrectionDir = new JPasswordField();
+    JLabel fieldCorrectionDir = new JLabel();
     JLabel labelMacDir = new JLabel("سمت توپ:");
-    JPasswordField fieldMacDir = new JPasswordField();
+    JLabel fieldMacDir = new JLabel();
 
 
     JLabel labelDeg = new JLabel("درجه:");
-    JPasswordField fieldDeg = new JPasswordField();
+    JLabel fieldDeg = new JLabel();
     JLabel labelArrDir = new JLabel("سمت تیر:");
-    JPasswordField fieldArrDir = new JPasswordField();
+    JLabel fieldArrDir = new JLabel();
 
 
     JLabel labelLandingTop = new JLabel("قله مسیر گلوله:");
-    JPasswordField fieldLandingTop = new JPasswordField();
+    JLabel fieldLandingTop = new JLabel();
     JLabel labelLandingDeg = new JLabel("زاویه فرود:");
-    JPasswordField fieldLandingDeg = new JPasswordField();
+    JLabel fieldLandingDeg = new JLabel();
 
     JLabel labelMaxSpeed = new JLabel("سرعت نهایی:");
-    JPasswordField fieldMaxSpeed = new JPasswordField();
+    JLabel fieldMaxSpeed = new JLabel();
 
     JLabel labelFlightTime = new JLabel("زمان پرواز:");
-    JPasswordField fieldFlightTime = new JPasswordField();
-
+    JLabel fieldFlightTime = new JLabel();
 
 
     JLabel labelCorrectionTitle = new JLabel("تصحیحات:");
@@ -91,35 +91,73 @@ public class MachinePanel extends JPanel {
     JButton btnCorrection = new JButton("ثبت تصحیحات");
 
 
-
-
+    private CalculateGisItems calculateGisItems;
+    private ElevationFind elevationFind;
+    private CalculateElevationItems calculateElevationItems;
     public MachinePanel() {
 
-        setName("آتشبار 1");
-        GroupLayout groupLayout = new GroupLayout(this);
-        groupLayout.setAutoCreateGaps(true);
-        groupLayout.setAutoCreateContainerGaps(true);
-        setLayout(groupLayout);
+        calculateGisItems = new CalculateGisItems();
+        elevationFind = new ElevationFind();
+        calculateElevationItems = new CalculateElevationItems();
 
-//        JLabel labelLocTitle = new JLabel("مختصات آتشبار و هدف:");
+        setName("آتشبار 1");
+
+        formFeature();
+
+        uiMake();
+
+        setInvisibleElvFields(false);
+        setInvisibleMacFields(false);
+        setInvisibleCorrectionFields(false);
+
+
+        btnCalDir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                callBtnCalDir();
+            }
+        });
+
+        btnCalDirAndDeg.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                callBtnCalDirAndDeg();
+            }
+        });
+
+        btnCorrection.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                callCorrectionsForm();
+            }
+        });
+
+    }
+
+    private MaskFormatter getMaskFormatter(String format) {
+        MaskFormatter mask = null;
+        try {
+            mask = new MaskFormatter(format);
+            mask.setPlaceholderCharacter('0');
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        return mask;
+    }
+
+    private void formFeature() {
         labelLocTitle.setFont(new FontUIResource(new Font("Tahoma", 0, 16)));
 
-
-
-        btnCalDir.setSize(320,40);
+        btnCalDir.setSize(320, 40);
         btnCalDir.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JCheckBox checkBoxLoc = new JCheckBox();
+        fieldElvMac.setFont(new Font("Tahoma", 1, 13));
+        fieldElvAim.setFont(new Font("Tahoma", 1, 13));
+        fieldDiffElv.setFont(new Font("Tahoma", 1, 13));
+        fieldTElv.setFont(new Font("Tahoma", 1, 13));
 
-        fieldElvMac.setEnabled(false);
-        fieldElvAim.setEnabled(false);
-        fieldDiffElv.setEnabled(false);
-        fieldTElv.setEnabled(false);
-
-        fieldDist.setEnabled(false);
-        fieldDir.setEnabled(false);
-
-
+        fieldDist.setFont(new Font("Tahoma", 1, 13));
+        fieldDir.setFont(new Font("Tahoma", 1, 13));
 
 
         labelMacSelectTitle.setFont(new FontUIResource(new Font("Tahoma", 0, 16)));
@@ -127,117 +165,127 @@ public class MachinePanel extends JPanel {
 //        MacSelectModel[] macSelectArray = new MacSelectModel[1];
 //        macSelectArray[0] = new MacSelectModel(1L,"توپ 10 ام 46");
 //        JComboBox<String> selectMac = new JComboBox<>(macSelectArray);
-
 //        JComboBox<String> selectType = new JComboBox<>(typeSelectArray);
 
+        fieldCorrectionDir.setFont(new Font("Tahoma", 1, 13));
+        fieldMacDir.setFont(new Font("Tahoma", 1, 13));
 
-        fieldCorrectionDir.setEnabled(false);
-        fieldMacDir.setEnabled(false);
+        fieldDeg.setFont(new Font("Tahoma", 1, 13));
+        fieldArrDir.setFont(new Font("Tahoma", 1, 13));
 
+        fieldLandingTop.setFont(new Font("Tahoma", 1, 13));
+        fieldLandingDeg.setFont(new Font("Tahoma", 1, 13));
 
-        fieldDeg.setEnabled(false);
-        fieldArrDir.setEnabled(false);
+        fieldMaxSpeed.setFont(new Font("Tahoma", 1, 13));
 
-
-        fieldLandingTop.setEnabled(false);
-        fieldLandingDeg.setEnabled(false);
-
-        fieldMaxSpeed.setEnabled(false);
-
-        fieldFlightTime.setEnabled(false);
-
+        fieldFlightTime.setFont(new Font("Tahoma", 1, 13));
 
         labelMacSelectTitle.setFont(new FontUIResource(new Font("Tahoma", 0, 16)));
-
         labelCorrectionTitle.setFont(new FontUIResource(new Font("Tahoma", 0, 16)));
 
 
+    }
+
+    private void uiMake() {
+
+
+        GroupLayout groupLayout = new GroupLayout(this);
+        groupLayout.setAutoCreateGaps(true);
+        groupLayout.setAutoCreateContainerGaps(true);
+        setLayout(groupLayout);
 
         groupLayout.setHorizontalGroup(groupLayout.createSequentialGroup()
-                        .addGroup(groupLayout.createParallelGroup()
-                                .addComponent(labelLocTitle)
-                                .addGroup(groupLayout.createSequentialGroup()
-                                        .addComponent(labelMacX)
-                                        .addComponent(fieldMacX)
-                                        .addComponent(labelMacY)
-                                        .addComponent(fieldMacY)
-                                )
-                                .addGroup(groupLayout.createSequentialGroup()
-                                        .addComponent(labelAimX)
-                                        .addComponent(fieldAimX)
-                                        .addComponent(labelAimY)
-                                        .addComponent(fieldAimY)
-
-                                )
-
-
-                                .addGroup(groupLayout.createSequentialGroup()
-                                        .addComponent(btnCalDir)
-                                        .addGap(10, 20, 30)
-                                        .addComponent(checkBoxLoc)
-                                        .addComponent(labelCheckBoxLoc)
-                                )
-                                .addGroup(groupLayout.createSequentialGroup()
-                                        .addComponent(labelElvMac)
-                                        .addComponent(fieldElvMac)
-                                        .addComponent(labelElvAim)
-                                        .addComponent(fieldElvAim)
-
-                                )
-                                .addGroup(groupLayout.createSequentialGroup()
-                                        .addComponent(labelDiffElv)
-                                        .addComponent(fieldDiffElv)
-                                        .addComponent(labelTElv)
-                                        .addComponent(fieldTElv)
-
-                                )
-                                .addGroup(groupLayout.createSequentialGroup()
-                                        .addComponent(labelDist)
-                                        .addComponent(fieldDist)
-                                )
-                                .addGroup(groupLayout.createSequentialGroup()
-                                        .addComponent(labelDir)
-                                        .addComponent(fieldDir)
-                                )
+                .addGroup(groupLayout.createParallelGroup()
+                        .addComponent(labelLocTitle)
+                        .addGroup(groupLayout.createSequentialGroup()
+                                .addComponent(labelMacX)
+                                .addComponent(fieldMacX)
+                                .addComponent(labelMacY)
+                                .addComponent(fieldMacY)
                         )
-                        .addGap(10, 20, 70)
-                        .addGroup(groupLayout.createParallelGroup()
-                                .addComponent(labelMacSelectTitle)
-                                .addGroup(groupLayout.createSequentialGroup()
-                                        .addComponent(labelSelectMac)
-                                        .addComponent(selectMac)
-                                        .addComponent(labelSelectType)
-                                        .addComponent(selectType))
-                                .addGroup(groupLayout.createSequentialGroup()
-                                        .addComponent(btnCalDirAndDeg)
-                                        .addGap(20, 30, 40)
-                                        .addComponent(checkBoxMac)
-                                        .addComponent(labelCheckBoxMac))
-                                .addGroup(groupLayout.createSequentialGroup()
-                                        .addComponent(labelCorrectionDir)
-                                        .addComponent(fieldCorrectionDir)
-                                        .addComponent(labelMacDir)
-                                        .addComponent(fieldMacDir))
-                                .addGroup(groupLayout.createSequentialGroup()
-                                        .addComponent(labelDeg)
-                                        .addComponent(fieldDeg)
-                                        .addComponent(labelArrDir)
-                                        .addComponent(fieldArrDir))
-                                .addGroup(groupLayout.createSequentialGroup()
-                                                .addComponent(labelFlightTime)
-                                                .addComponent(fieldFlightTime)
-                                        .addComponent(labelLandingTop)
-                                        .addComponent(fieldLandingTop)
-                                        .addComponent(labelLandingDeg)
-                                        .addComponent(fieldLandingDeg)
-                                        .addComponent(labelMaxSpeed)
-                                        .addComponent(fieldMaxSpeed)
-                                        )
-                                .addGroup(groupLayout.createSequentialGroup()
-                                        .addComponent(labelCorrectionTitle))
-                                .addGroup(groupLayout.createSequentialGroup()
-                                        .addComponent(btnCorrection))
+                        .addGroup(groupLayout.createSequentialGroup()
+                                .addComponent(labelAimX)
+                                .addComponent(fieldAimX)
+                                .addComponent(labelAimY)
+                                .addComponent(fieldAimY)
+
                         )
+
+
+                        .addGroup(groupLayout.createSequentialGroup()
+                                .addComponent(btnCalDir)
+                                .addGap(10, 20, 30)
+                                .addComponent(checkBoxLoc)
+                                .addComponent(labelCheckBoxLoc)
+                        )
+                        .addGroup(groupLayout.createSequentialGroup()
+                                .addComponent(labelElvMac)
+                                .addComponent(fieldElvMac)
+                                .addGap(30, 40, 50)
+                                .addComponent(labelElvAim)
+                                .addComponent(fieldElvAim)
+
+                        )
+                        .addGroup(groupLayout.createSequentialGroup()
+                                .addComponent(labelDiffElv)
+                                .addComponent(fieldDiffElv)
+                                .addGap(30, 40, 50)
+                                .addComponent(labelTElv)
+                                .addComponent(fieldTElv)
+
+                        )
+                        .addGroup(groupLayout.createSequentialGroup()
+                                .addComponent(labelDist)
+                                .addComponent(fieldDist)
+                        )
+                        .addGroup(groupLayout.createSequentialGroup()
+                                .addComponent(labelDir)
+                                .addComponent(fieldDir)
+                        )
+                )
+                .addGap(10, 20, 70)
+                .addGroup(groupLayout.createParallelGroup()
+                        .addComponent(labelMacSelectTitle)
+                        .addGroup(groupLayout.createSequentialGroup()
+                                .addComponent(labelSelectMac)
+                                .addComponent(selectMac)
+                                .addComponent(labelSelectType)
+                                .addComponent(selectType))
+                        .addGroup(groupLayout.createSequentialGroup()
+                                .addComponent(btnCalDirAndDeg)
+                                .addGap(30, 40, 50)
+                                .addComponent(checkBoxMac)
+                                .addComponent(labelCheckBoxMac))
+                        .addGroup(groupLayout.createSequentialGroup()
+                                .addComponent(labelCorrectionDir)
+                                .addComponent(fieldCorrectionDir)
+                                .addGap(30, 40, 50)
+                                .addComponent(labelMacDir)
+                                .addComponent(fieldMacDir))
+                        .addGroup(groupLayout.createSequentialGroup()
+                                .addComponent(labelDeg)
+                                .addComponent(fieldDeg)
+                                .addGap(30, 40, 50)
+                                .addComponent(labelArrDir)
+                                .addComponent(fieldArrDir))
+                        .addGroup(groupLayout.createSequentialGroup()
+                                .addComponent(labelFlightTime)
+                                .addComponent(fieldFlightTime)
+                                .addGap(10, 25, 40)
+                                .addComponent(labelLandingTop)
+                                .addComponent(fieldLandingTop)
+                                .addGap(10, 25, 40)
+                                .addComponent(labelLandingDeg)
+                                .addComponent(fieldLandingDeg)
+                                .addGap(10, 25, 40)
+                                .addComponent(labelMaxSpeed)
+                                .addComponent(fieldMaxSpeed)
+                        )
+                        .addGroup(groupLayout.createSequentialGroup()
+                                .addComponent(labelCorrectionTitle))
+                        .addGroup(groupLayout.createSequentialGroup()
+                                .addComponent(btnCorrection))
+                )
         );
 
         groupLayout.setVerticalGroup(groupLayout.createParallelGroup()
@@ -356,57 +404,112 @@ public class MachinePanel extends JPanel {
                                         .addComponent(btnCorrection))
 
 
-
                         ))
         );
 
-
-
-
-
-        btnCorrection.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                JOptionPane.showMessageDialog(button1, textField1.getText());
-
-//                new Form1().setVisible(true);
-
-
-
-                callForm();
-
-//                new newp().AccessibleJFrame;
-//                CardLayout cl = (CardLayout)(cards.getLayout());
-//                cl.show(cards, (String)textField1.getText());
-
-            }
-        });
-
         setAlignmentX(SwingConstants.RIGHT);
         applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+    }
 
+    private void setInvisibleElvFields(boolean isVisible) {
+
+        labelElvMac.setVisible(isVisible);
+        fieldElvMac.setVisible(isVisible);
+        labelElvAim.setVisible(isVisible);
+        fieldElvAim.setVisible(isVisible);
+        labelDiffElv.setVisible(isVisible);
+        fieldDiffElv.setVisible(isVisible);
+        labelTElv.setVisible(isVisible);
+        fieldTElv.setVisible(isVisible);
+        labelDist.setVisible(isVisible);
+        fieldDist.setVisible(isVisible);
+        labelDir.setVisible(isVisible);
+        fieldDir.setVisible(isVisible);
+
+        labelMacSelectTitle.setVisible(isVisible);
+        labelSelectMac.setVisible(isVisible);
+        selectMac.setVisible(isVisible);
+        labelSelectType.setVisible(isVisible);
+        selectType.setVisible(isVisible);
+        btnCalDirAndDeg.setVisible(isVisible);
+        checkBoxMac.setVisible(isVisible);
+        labelCheckBoxMac.setVisible(isVisible);
+    }
+
+    private void setInvisibleMacFields(boolean isVisible) {
+
+        labelCorrectionDir.setVisible(isVisible);
+        fieldCorrectionDir.setVisible(isVisible);
+        labelMacDir.setVisible(isVisible);
+        fieldMacDir.setVisible(isVisible);
+        labelDeg.setVisible(isVisible);
+        fieldDeg.setVisible(isVisible);
+        labelArrDir.setVisible(isVisible);
+        fieldArrDir.setVisible(isVisible);
+        labelLandingTop.setVisible(isVisible);
+        fieldLandingTop.setVisible(isVisible);
+        labelLandingDeg.setVisible(isVisible);
+        fieldLandingDeg.setVisible(isVisible);
+        labelMaxSpeed.setVisible(isVisible);
+        fieldMaxSpeed.setVisible(isVisible);
+        labelFlightTime.setVisible(isVisible);
+        fieldFlightTime.setVisible(isVisible);
+
+
+        labelCorrectionTitle.setVisible(isVisible);
+        btnCorrection.setVisible(isVisible);
+    }
+
+    private void setInvisibleCorrectionFields(boolean isVisible) {
+
+        labelCorrectionTitle.setVisible(isVisible);
+        btnCorrection.setVisible(isVisible);
+    }
+
+
+    private void callBtnCalDir() {
+
+        setInvisibleElvFields(true);
+
+        Double macX = Double.valueOf(fieldMacX.getText());
+        Double macY = Double.valueOf(fieldMacY.getText());
+        Double aimX = Double.valueOf(fieldAimX.getText());
+        Double aimY = Double.valueOf(fieldAimY.getText());
+
+
+        Long distance = calculateGisItems.calculateDistance(macX,macY,aimX,aimY);//
+        Long direction = calculateGisItems.calculateMilDirection(macX,macY,aimX,aimY);//
+
+        Long macElv = elevationFind.findPointElevation(macX,macY);//
+        Long aimElv = elevationFind.findPointElevation(aimX,aimY);//
+
+        Long elvDiff = calculateElevationItems.calculateElvDifference(macElv,aimElv);
+        Long levelDiff = calculateElevationItems.calculateLevelDifference(elvDiff,distance);
+
+
+//        checkBoxLoc
+        fieldElvMac.setText(fieldMacX.getText());
+        fieldElvAim.setText(String.valueOf(levelDiff));
+        fieldElvAim.setText(String.valueOf(levelDiff));
+        fieldElvAim.setText(String.valueOf(levelDiff));
+        fieldElvAim.setText(String.valueOf(levelDiff));
+        fieldElvAim.setText(String.valueOf(levelDiff));
 
 
     }
 
+    private void callBtnCalDirAndDeg() {
 
-    private MaskFormatter getMaskFormatter(String format) {
-        MaskFormatter mask = null;
-        try {
-            mask = new MaskFormatter(format);
-            mask.setPlaceholderCharacter('0');
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        }
-        return mask;
+        setInvisibleMacFields(true);
+        setInvisibleCorrectionFields(true);
+
+//        Long aimY =fieldAimY.getText();
+
     }
 
+    public void callCorrectionsForm() {
 
-
-    public void  callForm(){
-
-        Form1 form = new Form1(this);
-
+        Corrections correctionsForm = new Corrections(this);
 
     }
 

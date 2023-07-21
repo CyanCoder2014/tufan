@@ -1,4 +1,4 @@
-package com.cyancoder;
+package com.cyancoder.service;
 
 import org.geotools.data.*;
 import org.geotools.data.simple.SimpleFeatureSource;
@@ -28,6 +28,12 @@ import java.util.*;
  */
 public class ElevationFind
 {
+
+    public Long findPointElevation(Double x, Double y){
+
+        return Long.valueOf(String.valueOf(x));
+
+    }
 
 
     public static void main(String[] args) throws Exception {

@@ -21,7 +21,7 @@ public class Form1 extends JFrame {
 
     public static Form1 staticForm1;
 
-    public Form1(MachinePanel machinePanel){
+    public Form1(){
 
 
 
@@ -41,7 +41,7 @@ public class Form1 extends JFrame {
                 staticForm1.setVisible(false);
 
 
-                machinePanel.labelLocTitle.setText(textField1.getText());
+//                machinePanel.labelLocTitle.setText(textField1.getText());
             }
         });
     }

@@ -1,4 +1,4 @@
-package com.cyancoder;
+package com.cyancoder.service;
 /*
  *    GeoTools Sample code and Tutorials by Open Source Geospatial Foundation, and others
  *    https://docs.geotools.org
@@ -22,7 +22,6 @@ import com.cyancoder.frame.PointMapFrame;
 import com.cyancoder.model.PointModel;
 import org.geotools.data.*;
 import org.geotools.data.simple.SimpleFeatureSource;
-import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.SchemaException;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
@@ -31,15 +30,11 @@ import org.geotools.map.FeatureLayer;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
 import org.geotools.styling.*;
-import org.geotools.swing.JMapFrame;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.FilterFactory2;
-import org.opengis.style.Fill;
-import org.opengis.style.Stroke;
 
 
 public class ShowMap {
