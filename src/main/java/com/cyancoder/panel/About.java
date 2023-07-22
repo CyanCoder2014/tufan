@@ -54,10 +54,10 @@ public class About extends JDialog {
 //        dispose();
 //    }
 
-    public static void main(String[] args) {
-        About dialog = new About();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
+//    public static void main(String[] args) {
+//        About dialog = new About();
+//        dialog.pack();
+//        dialog.setVisible(true);
+//        System.exit(0);
+//    }
 }

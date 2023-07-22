@@ -18,6 +18,7 @@ public class Operation extends JFrame {
     private JPanel panel1;
     private JCheckBox checkBox1;
     private JTextField textField1;
+    private JComboBox comboBox1;
 
     public static Operation staticForm1;
 
