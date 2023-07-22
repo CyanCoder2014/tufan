@@ -1,5 +1,6 @@
-package com.cyancoder.panel;
+package com.cyancoder.panel.machine;
 
+import com.cyancoder.panel.machine.MachinePanel;
 import org.geotools.swing.control.JIntegerField;
 
 import javax.swing.*;

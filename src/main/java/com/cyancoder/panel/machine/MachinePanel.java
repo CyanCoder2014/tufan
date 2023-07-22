@@ -1,10 +1,8 @@
-package com.cyancoder.panel;
+package com.cyancoder.panel.machine;
 
-import com.cyancoder.model.MacSelectModel;
 import com.cyancoder.service.CalculateElevationItems;
 import com.cyancoder.service.CalculateGisItems;
 import com.cyancoder.service.ElevationFind;
-import org.geotools.swing.control.JIntegerField;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;

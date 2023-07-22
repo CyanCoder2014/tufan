@@ -1,4 +1,4 @@
-package com.cyancoder.panel;
+package com.cyancoder.panel.machine;
 
 import javax.swing.*;
 

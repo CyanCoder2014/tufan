@@ -1,5 +1,6 @@
-package com.cyancoder.panel;
+package com.cyancoder.panel.main;
 
+import com.cyancoder.panel.machine.MachinePanel;
 import com.cyancoder.service.ShowMap;
 import org.geotools.feature.SchemaException;
 
