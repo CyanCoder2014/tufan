@@ -20,7 +20,7 @@ public class CalculateGisItems {
 
     }
 
-    public Long calculateMilDirection(Double originX, Double originY,Double targetX,Double targetY){
+    public Long calculateDegDirection(Double originX, Double originY,Double targetX,Double targetY){
 
         double xDiff = targetX - originX;
         double yDiff = targetY - originY;
@@ -39,6 +39,12 @@ public class CalculateGisItems {
             angle = 360 - Math.abs(angle);
 
         return Math.round(angle);
+    }
+
+    public Long calculateMilDirection(Double originX, Double originY,Double targetX,Double targetY){
+
+        return Math.round(calculateDegDirection(originX, originY, targetX, targetY)*17.777778);
+
     }
 
 

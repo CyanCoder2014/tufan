@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Form1 extends JFrame {
+public class Operation extends JFrame {
     private JButton button1;
 
     public JPanel getPanel1() {
@@ -19,9 +19,9 @@ public class Form1 extends JFrame {
     private JCheckBox checkBox1;
     private JTextField textField1;
 
-    public static Form1 staticForm1;
+    public static Operation staticForm1;
 
-    public Form1(){
+    public Operation(){
 
 
 

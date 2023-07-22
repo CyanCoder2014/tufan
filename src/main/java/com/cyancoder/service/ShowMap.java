@@ -52,11 +52,6 @@ public class ShowMap {
 
 
 
-    public static void main(String[] args) throws Exception {
-        ShowMap.showMap();
-    }
-
-
     public static void showMap() throws SchemaException, IOException {
 
         PointModel basePoint = new PointModel( 45.8,38.23);

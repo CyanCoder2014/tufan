@@ -42,10 +42,14 @@ public class MachinePanel extends JPanel {
     JLabel labelTElv = new JLabel("تراز:");
     JLabel fieldTElv = new JLabel();
 
-    JLabel labelDist = new JLabel("برد (مسافت):");
-    JLabel fieldDist = new JLabel();
-    JLabel labelDir = new JLabel("سمت نقشه ای (گرا):");
-    JLabel fieldDir = new JLabel();
+    JLabel labelDistM = new JLabel("برد (مسافت به متر):");
+    JLabel fieldDistM = new JLabel();
+    JLabel labelDistKm = new JLabel("برد (مسافت به کیلومتر):");
+    JLabel fieldDistKm = new JLabel();
+    JLabel labelDirMil = new JLabel("سمت نقشه ای (گرا به میلیوم):");
+    JLabel fieldDirMil = new JLabel();
+    JLabel labelDirDeg = new JLabel("سمت نقشه ای (گرا به درجه):");
+    JLabel fieldDirDeg = new JLabel();
 
 
     JLabel labelMacSelectTitle = new JLabel("اطلاعات توپ و خرج گلوله:");
@@ -135,9 +139,11 @@ public class MachinePanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if(checkBoxLoc.isSelected() ){
                     setDisablePointFields(false);
+                    btnCalDir.setEnabled(false);
 
                 }else{
                     setDisablePointFields(true);
+                    btnCalDir.setEnabled(true);
                 }
             }
         });
@@ -177,8 +183,10 @@ public class MachinePanel extends JPanel {
         fieldDiffElv.setFont(new Font("Tahoma", 1, 13));
         fieldTElv.setFont(new Font("Tahoma", 1, 13));
 
-        fieldDist.setFont(new Font("Tahoma", 1, 13));
-        fieldDir.setFont(new Font("Tahoma", 1, 13));
+        fieldDistM.setFont(new Font("Tahoma", 1, 13));
+        fieldDistKm.setFont(new Font("Tahoma", 1, 13));
+        fieldDirMil.setFont(new Font("Tahoma", 1, 13));
+        fieldDirDeg.setFont(new Font("Tahoma", 1, 13));
 
 
         labelMacSelectTitle.setFont(new FontUIResource(new Font("Tahoma", 0, 16)));
@@ -256,12 +264,19 @@ public class MachinePanel extends JPanel {
 
                         )
                         .addGroup(groupLayout.createSequentialGroup()
-                                .addComponent(labelDist)
-                                .addComponent(fieldDist)
+                                .addComponent(labelDistM)
+                                .addComponent(fieldDistM)
+                                .addGap(30, 40, 50)
+                                .addComponent(labelDistKm)
+                                .addComponent(fieldDistKm)
+
                         )
                         .addGroup(groupLayout.createSequentialGroup()
-                                .addComponent(labelDir)
-                                .addComponent(fieldDir)
+                                .addComponent(labelDirMil)
+                                .addComponent(fieldDirMil)
+                                .addGap(30, 40, 50)
+                                .addComponent(labelDirDeg)
+                                .addComponent(fieldDirDeg)
                         )
                 )
                 .addGap(10, 20, 70)
@@ -357,13 +372,19 @@ public class MachinePanel extends JPanel {
                         )
                         .addGap(20, 30, 40)
                         .addGroup(groupLayout.createParallelGroup()
-                                .addComponent(labelDist)
-                                .addComponent(fieldDist, GroupLayout.DEFAULT_SIZE,
+                                .addComponent(labelDistM)
+                                .addComponent(fieldDistM, GroupLayout.DEFAULT_SIZE,
+                                        GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelDistKm)
+                                .addComponent(fieldDistKm, GroupLayout.DEFAULT_SIZE,
                                         GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         )
                         .addGroup(groupLayout.createParallelGroup()
-                                .addComponent(labelDir)
-                                .addComponent(fieldDir, GroupLayout.DEFAULT_SIZE,
+                                .addComponent(labelDirMil)
+                                .addComponent(fieldDirMil, GroupLayout.DEFAULT_SIZE,
+                                        GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelDirDeg)
+                                .addComponent(fieldDirDeg, GroupLayout.DEFAULT_SIZE,
                                         GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         ))
 
@@ -455,10 +476,14 @@ public class MachinePanel extends JPanel {
         fieldDiffElv.setVisible(isVisible);
         labelTElv.setVisible(isVisible);
         fieldTElv.setVisible(isVisible);
-        labelDist.setVisible(isVisible);
-        fieldDist.setVisible(isVisible);
-        labelDir.setVisible(isVisible);
-        fieldDir.setVisible(isVisible);
+        labelDistM.setVisible(isVisible);
+        fieldDistM.setVisible(isVisible);
+        labelDistKm.setVisible(isVisible);
+        fieldDistKm.setVisible(isVisible);
+        labelDirMil.setVisible(isVisible);
+        fieldDirMil.setVisible(isVisible);
+        labelDirDeg.setVisible(isVisible);
+        fieldDirDeg.setVisible(isVisible);
 
         labelMacSelectTitle.setVisible(isVisible);
         labelSelectMac.setVisible(isVisible);
@@ -503,35 +528,41 @@ public class MachinePanel extends JPanel {
 
     private void callBtnCalDir() {
 
-        setInvisibleElvFields(true);
-
         Double macX = Double.valueOf(fieldMacX.getText());
         Double macY = Double.valueOf(fieldMacY.getText());
         Double aimX = Double.valueOf(fieldAimX.getText());
         Double aimY = Double.valueOf(fieldAimY.getText());
 
+        if ((macX==0 || macY==0) || (aimX==0 || aimY==0))
+            JOptionPane.showMessageDialog(null, "مختصات به درستی وارد نشده است!");
+        else {
 
-        Long distance = calculateGisItems.calculateDistance(macX, macY, aimX, aimY);
-        Long direction = calculateGisItems.calculateMilDirection(macX, macY, aimX, aimY);
+            setInvisibleElvFields(true);
+            btnCalDir.setEnabled(false);
 
-        Long macElv = elevationFind.findPointElevation(macX, macY);//
-        Long aimElv = elevationFind.findPointElevation(aimX, aimY);//
+            Long distance = calculateGisItems.calculateDistance(macX, macY, aimX, aimY);
+            Long directionDeg = calculateGisItems.calculateDegDirection(macX, macY, aimX, aimY);
+            Long directionMil = calculateGisItems.calculateMilDirection(macX, macY, aimX, aimY);
 
-        Long elvDiff = calculateElevationItems.calculateElvDifference(macElv, aimElv);
-        Long levelDiff = calculateElevationItems.calculateLevelDifference(elvDiff, distance);
+            Long macElv = elevationFind.findPointElevation(macX, macY);
+            Long aimElv = elevationFind.findPointElevation(aimX, aimY);
+
+            Long elvDiff = calculateElevationItems.calculateElvDifference(macElv, aimElv);
+            Long levelDiff = calculateElevationItems.calculateLevelDifference(elvDiff, distance);
 
 
-        checkBoxLoc.setSelected(true);
-        setDisablePointFields(false);
+            checkBoxLoc.setSelected(true);
+            setDisablePointFields(false);
 
-        fieldElvMac.setText(String.valueOf(macElv));
-        fieldElvAim.setText(String.valueOf(aimElv));
-        fieldDiffElv.setText(String.valueOf(elvDiff));
-        fieldTElv.setText(String.valueOf(levelDiff));
-        fieldDist.setText(String.valueOf(distance));
-//        fieldDist.setText(String.valueOf(distance));
-        fieldDir.setText(String.valueOf(direction));
-//        fieldDir.setText(String.valueOf(direction));
+            fieldElvMac.setText(String.valueOf(macElv));
+            fieldElvAim.setText(String.valueOf(aimElv));
+            fieldDiffElv.setText(String.valueOf(elvDiff));
+            fieldTElv.setText(String.valueOf(levelDiff));
+            fieldDistM.setText(String.valueOf(distance));
+            fieldDistKm.setText(String.valueOf(distance / 1000));
+            fieldDirMil.setText(String.valueOf(directionMil));
+            fieldDirDeg.setText(String.valueOf(directionDeg));
+        }
     }
 
     private void callBtnCalDirAndDeg() {
