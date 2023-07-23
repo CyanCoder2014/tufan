@@ -1,8 +1,10 @@
 package com.cyancoder.panel.main;
 
 import com.cyancoder.model.OperationSingleton;
+import org.apache.commons.lang3.ArrayUtils;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,19 +19,20 @@ public class MapSelect extends JFrame {
 
     private static MapSelect staticMapSelect;
     public MapSelect(OperationSingleton operationSingleton){
-
-        comboBox1.setSelectedItem(operationSingleton.getMapName());
-
         staticMapSelect = this;
 
         setContentPane(mapSelectPanel);
         setTitle("انتخاب نقشه ارتفاعی منطقه");
         setSize(500,250);
 //        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         setVisible(true);
 
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(mapSelectArray);
         comboBox1.setModel(model);
+
+        String selected = operationSingleton.getMapName()!=null?operationSingleton.getMapName():mapSelectArray[0];
+        comboBox1.setSelectedIndex(ArrayUtils.indexOf(mapSelectArray, selected));
 
         button1.addActionListener(new ActionListener() {
             @Override

@@ -3,6 +3,7 @@ package com.cyancoder.panel.main;
 import com.cyancoder.model.OperationSingleton;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,7 +19,6 @@ public class Operation extends JFrame {
     }
 
     private JPanel panel1;
-    private JCheckBox checkBox1;
     private JTextField textField1;
     private JComboBox comboBox1;
 
@@ -31,10 +31,13 @@ public class Operation extends JFrame {
         staticOperation = this;
 
         setContentPane(panel1);
-        setTitle("Tufan - G11 - انتخاب توپ");
-        setSize(700,500);
+        setTitle("ثبت عملیات");
+        setSize(500,250);
 //        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         setVisible(true);
+
+
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

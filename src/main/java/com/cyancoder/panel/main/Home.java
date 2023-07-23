@@ -1,6 +1,7 @@
 package com.cyancoder.panel.main;
 
 import com.cyancoder.model.OperationSingleton;
+import com.cyancoder.panel.machine.AddMachine;
 import com.cyancoder.panel.machine.MachinePanel;
 import com.cyancoder.service.ShowMap;
 import org.geotools.feature.SchemaException;
@@ -26,6 +27,11 @@ public class Home extends JFrame{
     }
 
     private  JTextField textField1;
+
+    public JTabbedPane getTabbedPane1() {
+        return tabbedPane1;
+    }
+
     private JTabbedPane tabbedPane1;
     private  JLabel wIcon;
     private JButton button3;
@@ -40,9 +46,8 @@ public class Home extends JFrame{
     public static Home staticHome;
 
     public Home() {
+
         staticHome = this;
-
-
 
         setContentPane(homePanel);
         setTitle("Tufan - G11");
@@ -57,48 +62,19 @@ public class Home extends JFrame{
         changeFont(homePanel,fontTahoma);
         labelHomeTitle.setFont(new Font("Tahoma", 1, 16));
 
-
-//        JFrame f = new JFrame("Add an image to JFrame");
-//        ImageIcon icon = new ImageIcon("E:\\\\Users\\\\Farid\\\\Downloads\\\\Map-of-Iran-with-the-Digital-Elevation-Model-DEM.png");
-//        f.add(new JLabel(icon));
-//        f.pack();
-//        f.setVisible(true);
-
-//        JLabel label = new JLabel(); //JLabel Creation
-//        wIcon.setIcon(new ImageIcon("./images/icons/add_new_plus-01.png")); //Sets the image to be displayed as an icon
-//        wIcon.setIcon(new ImageIcon("./images/icons/lightning_thunder_power_energy_flash-01.png")); //Sets the image to be displayed as an icon
         wIcon.setIcon(new ImageIcon("./images/icons/map_location_pin_marker-01.png")); //Sets the image to be displayed as an icon
         Dimension size = wIcon.getPreferredSize(); //Gets the size of the image
         wIcon.setBounds(50, 30, size.width, size.height); //Sets the location of the image
 
 
-
-//        JPanel card1 = new JPanel();
-//        JPanel card2 = new JPanel();
-//        JPanel cards = new JPanel(new CardLayout());
-//        cards.add(card1, "asadasd");
-//        cards.add(card2, "Asafsfaf");
-
-//        BufferedImage wPic = null;
-//        try {
-//            wPic = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("E:\\\\Users\\\\Farid\\\\Downloads\\\\Map-of-Iran-with-the-Digital-Elevation-Model-DEM.png")));
-//        } catch (IOException ex) {
-//            // handle exception...
-//        }
-//        wIcon = new JLabel(new ImageIcon(wPic));
+        if (OperationSingleton.getOperationSingleton().getName()==null)
+            new Operation(OperationSingleton.getOperationSingleton());
 
 
 
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                JOptionPane.showMessageDialog(button1, textField1.getText());
-
-//                new Form1().setVisible(true);
-//                new newp().AccessibleJFrame;
-//                CardLayout cl = (CardLayout)(cards.getLayout());
-//                cl.show(cards, (String)textField1.getText());
-
             }
         });
         btnShowMap.addActionListener(new ActionListener() {
@@ -124,15 +100,7 @@ public class Home extends JFrame{
 
             public void addPanel()
             {
-                System.out.println("new machinePanel added");
-
-
-
-
-                JPanel panel1 = new MachinePanel();
-
-                tabbedPane1.add("آتشبار 1",panel1);
-
+              new AddMachine(OperationSingleton.getOperationSingleton());
             }
 
 

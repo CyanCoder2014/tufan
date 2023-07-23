@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.cyancoder.frame.PointMapFrame;
+import com.cyancoder.model.OperationSingleton;
 import com.cyancoder.model.PointModel;
 import org.geotools.data.*;
 import org.geotools.data.simple.SimpleFeatureSource;
@@ -39,31 +40,15 @@ import org.opengis.feature.simple.SimpleFeatureType;
 
 public class ShowMap {
 
-    public static ShowMap showMap;
 
     public ShowMap()
-    {
-        showMap = this;
-        if (showMap ==null)
-            showMap = new ShowMap();///////////////////////////////////////////////////////////
-    }
+    {}
 
     private static final Logger LOGGER = org.geotools.util.logging.Logging.getLogger(ShowMap.class);
 
 
 
     public static void showMap() throws SchemaException, IOException {
-
-        PointModel basePoint = new PointModel( 45.8,38.23);
-        basePoint.setName("موقعیت مبدأ");
-        basePoint.setElevation(232324);
-        Layer basePoinLayer = setPointLayer(basePoint,"Circle",Color.YELLOW, Color.RED, 0.7f, 12f);
-
-        PointModel targetPoint = new PointModel( 45.87159,38.13718);
-        targetPoint.setName("موقعیت هدف");
-        targetPoint.setElevation(232324);
-        Layer targetPoinLayer = setPointLayer(targetPoint,"Cross",Color.YELLOW, Color.RED, 0.7f, 12f);
-
 
        Layer admLayer = setPolLayer("./maps/IRN_adm/IRN_adm2.shp",Color.ORANGE.darker(),Color.decode("#f9d19d"),0.3f);
        Layer watAreaLayer = setPolLayer("./maps/IRN_wat/IRN_water_areas_dcw.shp",Color.decode("#0077ff"),Color.decode("#0099ff"),0.8f);
@@ -80,10 +65,44 @@ public class ShowMap {
         map.addLayer(roadLayer);
         map.addLayer(borderLayer);
 
-        map.addLayer(basePoinLayer);
-        map.addLayer(targetPoinLayer);
+        addPoints(map);
 
         new PointMapFrame(map);
+    }
+
+    private static void addPoints(MapContent map) throws SchemaException {
+
+        OperationSingleton operationSingleton = OperationSingleton.getOperationSingleton();
+
+        operationSingleton.getFireLoad().forEach(fireLoad -> {
+            Double originX = Double.valueOf(fireLoad.getOriginX()!=null?fireLoad.getOriginX():"0");
+            Double originY = Double.valueOf(fireLoad.getOriginY()!=null?fireLoad.getOriginY():"0");
+            if ((43.000 < originX && originX < 63.300) || (25.000 < originY && originY < 40.000)) {
+                PointModel originPoint = new PointModel(originX, originY);
+                originPoint.setName("موقعیت استقرار توپ آتشبار: " + fireLoad.getName());
+                originPoint.setElevation(0);
+                try {
+                    Layer originPoinLayer = setPointLayer(originPoint,"Circle",Color.YELLOW, Color.RED, 0.7f, 12f);
+                    map.addLayer(originPoinLayer);
+                } catch (SchemaException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            Double targetX = Double.valueOf(fireLoad.getTargetX()!=null?fireLoad.getTargetX():"0");
+            Double targetY = Double.valueOf(fireLoad.getTargetY()!=null?fireLoad.getTargetY():"0");
+            if ((43.000 < targetX && targetX < 63.300) || (25.000 < targetY && targetY < 40.000)) {
+                PointModel targetPoint = new PointModel(targetX, targetY);
+                targetPoint.setName("موقعیت هدف آتشبار: " + fireLoad.getName());
+                targetPoint.setElevation(0);
+                try {
+                    Layer originPoinLayer = setPointLayer(targetPoint,"Cross",Color.YELLOW, Color.RED, 0.7f, 12f);
+                    map.addLayer(originPoinLayer);
+                } catch (SchemaException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
 

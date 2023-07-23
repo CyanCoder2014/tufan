@@ -1,5 +1,6 @@
 package com.cyancoder.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class OperationSingleton {
     private String name;
     private String mapName;
     private String mapUrl;
-    private List<FireLoad> fireLoad;
+    private List<FireLoad> fireLoad = new ArrayList<>();
     private Date createdOn;
     private Date updatedOn;
 

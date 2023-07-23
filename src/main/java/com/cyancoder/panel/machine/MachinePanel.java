@@ -1,5 +1,6 @@
 package com.cyancoder.panel.machine;
 
+import com.cyancoder.model.OperationSingleton;
 import com.cyancoder.service.CalculateElevationItems;
 import com.cyancoder.service.CalculateGisItems;
 import com.cyancoder.service.ElevationFind;
@@ -534,6 +535,8 @@ public class MachinePanel extends JPanel {
         if ((macX==0 || macY==0) || (aimX==0 || aimY==0))
             JOptionPane.showMessageDialog(null, "مختصات به درستی وارد نشده است!");
         else {
+
+
 
             setInvisibleElvFields(true);
             btnCalDir.setEnabled(false);
