@@ -31,11 +31,11 @@ public class MachinePanel extends JPanel {
     JLabel labelCheckBoxLoc = new JLabel("قفل ویرایش مختصات");
     JCheckBox checkBoxLoc = new JCheckBox();
 
-    JLabel labelElvMac = new JLabel("ارتفاع آتشبار:");
+    JLabel labelElvMac = new JLabel("ارتفاع آتشبار (متر):");
     JLabel fieldElvMac = new JLabel();
-    JLabel labelElvAim = new JLabel("ارتفاع هدف:");
+    JLabel labelElvAim = new JLabel("ارتفاع هدف (متر):");
     JLabel fieldElvAim = new JLabel();
-    JLabel labelDiffElv = new JLabel("اختلاف ارتفاع:");
+    JLabel labelDiffElv = new JLabel("اختلاف ارتفاع (متر):");
     JLabel fieldDiffElv = new JLabel();
     JLabel labelTElv = new JLabel("تراز:");
     JLabel fieldTElv = new JLabel();

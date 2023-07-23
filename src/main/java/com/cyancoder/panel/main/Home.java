@@ -1,5 +1,6 @@
 package com.cyancoder.panel.main;
 
+import com.cyancoder.model.OperationSingleton;
 import com.cyancoder.panel.machine.MachinePanel;
 import com.cyancoder.service.ShowMap;
 import org.geotools.feature.SchemaException;
@@ -125,6 +126,9 @@ public class Home extends JFrame{
             {
                 System.out.println("new machinePanel added");
 
+
+
+
                 JPanel panel1 = new MachinePanel();
 
                 tabbedPane1.add("آتشبار 1",panel1);
@@ -146,6 +150,19 @@ public class Home extends JFrame{
                 dialog.pack();
                 dialog.setVisible(true);
 //                System.exit(0);
+            }
+        });
+        Button11.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Operation(OperationSingleton.getOperationSingleton());
+            }
+        });
+        Button22.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MapSelect(OperationSingleton.getOperationSingleton());
+
             }
         });
     }
