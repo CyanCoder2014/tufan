@@ -11,7 +11,7 @@ public class CalculateElevationItems {
 
     public Long calculateLevelDifference(Long elvDif, Long distance){
 
-        Long res = null;
+        long res = 0L;
 
         if (distance != 0 && elvDif != 0)
             res =elvDif/(distance/1000);

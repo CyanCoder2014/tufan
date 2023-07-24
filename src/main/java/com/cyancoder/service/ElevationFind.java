@@ -1,5 +1,7 @@
 package com.cyancoder.service;
 
+import com.cyancoder.model.GeneralFields;
+import com.cyancoder.model.OperationSingleton;
 import org.geotools.data.*;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.feature.FeatureCollection;
@@ -21,15 +23,21 @@ public class ElevationFind
 
     public Long findPointElevation(Double x, Double y) {
 
-        // display a data store file chooser dialog for shapefiles
+        File file = new File("./maps/provinces_dem/DEM_AZar_Sharghi.shp");
+
+        if (OperationSingleton.getOperationSingleton().getMapName() == GeneralFields.mapSelectArray[1])
+            file = new File("./maps/provinces_dem/DEM_AZar_Gharbi.shp");
+        if (OperationSingleton.getOperationSingleton().getMapName() == GeneralFields.mapSelectArray[2])
+            file = new File("./maps/provinces_dem/DEM_Kordestan.shp");
+        if (OperationSingleton.getOperationSingleton().getMapName() == GeneralFields.mapSelectArray[3])
+            file = new File("./maps/provinces_dem/DEM_Ardbil.shp");
+        if (OperationSingleton.getOperationSingleton().getMapName() == GeneralFields.mapSelectArray[4])
+            file = new File("./maps/_demshp/Dem_100.shp");
+
 //        File file = JFileDataStoreChooser.showOpenFile("shp", null);
 //        if (file == null) {
 //            return;
 //        }
-
-//        File file = new File("./maps/_demshp/Dem_100.shp");
-        File file = new File("./maps/provinces_dem/DEM_AZar_Sharghi.shp");
-
 
         FeatureSource<SimpleFeatureType, SimpleFeature> source = null;
         try {

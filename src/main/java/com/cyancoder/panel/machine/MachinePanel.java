@@ -1,5 +1,6 @@
 package com.cyancoder.panel.machine;
 
+import com.cyancoder.model.FireLoad;
 import com.cyancoder.model.OperationSingleton;
 import com.cyancoder.service.CalculateElevationItems;
 import com.cyancoder.service.CalculateGisItems;
@@ -98,11 +99,17 @@ public class MachinePanel extends JPanel {
     private final ElevationFind elevationFind;
     private final CalculateElevationItems calculateElevationItems;
 
-    public MachinePanel() {
+    private final OperationSingleton operationSingleton;
+    private final FireLoad fireLoad;
+
+    public MachinePanel(FireLoad fireLoad) {
 
         calculateGisItems = new CalculateGisItems();
         elevationFind = new ElevationFind();
         calculateElevationItems = new CalculateElevationItems();
+        operationSingleton = OperationSingleton.getOperationSingleton();
+        this.fireLoad = fireLoad;
+
 
         setName("آتشبار 1");
 
@@ -136,11 +143,11 @@ public class MachinePanel extends JPanel {
         checkBoxLoc.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(checkBoxLoc.isSelected() ){
+                if (checkBoxLoc.isSelected()) {
                     setDisablePointFields(false);
                     btnCalDir.setEnabled(false);
 
-                }else{
+                } else {
                     setDisablePointFields(true);
                     btnCalDir.setEnabled(true);
                 }
@@ -149,10 +156,10 @@ public class MachinePanel extends JPanel {
         checkBoxMac.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(checkBoxMac.isSelected() ){
+                if (checkBoxMac.isSelected()) {
                     setDisableMacFields(false);
 
-                }else{
+                } else {
                     setDisableMacFields(true);
                 }
             }
@@ -460,6 +467,7 @@ public class MachinePanel extends JPanel {
         fieldAimY.setEnabled(isDisable);
 
     }
+
     private void setDisableMacFields(boolean isDisable) {
         selectMac.setEnabled(isDisable);
         selectType.setEnabled(isDisable);
@@ -532,11 +540,10 @@ public class MachinePanel extends JPanel {
         Double aimX = Double.valueOf(fieldAimX.getText());
         Double aimY = Double.valueOf(fieldAimY.getText());
 
-        if ((macX==0 || macY==0) || (aimX==0 || aimY==0))
-            JOptionPane.showMessageDialog(null, "مختصات به درستی وارد نشده است!");
-        else {
-
-
+        if ((43.000 < macX && macX < 63.300) &&
+                (25.000 < macY && macY < 40.000) &&
+                (43.000 < aimX && aimX < 63.300) &&
+                (25.000 < aimY && aimY < 40.000)) {
 
             setInvisibleElvFields(true);
             btnCalDir.setEnabled(false);
@@ -551,7 +558,6 @@ public class MachinePanel extends JPanel {
             Long elvDiff = calculateElevationItems.calculateElvDifference(macElv, aimElv);
             Long levelDiff = calculateElevationItems.calculateLevelDifference(elvDiff, distance);
 
-
             checkBoxLoc.setSelected(true);
             setDisablePointFields(false);
 
@@ -563,7 +569,20 @@ public class MachinePanel extends JPanel {
             fieldDistKm.setText(String.valueOf(distance / 1000));
             fieldDirMil.setText(String.valueOf(directionMil));
             fieldDirDeg.setText(String.valueOf(directionDeg));
-        }
+
+
+
+            fireLoad.setOriginX(macX);
+            fireLoad.setOriginY(macY);
+            fireLoad.setTargetX(aimX);
+            fireLoad.setTargetY(aimY);
+            operationSingleton.getFireLoad().indexOf(fireLoad);
+            operationSingleton.getFireLoad().set(operationSingleton.getFireLoad().indexOf(fireLoad),fireLoad);
+
+
+        } else
+            JOptionPane.showMessageDialog(null, "مختصات به درستی وارد نشده است!");
+
     }
 
     private void callBtnCalDirAndDeg() {

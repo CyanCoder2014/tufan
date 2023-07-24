@@ -43,7 +43,7 @@ public class AddMachine extends JFrame{
             fireLoad.setName(textField1.getText());
             operationSingleton.getFireLoad().add(fireLoad);
 
-            JPanel machinePanel = new MachinePanel();
+            JPanel machinePanel = new MachinePanel(fireLoad);
             staticHome.getTabbedPane1().add(fireLoad.getName(), machinePanel);
             staticAddMachine.setVisible(false);
         }

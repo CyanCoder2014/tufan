@@ -6,10 +6,10 @@ public class FireLoad {
 
     private Long id;
     private String name;
-    private String originX;
-    private String originY;
-    private String targetX;
-    private String targetY;
+    private Double originX;
+    private Double originY;
+    private Double targetX;
+    private Double targetY;
     private String machineId;
     private String machineName;
     private String machineType;
@@ -33,35 +33,35 @@ public class FireLoad {
         this.name = name;
     }
 
-    public String getOriginX() {
+    public Double getOriginX() {
         return originX;
     }
 
-    public void setOriginX(String originX) {
+    public void setOriginX(Double originX) {
         this.originX = originX;
     }
 
-    public String getOriginY() {
+    public Double getOriginY() {
         return originY;
     }
 
-    public void setOriginY(String originY) {
+    public void setOriginY(Double originY) {
         this.originY = originY;
     }
 
-    public String getTargetX() {
+    public Double getTargetX() {
         return targetX;
     }
 
-    public void setTargetX(String targetX) {
+    public void setTargetX(Double targetX) {
         this.targetX = targetX;
     }
 
-    public String getTargetY() {
+    public Double getTargetY() {
         return targetY;
     }
 
-    public void setTargetY(String targetY) {
+    public void setTargetY(Double targetY) {
         this.targetY = targetY;
     }
 

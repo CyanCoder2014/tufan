@@ -1,5 +1,6 @@
 package com.cyancoder.panel.main;
 
+import com.cyancoder.model.GeneralFields;
 import com.cyancoder.model.OperationSingleton;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -11,8 +12,7 @@ import java.awt.event.ActionListener;
 public class MapSelect extends JFrame {
     private JButton button1;
     JComboBox comboBox1;
-    String[] mapSelectArray = new String[]{"نقشه ارتفاعی آذربایجان شرقی"
-    , "نقشه ارتفاعی آذربایجان غربی", "نقشه ارتفاعی کردستان", "نقشه ارتفاعی اردبیل", "نقشه ارتفاعی تجمیعی ۴ استان"};
+    String[] mapSelectArray = GeneralFields.mapSelectArray;
 
     private JPanel mapSelectPanel;
 

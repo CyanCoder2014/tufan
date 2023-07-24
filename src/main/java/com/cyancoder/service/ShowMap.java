@@ -75,9 +75,9 @@ public class ShowMap {
         OperationSingleton operationSingleton = OperationSingleton.getOperationSingleton();
 
         operationSingleton.getFireLoad().forEach(fireLoad -> {
-            Double originX = Double.valueOf(fireLoad.getOriginX()!=null?fireLoad.getOriginX():"0");
-            Double originY = Double.valueOf(fireLoad.getOriginY()!=null?fireLoad.getOriginY():"0");
-            if ((43.000 < originX && originX < 63.300) || (25.000 < originY && originY < 40.000)) {
+            double originX = fireLoad.getOriginX() != null ? fireLoad.getOriginX() : 0;
+            double originY = fireLoad.getOriginY() != null ? fireLoad.getOriginY() : 0;
+            if ((43.000 < originX && originX < 63.300) && (25.000 < originY && originY < 40.000)) {
                 PointModel originPoint = new PointModel(originX, originY);
                 originPoint.setName("موقعیت استقرار توپ آتشبار: " + fireLoad.getName());
                 originPoint.setElevation(0);
@@ -89,9 +89,9 @@ public class ShowMap {
                 }
             }
 
-            Double targetX = Double.valueOf(fireLoad.getTargetX()!=null?fireLoad.getTargetX():"0");
-            Double targetY = Double.valueOf(fireLoad.getTargetY()!=null?fireLoad.getTargetY():"0");
-            if ((43.000 < targetX && targetX < 63.300) || (25.000 < targetY && targetY < 40.000)) {
+            double targetX = fireLoad.getTargetX() != null ? fireLoad.getTargetX() : 0;
+            double targetY = fireLoad.getTargetY() != null ? fireLoad.getTargetY() : 0;
+            if ((43.000 < targetX && targetX < 63.300) && (25.000 < targetY && targetY < 40.000)) {
                 PointModel targetPoint = new PointModel(targetX, targetY);
                 targetPoint.setName("موقعیت هدف آتشبار: " + fireLoad.getName());
                 targetPoint.setElevation(0);
