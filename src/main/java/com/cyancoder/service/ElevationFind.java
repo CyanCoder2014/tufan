@@ -42,7 +42,7 @@ public class ElevationFind
         FeatureSource<SimpleFeatureType, SimpleFeature> source = null;
         try {
             FileDataStore store = FileDataStoreFinder.getDataStore(file);
-            SimpleFeatureSource featureSource = store.getFeatureSource();
+//            SimpleFeatureSource featureSource = store.getFeatureSource();
 
             Map<String, Object> map = new HashMap<>();
             map.put("url", file.toURI().toURL());
