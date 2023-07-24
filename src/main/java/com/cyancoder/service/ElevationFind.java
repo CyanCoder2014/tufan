@@ -60,8 +60,6 @@ public class ElevationFind
         }
 
 
-        Scanner scanner = new Scanner(System.in);
-
         double xMin = x - 0.001;
         double xMax = x + 0.001;
 
@@ -77,7 +75,6 @@ public class ElevationFind
                 " AND " +
                 String.valueOf(Math.round(yMax * 1000.0) / 1000.0) +
                 ")";
-        System.out.println(sqlFilter);
 
 
         Filter filter = null;
@@ -107,19 +104,7 @@ public class ElevationFind
         }
 
 
-
         return res;
-
-
-//        try (FeatureIterator<SimpleFeature> features = collection.features()) {
-//            while (features.hasNext()) {
-//                SimpleFeature feature = features.next();
-//                System.out.println(feature.getAttribute("X"));
-//                System.out.println(feature.getAttribute("Y"));
-//                System.out.println(feature.getAttribute("Z"));
-//            }
-//        }
-
 
     }
 
