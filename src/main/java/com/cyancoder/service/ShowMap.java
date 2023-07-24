@@ -57,7 +57,7 @@ public class ShowMap {
        Layer borderLayer = setPolLayer("./maps/IRN_adm/IRN_adm1.shp",Color.decode("#000000"),null,0f);
 
         MapContent map = new MapContent();
-        map.setTitle("نمایش موقعیت آتشتبارها و اهداف روی نقشه");
+        map.setTitle("نمایش موقعیت آتشبارها و اهداف روی نقشه");
 
         map.addLayer(admLayer);
         map.addLayer(watAreaLayer);
@@ -130,7 +130,7 @@ public class ShowMap {
                         "Location",
                         "the_geom:Point:srid=4326,"
                                 +
-                                "elevation:double,"
+                                "title:String," // need to consider
                                 +
                                 "name:String,"
                                 +
