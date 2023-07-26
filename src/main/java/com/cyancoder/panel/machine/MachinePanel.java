@@ -102,6 +102,9 @@ public class MachinePanel extends JPanel {
     private final OperationSingleton operationSingleton;
     private final FireLoad fireLoad;
 
+    private Long macElv;
+    private Long aimElv;
+
     public MachinePanel(FireLoad fireLoad) {
 
         calculateGisItems = new CalculateGisItems();
@@ -109,7 +112,6 @@ public class MachinePanel extends JPanel {
         calculateElevationItems = new CalculateElevationItems();
         operationSingleton = OperationSingleton.getOperationSingleton();
         this.fireLoad = fireLoad;
-
 
         setName("آتشبار 1");
 
@@ -552,32 +554,52 @@ public class MachinePanel extends JPanel {
             Long directionDeg = calculateGisItems.calculateDegDirection(macX, macY, aimX, aimY);
             Long directionMil = calculateGisItems.calculateMilDirection(macX, macY, aimX, aimY);
 
-            Long macElv = elevationFind.findPointElevation(macX, macY);
-            Long aimElv = elevationFind.findPointElevation(aimX, aimY);
+            Runnable runnable1 = () -> {
+                 macElv = elevationFind.findPointElevation(macX, macY);
+            };
+            Runnable runnable2 = () -> {
+                 aimElv = elevationFind.findPointElevation(aimX, aimY);
+            };
+            Thread t1 = new Thread(runnable1,"t1 - elv");
+            Thread t2 = new Thread(runnable2,"t2 - elv");
 
-            Long elvDiff = calculateElevationItems.calculateElvDifference(macElv, aimElv);
-            Long levelDiff = calculateElevationItems.calculateLevelDifference(elvDiff, distance);
+            t1.start();
+            t2.start();
 
-            checkBoxLoc.setSelected(true);
-            setDisablePointFields(false);
+            try {
+                t1.join();
+                t2.join();
+            }catch (Exception ignored){}
 
             fieldElvMac.setText(String.valueOf(macElv));
             fieldElvAim.setText(String.valueOf(aimElv));
-            fieldDiffElv.setText(String.valueOf(elvDiff));
-            fieldTElv.setText(String.valueOf(levelDiff));
+
             fieldDistM.setText(String.valueOf(distance));
             fieldDistKm.setText(String.valueOf(distance / 1000));
             fieldDirMil.setText(String.valueOf(directionMil));
             fieldDirDeg.setText(String.valueOf(directionDeg));
 
+            if (macElv!=null && aimElv!=null) {
+                Long elvDiff = calculateElevationItems.calculateElvDifference(macElv, aimElv);
+                Long levelDiff = calculateElevationItems.calculateLevelDifference(elvDiff, distance);
 
+                fieldDiffElv.setText(String.valueOf(elvDiff));
+                fieldTElv.setText(String.valueOf(levelDiff));
 
-            fireLoad.setOriginX(macX);
-            fireLoad.setOriginY(macY);
-            fireLoad.setTargetX(aimX);
-            fireLoad.setTargetY(aimY);
-            operationSingleton.getFireLoad().indexOf(fireLoad);
-            operationSingleton.getFireLoad().set(operationSingleton.getFireLoad().indexOf(fireLoad),fireLoad);
+                fireLoad.setOriginX(macX);
+                fireLoad.setOriginY(macY);
+                fireLoad.setTargetX(aimX);
+                fireLoad.setTargetY(aimY);
+                operationSingleton.getFireLoad().indexOf(fireLoad);
+                operationSingleton.getFireLoad().set(operationSingleton.getFireLoad().indexOf(fireLoad), fireLoad);
+                checkBoxLoc.setSelected(true);
+                setDisablePointFields(false);
+            }
+            else{
+                btnCalDir.setEnabled(true);
+                JOptionPane.showMessageDialog(null, "مختصات خارج از محدوده نقشه ارتفاعی است!");
+            }
+
 
 
         } else

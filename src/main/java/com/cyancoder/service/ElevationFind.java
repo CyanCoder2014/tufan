@@ -79,7 +79,7 @@ public class ElevationFind
 
         Filter filter = null;
 
-        Long res = 0L;
+        Long res = null;
         try {
 
 //        Filter filter = Filter.INCLUDE; // ECQL.toFilter("BBOX(THE_GEOM, 10,20,30,40)")
@@ -94,18 +94,15 @@ public class ElevationFind
             FeatureIterator<SimpleFeature> test = collection.features();
 
             res = Math.round((double) test.next().getAttributes().get(3));
-            System.out.println("this one: ");
+            System.out.println("elv: ");
             System.out.println(res);
             test.close();
 
 
         } catch (Exception ignored) {
-
         }
 
-
         return res;
-
     }
 
 
