@@ -609,6 +609,20 @@ public class MachinePanel extends JPanel {
 
     private void callBtnCalDirAndDeg() {
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         setInvisibleMacFields(true);
         setInvisibleCorrectionFields(true);
 
