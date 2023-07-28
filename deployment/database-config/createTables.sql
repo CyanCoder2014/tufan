@@ -111,18 +111,16 @@ CREATE TABLE if not exists `machine_details` (
 
 
 ALTER TABLE `fire_loads`
-  ADD KEY `fire_loads_operation_id_index` (`operation_id`),
-  ADD KEY `fire_loads_machine_id_index` (`machine_id`);
+  ADD KEY if not exists `fire_loads_operation_id_index` (`operation_id`),
+  ADD KEY if not exists `fire_loads_machine_id_index` (`machine_id`);
 
 
 ALTER TABLE `machine_types`
-  ADD KEY `machine_details_machine_id_index` (`machine_id`);
---  CONSTRAINT FK_MachinesMachine_types FOREIGN KEY (machine_id);
---  REFERENCES machines(machine_id);
+  ADD KEY if not exists `machine_details_machine_id_index` (`machine_id`);
 
 
 ALTER TABLE `machine_details`
-  ADD KEY `machine_details_machine_types_id_index` (`machine_types_id`);
+  ADD KEY if not exists `machine_details_machine_types_id_index` (`machine_types_id`);
 
 
   
