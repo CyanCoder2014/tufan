@@ -8,6 +8,7 @@ echo "InstallationPath: %InstallationPath%"
 if not exist "%InstallationPath%\install-files" xcopy /s "%SourcePath%\install-files\*.*" "%InstallationPath%\install-files\*"
 if not exist "%InstallationPath%\database-config" xcopy /s "%SourcePath%\database-config\*.*" "%InstallationPath%\database-config\*"
 if not exist "%InstallationPath%\Tufan.bat" xcopy /s "%SourcePath%\install-files\Tufan.bat" "%InstallationPath%\*"
+if not exist "%InstallationPath%\tufan.jar" xcopy /s "%SourcePath%\tufan.jar" "%InstallationPath%\*"
 
 if not exist "%MySQLPath%\mysql" xcopy /s "%SourcePath%\install-files\xampp\*.*" "%MySQLPath%\*"
 
@@ -62,9 +63,10 @@ echo Create and Config Database finished.
 
 
 
-@REM echo Running jar file. Please wait...
-@REM
-@REM echo Application Started successfully.
+echo Running jar file. Please wait...
+cd "C:\Program Files\Java\jdk-17\bin"
+java -jar %InstallationPath%\tufan.jar
+echo Application Started successfully.
 
 
 PAUSE
