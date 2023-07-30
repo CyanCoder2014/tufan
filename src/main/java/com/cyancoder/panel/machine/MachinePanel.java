@@ -5,6 +5,7 @@ import com.cyancoder.model.OperationSingleton;
 import com.cyancoder.service.CalculateElevationItems;
 import com.cyancoder.service.CalculateGisItems;
 import com.cyancoder.service.ElevationFind;
+import com.cyancoder.service.GetMachineDetail;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
@@ -616,7 +617,11 @@ public class MachinePanel extends JPanel {
 
 
 
+        GetMachineDetail getMachineDetail = new GetMachineDetail();
 
+
+
+        getMachineDetail.fetchData();
 
 
 

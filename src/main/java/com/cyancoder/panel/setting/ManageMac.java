@@ -195,7 +195,8 @@ public class ManageMac extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt)
+    {
         // TODO add your handling code here:
         String fname = txtFname.getText().trim();
         String lname = txtLname.getText().trim();
