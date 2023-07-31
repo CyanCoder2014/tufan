@@ -42,6 +42,7 @@ public class Home extends JFrame{
     private JLabel labelHomeTitle;
     private JButton btnAbout;
 
+    private static String baseLoc = "C:\\Tufan-Application";
 
     public static Home staticHome;
 
@@ -62,7 +63,7 @@ public class Home extends JFrame{
         changeFont(homePanel,fontTahoma);
         labelHomeTitle.setFont(new Font("Tahoma", 1, 16));
 
-        wIcon.setIcon(new ImageIcon("./images/icons/map_location_pin_marker-01.png")); //Sets the image to be displayed as an icon
+        wIcon.setIcon(new ImageIcon(baseLoc+"/images/icons/map_location_pin_marker-01.png")); //Sets the image to be displayed as an icon
         Dimension size = wIcon.getPreferredSize(); //Gets the size of the image
         wIcon.setBounds(50, 30, size.width, size.height); //Sets the location of the image
 

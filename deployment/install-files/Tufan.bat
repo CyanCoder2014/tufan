@@ -20,16 +20,13 @@ set MySQLPath=C:\xampp
 
 echo Start MySQL Server. Please wait...
 cd "%MySQLPath%"
-@REM net stop MySQL
-@REM mysqld --remove
-@REM mysqld --install
-@REM mysqld --initialize
-@REM net start MySQL
 call mysql_start.bat
-echo MySQL Started successfully.
+echo MySQL Started.
 
 
 
-@REM echo Running jar file. Please wait...
-@REM
-@REM echo Application Started successfully.
+
+echo Running jar file. Please wait...
+cd "C:\Program Files\Java\jdk-17\bin"
+java -jar %InstallationPath%\tufan.jar
+echo Application Started successfully.

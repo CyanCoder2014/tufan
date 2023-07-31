@@ -14,25 +14,22 @@ import org.opengis.filter.Filter;
 import java.io.File;
 import java.util.*;
 
-/**
- * Hello world!
- *
- */
 public class ElevationFind
 {
 
+    private static String baseLoc = "C:\\Tufan-Application";
     public Long findPointElevation(Double x, Double y) {
 
-        File file = new File("./maps/provinces_dem/DEM_AZar_Sharghi.shp");
+        File file = new File(baseLoc+"/maps/provinces_dem/DEM_AZar_Sharghi.shp");
 
         if (OperationSingleton.getOperationSingleton().getMapName() == GeneralFields.mapSelectArray[1])
-            file = new File("./maps/provinces_dem/DEM_AZar_Gharbi.shp");
+            file = new File(baseLoc+"/maps/provinces_dem/DEM_AZar_Gharbi.shp");
         if (OperationSingleton.getOperationSingleton().getMapName() == GeneralFields.mapSelectArray[2])
-            file = new File("./maps/provinces_dem/DEM_Kordestan.shp");
+            file = new File(baseLoc+"/maps/provinces_dem/DEM_Kordestan.shp");
         if (OperationSingleton.getOperationSingleton().getMapName() == GeneralFields.mapSelectArray[3])
-            file = new File("./maps/provinces_dem/DEM_Ardbil.shp");
+            file = new File(baseLoc+"/maps/provinces_dem/DEM_Ardbil.shp");
         if (OperationSingleton.getOperationSingleton().getMapName() == GeneralFields.mapSelectArray[4])
-            file = new File("./maps/_demshp/Dem_100.shp");
+            file = new File(baseLoc+"/maps/_demshp/Dem_100.shp");
 
 //        File file = JFileDataStoreChooser.showOpenFile("shp", null);
 //        if (file == null) {

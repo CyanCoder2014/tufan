@@ -1,15 +1,5 @@
 package com.cyancoder.service;
-/*
- *    GeoTools Sample code and Tutorials by Open Source Geospatial Foundation, and others
- *    https://docs.geotools.org
- *
- *    To the extent possible under law, the author(s) have dedicated all copyright
- *    and related and neighboring rights to this software to the public domain worldwide.
- *    This software is distributed without any warranty.
- *
- *    You should have received a copy of the CC0 Public Domain Dedication along with this
- *    software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
- */
+
 
 import java.awt.*;
 import java.io.File;
@@ -47,14 +37,15 @@ public class ShowMap {
     private static final Logger LOGGER = org.geotools.util.logging.Logging.getLogger(ShowMap.class);
 
 
+    private static String baseLoc = "C:\\Tufan-Application";
 
     public static void showMap() throws SchemaException, IOException {
 
-       Layer admLayer = setPolLayer("./maps/IRN_adm/IRN_adm2.shp",Color.ORANGE.darker(),Color.decode("#f9d19d"),0.3f);
-       Layer watAreaLayer = setPolLayer("./maps/IRN_wat/IRN_water_areas_dcw.shp",Color.decode("#0077ff"),Color.decode("#0099ff"),0.8f);
-       Layer watLineLayer = setPolLayer("./maps/IRN_wat/IRN_water_lines_dcw.shp",Color.decode("#ccffff"),null,0f);
-       Layer roadLayer = setPolLayer("./maps/IRN_rds/IRN_roads.shp",Color.decode("#ccccaa"),null,0f);
-       Layer borderLayer = setPolLayer("./maps/IRN_adm/IRN_adm1.shp",Color.decode("#000000"),null,0f);
+        Layer admLayer = setPolLayer(baseLoc+"/maps/IRN_adm/IRN_adm2.shp",Color.ORANGE.darker(),Color.decode("#f9d19d"),0.3f);
+        Layer watAreaLayer = setPolLayer(baseLoc+"/maps/IRN_wat/IRN_water_areas_dcw.shp",Color.decode("#0077ff"),Color.decode("#0099ff"),0.8f);
+        Layer watLineLayer = setPolLayer(baseLoc+"/maps/IRN_wat/IRN_water_lines_dcw.shp",Color.decode("#ccffff"),null,0f);
+        Layer roadLayer = setPolLayer(baseLoc+"/maps/IRN_rds/IRN_roads.shp",Color.decode("#ccccaa"),null,0f);
+        Layer borderLayer = setPolLayer(baseLoc+"/maps/IRN_adm/IRN_adm1.shp",Color.decode("#000000"),null,0f);
 
         MapContent map = new MapContent();
         map.setTitle("نمایش موقعیت آتشبارها و اهداف روی نقشه");
