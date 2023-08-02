@@ -14,17 +14,41 @@ goto :eof
 :payload
 
 
+set InstallationPath=C:\Tufan-Application
 set MySQLPath=C:\xampp
 
 
 echo Start MySQL Server. Please wait...
+@REM e:
 cd "%MySQLPath%"
 @REM net stop MySQL
 @REM mysqld --remove
 @REM mysqld --install
 @REM mysqld --initialize
 @REM net start MySQL
-call mysql_start.bat
+@REM call mysql_start.bat
+
+
+
+echo Create and Config Database Started. Please wait...
+set MYSQL="%MySQLPath%\mysql\bin"
+set INPUTCreateDB="%InstallationPath%\database-config\createDB.sql"
+set INPUTCreateT="%InstallationPath%\database-config\createTables.sql"
+set INPUTInsert="%InstallationPath%\database-config\insertData.sql"
+set OUTPUT="%InstallationPath%\install-files\OutputLog.txt"
+set USER=adminMG
+set PASSWORD=maghsoud71
+cd %MYSQL%
+echo %MYSQL%
+echo Config User Database Started...
+mysql -uroot < %INPUTCreateDB%
+echo Create Tables Started...
+mysql -u%USER% -p%PASSWORD% -v -D tufan-g11 < %INPUTCreateT% > %OUTPUT%
+echo Insert data Started...
+mysql -u%USER% -p%PASSWORD% -v -D tufan-g11 < %INPUTInsert% > %OUTPUT%
+echo Create and Config Database finished.
+
+
 
 
 @REM @echo off
