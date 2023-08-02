@@ -1,17 +1,17 @@
 @ECHO OFF
 
-if _%1_==_payload_  goto :payload
-
-:getadmin
-    echo %~nx0: elevating self
-    set vbs=%temp%\getadmin.vbs
-    echo Set UAC = CreateObject^("Shell.Application"^)                >> "%vbs%"
-    echo UAC.ShellExecute "%~s0", "payload %~sdp0 %*", "", "runas", 1 >> "%vbs%"
-    "%temp%\getadmin.vbs"
-    del "%temp%\getadmin.vbs"
-goto :eof
-
-:payload
+@REM if _%1_==_payload_  goto :payload
+@REM
+@REM :getadmin
+@REM     echo %~nx0: elevating self
+@REM     set vbs=%temp%\getadmin.vbs
+@REM     echo Set UAC = CreateObject^("Shell.Application"^)                >> "%vbs%"
+@REM     echo UAC.ShellExecute "%~s0", "payload %~sdp0 %*", "", "runas", 1 >> "%vbs%"
+@REM     "%temp%\getadmin.vbs"
+@REM     del "%temp%\getadmin.vbs"
+@REM goto :eof
+@REM
+@REM :payload
 
 
 set InstallationPath=C:\Tufan-Application
@@ -28,5 +28,8 @@ echo MySQL Started.
 
 echo Running jar file. Please wait...
 cd "C:\Program Files\Java\jdk-17\bin"
-java -jar %InstallationPath%\tufan.jar
+start javaw -jar %InstallationPath%\tufan.jar
 echo Application Started successfully.
+
+exit
+@REM PAUSE
