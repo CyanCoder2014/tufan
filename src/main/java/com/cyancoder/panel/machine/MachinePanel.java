@@ -117,8 +117,12 @@ public class MachinePanel extends JPanel {
     private Long distance;
     private Long directionMil = 0L;
     private Long levelDiff;
+    private JPanel machinePanel;
+
 
     public MachinePanel(FireLoad fireLoad) {
+
+        machinePanel = this;
 
         calculateGisItems = new CalculateGisItems();
         elevationFind = new ElevationFind();
@@ -210,6 +214,16 @@ public class MachinePanel extends JPanel {
                 selectType.setModel(selectTypeModel);
 
                 selectType.setEnabled(true);
+            }
+        });
+
+        btnRemoveFireLoad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                RemoveMachine dialog = new RemoveMachine(machinePanel,fireLoad);
+                dialog.pack();
+                dialog.setVisible(true);
             }
         });
 
