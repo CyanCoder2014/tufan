@@ -6,31 +6,31 @@ public class MachineDetail {
 
     private  Long id;
     private  Long machine_types_id;
-    private  Integer distance;
-    private  Double deg_mil;
-    private  Double deg_bar;
-    private  Double deg_bar_b;
-    private  Integer top;
+    private  Integer distance;  // برد
+    private  Double deg_mil;  // درجه میلیم
+    private  Double deg_bar;  // درجه بارابان
+    private  Double deg_bar_b;  // درجه بازوئی
+    private  Integer top;  // قله مسیر گلوله
 
-    private  Integer cor_dir;
-    private  Integer cor_dir_w;
-    private  Integer cor_dis_w;
-    private  Integer cor_dis_p;
-    private  Integer cor_dis_air_tem;
-    private  Integer cor_dis_s;
-    private  Integer cor_dis_tem;
-    private  Integer cor_dis_wg;
-    private  Integer cor_dis_mil;
+    private  Integer cor_dir;  // تصحیحات: سمت: انحراف
+    private  Integer cor_dir_w;  // تصحیحات: سمت: باد 10 متر در ثانیه
+    private  Integer cor_dis_w;  //  تصحیحات: برد: باد بردی 10 متر در ثانیه
+    private  Integer cor_dis_p;  //  تصحیحات: عنوان
+    private  Integer cor_dis_air_tem;  //  تصحیحات: عنوان
+    private  Integer cor_dis_s;  //  تصحیحات: عنوان
+    private  Integer cor_dis_tem;  //  تصحیحات: عنوان
+    private  Integer cor_dis_wg;  //  تصحیحات: عنوان
+    private  Integer cor_dis_mil;  //  تصحیحات: عنوان
 
-    private  Integer dis_deg;
-    private  Integer b;
-    private  Integer deg;
-    private  Double land_deg;
-    private  Integer speed;
-    private  Integer flight_time;
-    private  Integer err_dis;
-    private  Integer err_h;
-    private  Integer err_dir;
+    private  Integer dis_deg;  // تغییر برد به ازای یک میلیم تغییر در زاویه درجه
+    private  Integer b;  // دوشاخه
+    private  Integer deg;  // زاویه درجه
+    private  Double land_deg;  // زاویه فرود
+    private  Integer speed;  // سرعت نهایی
+    private  Integer flight_time;  // زمان پرواز
+    private  Integer err_dis;  // title
+    private  Integer err_h;  // title
+    private  Integer err_dir;  // title
     private  Integer state;
     private Date created_on;
 

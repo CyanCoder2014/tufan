@@ -8,10 +8,14 @@ public class Machine {
     private  String name;
     private  String title;
     private  String note;
-    private  String state;
+    private  Integer state;
     private Date created_on;
 
-
+    public Machine(Long id, String name, Integer state){
+        this.id = id;
+        this.name = name;
+        this.state = state;
+    }
     public Long getId() {
         return id;
     }
@@ -44,11 +48,11 @@ public class Machine {
         this.note = note;
     }
 
-    public String getState() {
+    public Integer getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(Integer state) {
         this.state = state;
     }
 

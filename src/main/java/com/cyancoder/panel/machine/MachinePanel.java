@@ -1,11 +1,13 @@
 package com.cyancoder.panel.machine;
 
 import com.cyancoder.model.FireLoad;
+import com.cyancoder.model.MachineDetail;
 import com.cyancoder.model.OperationSingleton;
 import com.cyancoder.service.CalculateElevationItems;
 import com.cyancoder.service.CalculateGisItems;
 import com.cyancoder.service.ElevationFind;
-import com.cyancoder.service.GetMachineDetail;
+import com.cyancoder.service.MachineService;
+import org.apache.commons.lang3.ArrayUtils;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
@@ -14,6 +16,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.Objects;
 
 public class MachinePanel extends JPanel {
 
@@ -60,7 +63,7 @@ public class MachinePanel extends JPanel {
     JComboBox<String> selectMac = new JComboBox<>(macSelectArray);
 
     JLabel labelSelectType = new JLabel("انتخاب خرج گلوله:");
-    String[] typeSelectArray = new String[]{"خرج کامل"};
+    String[] typeSelectArray = new String[]{};
     JComboBox<String> selectType = new JComboBox<>(typeSelectArray);
 
     JButton btnCalDirAndDeg = new JButton("محاسبه سمت و زاویه توپ");
@@ -102,9 +105,14 @@ public class MachinePanel extends JPanel {
 
     private final OperationSingleton operationSingleton;
     private final FireLoad fireLoad;
+    private final MachineService machineService;
 
     private Long macElv;
     private Long aimElv;
+
+    private Long distance;
+    private Long directionMil = 0L;
+    private Long levelDiff;
 
     public MachinePanel(FireLoad fireLoad) {
 
@@ -113,6 +121,8 @@ public class MachinePanel extends JPanel {
         calculateElevationItems = new CalculateElevationItems();
         operationSingleton = OperationSingleton.getOperationSingleton();
         this.fireLoad = fireLoad;
+        machineService = new MachineService();
+
 
         setName("آتشبار 1");
 
@@ -122,6 +132,28 @@ public class MachinePanel extends JPanel {
         setInvisibleElvFields(false);
         setInvisibleMacFields(false);
         setInvisibleCorrectionFields(false);
+
+        selectType.setEnabled(false);
+
+
+        machineService.fetchMachines();
+        macSelectArray = new String[]{"توپ 10 ام 46"};//////===
+
+        DefaultComboBoxModel<String> macSelectModel = new DefaultComboBoxModel<>(macSelectArray);
+        selectMac.setModel(macSelectModel);
+
+
+//        typeSelectArray = new String[]{"خرج کامل"};//////===
+        machineService.fetchMachineTypes("1",null);
+
+
+        DefaultComboBoxModel<String> selectTypeModel = new DefaultComboBoxModel<>(typeSelectArray);
+        selectType.setModel(selectTypeModel);
+
+
+
+
+
 
         btnCalDir.addActionListener(new ActionListener() {
             @Override
@@ -165,6 +197,12 @@ public class MachinePanel extends JPanel {
                 } else {
                     setDisableMacFields(true);
                 }
+            }
+        });
+        selectMac.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectType.setEnabled(true);
             }
         });
 
@@ -471,9 +509,9 @@ public class MachinePanel extends JPanel {
 
     }
 
-    private void setDisableMacFields(boolean isDisable) {
-        selectMac.setEnabled(isDisable);
-        selectType.setEnabled(isDisable);
+    private void setDisableMacFields(boolean isEnabled) {
+        selectMac.setEnabled(isEnabled);
+        selectType.setEnabled(isEnabled);
     }
 
     private void setInvisibleElvFields(boolean isVisible) {
@@ -554,6 +592,8 @@ public class MachinePanel extends JPanel {
             Long distance = calculateGisItems.calculateDistance(macX, macY, aimX, aimY);
             Long directionDeg = calculateGisItems.calculateDegDirection(macX, macY, aimX, aimY);
             Long directionMil = calculateGisItems.calculateMilDirection(macX, macY, aimX, aimY);
+            this.distance = distance;
+            this.directionMil = directionMil;
 
             Runnable runnable1 = () -> {
                  macElv = elevationFind.findPointElevation(macX, macY);
@@ -583,6 +623,7 @@ public class MachinePanel extends JPanel {
             if (macElv!=null && aimElv!=null) {
                 Long elvDiff = calculateElevationItems.calculateElvDifference(macElv, aimElv);
                 Long levelDiff = calculateElevationItems.calculateLevelDifference(elvDiff, distance);
+                this.levelDiff = levelDiff;
 
                 fieldDiffElv.setText(String.valueOf(elvDiff));
                 fieldTElv.setText(String.valueOf(levelDiff));
@@ -611,27 +652,35 @@ public class MachinePanel extends JPanel {
     private void callBtnCalDirAndDeg() {
 
 
+        if (selectMac.getSelectedItem()!=null && selectType.getSelectedItem()!=null) {
+            MachineDetail machineDetail = machineService.getMachineDetails(
+                    selectMac.getSelectedItem().toString(),
+                    selectType.getSelectedItem().toString(),
+                    this.distance);
 
 
+            if (machineDetail != null) {
 
+                fieldCorrectionDir.setText(String.valueOf(machineDetail.getCor_dir()));
+                fieldMacDir.setText(String.valueOf(this.directionMil + machineDetail.getCor_dir()));
 
+                fieldDeg.setText(String.valueOf(machineDetail.getDeg_mil()));
+                fieldArrDir.setText(String.valueOf(this.levelDiff + machineDetail.getDeg_mil()));
 
+                fieldFlightTime.setText(String.valueOf(machineDetail.getFlight_time()));
+                fieldLandingTop.setText(String.valueOf(machineDetail.getTop()));
+                fieldLandingDeg.setText(String.valueOf(machineDetail.getLand_deg()));
+                fieldMaxSpeed.setText(String.valueOf(machineDetail.getSpeed()));
 
-        GetMachineDetail getMachineDetail = new GetMachineDetail();
+            }
 
+            checkBoxMac.setSelected(true);
+            setDisableMacFields(false);
 
-
-        getMachineDetail.fetchData();
-
-
-
-
-
-
-        setInvisibleMacFields(true);
-        setInvisibleCorrectionFields(true);
-
-//        Long aimY =fieldAimY.getText();
+            setInvisibleMacFields(true);
+            setInvisibleCorrectionFields(true);
+        } else
+            JOptionPane.showMessageDialog(null, "مشخصات توپ و خرج به درستی وارد نشده است!");
 
     }
 

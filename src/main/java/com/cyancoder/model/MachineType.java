@@ -7,8 +7,16 @@ public class MachineType {
     private  Long id;
     private  Long machine_id;
     private  String name;
-    private  String state;
+    private  Integer state;
     private Date created_on;
+
+
+    public MachineType(Long id, Long machine_id, String name, Integer state){
+        this.id = id;
+        this.machine_id = machine_id;
+        this.name = name;
+        this.state = state;
+    }
 
     public Long getId() {
         return id;
@@ -34,11 +42,11 @@ public class MachineType {
         this.name = name;
     }
 
-    public String getState() {
+    public Integer getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(Integer state) {
         this.state = state;
     }
 
