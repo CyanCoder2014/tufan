@@ -3,6 +3,7 @@ package com.cyancoder.panel.main;
 import com.cyancoder.model.OperationSingleton;
 import com.cyancoder.panel.machine.AddMachine;
 import com.cyancoder.panel.machine.MachinePanel;
+import com.cyancoder.panel.setting.ManageMac;
 import com.cyancoder.service.ShowMap;
 import org.geotools.feature.SchemaException;
 
@@ -132,6 +133,15 @@ public class Home extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 new MapSelect(OperationSingleton.getOperationSingleton());
+
+            }
+        });
+        button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+                new ManageMac().setVisible(true);
 
             }
         });
