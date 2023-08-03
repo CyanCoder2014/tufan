@@ -55,12 +55,9 @@ public class MachineService {
             st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                System.out.println("mt.id");
-                System.out.println(rs.getString("mt.id"));
-
                 Machine machine = new Machine(
-                        Long.valueOf(rs.getString("mt.id")),
-                        rs.getString("mt.name"),
+                        Long.valueOf(rs.getString("id")),
+                        rs.getString("name"),
                         null
                 );
                 machines.add(machine);
@@ -87,6 +84,49 @@ public class MachineService {
             if (type != null) {
                 sqlStringBuilder.append(" AND ")
                         .append("mt.name LIKE ").append("'%").append(type).append("%'");
+            }
+            sqlStringBuilder.append(";");
+
+            String sql = sqlStringBuilder.toString();
+            System.out.println(sql);
+
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                System.out.println("mt.id");
+                System.out.println(rs.getString("mt.id"));
+
+                MachineType machineType = new MachineType(
+                        Long.valueOf(rs.getString("mt.id")),
+                        Long.valueOf(rs.getString("mt.machine_id")),
+                        rs.getString("mt.name"),
+                        null
+                );
+                machineTypes.add(machineType);
+            }
+
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ManageMacType.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+        return machineTypes;
+    }
+
+
+
+    public ArrayList<MachineType> fetchMachineTypes(Integer macId, Integer typeId) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tufan-g11", "adminMG", "maghsoud71");
+            StringBuilder sqlStringBuilder = new StringBuilder();
+            sqlStringBuilder.append("SELECT * FROM machines m " +
+                            " LEFT JOIN machine_types mt ON m.id = mt.machine_id WHERE ")
+                    .append("m.id = ").append(macId);
+            if (typeId != null) {
+                sqlStringBuilder.append(" AND ")
+                        .append("mt.id = ").append(typeId);
             }
             sqlStringBuilder.append(";");
 

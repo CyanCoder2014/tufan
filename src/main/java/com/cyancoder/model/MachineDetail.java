@@ -6,36 +6,36 @@ public class MachineDetail {
 
     private  Long id;
     private  Long machine_types_id;
-    private  Integer distance;  // برد
+    private  int distance;  // برد
     private  Double deg_mil;  // درجه میلیم
     private  Double deg_bar;  // درجه بارابان
     private  Double deg_bar_b;  // درجه بازوئی
-    private  Integer top;  // قله مسیر گلوله
+    private  int top;  // قله مسیر گلوله
 
-    private  Integer cor_dir;  // تصحیحات: سمت: انحراف
-    private  Integer cor_dir_w;  // تصحیحات: سمت: باد 10 متر در ثانیه
-    private  Integer cor_dis_w;  //  تصحیحات: برد: باد بردی 10 متر در ثانیه
-    private  Integer cor_dis_p;  //  تصحیحات: عنوان
-    private  Integer cor_dis_air_tem;  //  تصحیحات: عنوان
-    private  Integer cor_dis_s;  //  تصحیحات: عنوان
-    private  Integer cor_dis_tem;  //  تصحیحات: عنوان
-    private  Integer cor_dis_wg;  //  تصحیحات: عنوان
-    private  Integer cor_dis_mil;  //  تصحیحات: عنوان
+    private  int cor_dir;  // تصحیحات: سمت: انحراف
+    private  int cor_dir_w;  // تصحیحات: سمت: باد 10 متر در ثانیه
+    private  int cor_dis_w;  //  تصحیحات: برد: باد بردی 10 متر در ثانیه
+    private  int cor_dis_p;  //  تصحیحات: عنوان
+    private  int cor_dis_air_tem;  //  تصحیحات: عنوان
+    private  int cor_dis_s;  //  تصحیحات: عنوان
+    private  int cor_dis_tem;  //  تصحیحات: عنوان
+    private  int cor_dis_wg;  //  تصحیحات: عنوان
+    private  int cor_dis_mil;  //  تصحیحات: عنوان
 
-    private  Integer dis_deg;  // تغییر برد به ازای یک میلیم تغییر در زاویه درجه
-    private  Integer b;  // دوشاخه
-    private  Integer deg;  // زاویه درجه
+    private  int dis_deg;  // تغییر برد به ازای یک میلیم تغییر در زاویه درجه
+    private  int b;  // دوشاخه
+    private  int deg;  // زاویه درجه
     private  Double land_deg;  // زاویه فرود
-    private  Integer speed;  // سرعت نهایی
-    private  Integer flight_time;  // زمان پرواز
-    private  Integer err_dis;  // title
-    private  Integer err_h;  // title
-    private  Integer err_dir;  // title
-    private  Integer state;
+    private  int speed;  // سرعت نهایی
+    private  int flight_time;  // زمان پرواز
+    private  int err_dis;  // title
+    private  int err_h;  // title
+    private  int err_dir;  // title
+    private  int state;
     private Date created_on;
 
 
-    public MachineDetail(Long id, Long machine_types_id, Integer distance, Double deg_mil, Double deg_bar, Double deg_bar_b, Integer top, Integer cor_dir, Integer cor_dir_w, Integer cor_dis_w, Integer cor_dis_p, Integer cor_dis_air_tem, Integer cor_dis_s, Integer cor_dis_tem, Integer cor_dis_wg, Integer cor_dis_mil, Integer dis_deg, Integer b, Integer deg, Double land_deg, Integer speed, Integer flight_time, Integer err_dis, Integer err_h, Integer err_dir, Integer state, Date created_on) {
+    public MachineDetail(Long id, Long machine_types_id, int distance, Double deg_mil, Double deg_bar, Double deg_bar_b, int top, int cor_dir, int cor_dir_w, int cor_dis_w, int cor_dis_p, int cor_dis_air_tem, int cor_dis_s, int cor_dis_tem, int cor_dis_wg, int cor_dis_mil, int dis_deg, int b, int deg, Double land_deg, int speed, int flight_time, int err_dis, int err_h, int err_dir, int state, Date created_on) {
         this.id = id;
         this.machine_types_id = machine_types_id;
         this.distance = distance;
@@ -65,7 +65,7 @@ public class MachineDetail {
         this.created_on = created_on;
     }
 
-    public MachineDetail(Long id, Long machine_types_id, Integer distance, Double deg_mil){
+    public MachineDetail(Long id, Long machine_types_id, int distance, Double deg_mil){
         this.id = id;
         this.machine_types_id = machine_types_id;
         this.distance = distance;
@@ -89,11 +89,11 @@ public class MachineDetail {
         this.machine_types_id = machine_types_id;
     }
 
-    public Integer getDistance() {
+    public int getDistance() {
         return distance;
     }
 
-    public void setDistance(Integer distance) {
+    public void setDistance(int distance) {
         this.distance = distance;
     }
 
@@ -121,107 +121,107 @@ public class MachineDetail {
         this.deg_bar_b = deg_bar_b;
     }
 
-    public Integer getTop() {
+    public int getTop() {
         return top;
     }
 
-    public void setTop(Integer top) {
+    public void setTop(int top) {
         this.top = top;
     }
 
-    public Integer getCor_dir() {
+    public int getCor_dir() {
         return cor_dir;
     }
 
-    public void setCor_dir(Integer cor_dir) {
+    public void setCor_dir(int cor_dir) {
         this.cor_dir = cor_dir;
     }
 
-    public Integer getCor_dir_w() {
+    public int getCor_dir_w() {
         return cor_dir_w;
     }
 
-    public void setCor_dir_w(Integer cor_dir_w) {
+    public void setCor_dir_w(int cor_dir_w) {
         this.cor_dir_w = cor_dir_w;
     }
 
-    public Integer getCor_dis_w() {
+    public int getCor_dis_w() {
         return cor_dis_w;
     }
 
-    public void setCor_dis_w(Integer cor_dis_w) {
+    public void setCor_dis_w(int cor_dis_w) {
         this.cor_dis_w = cor_dis_w;
     }
 
-    public Integer getCor_dis_p() {
+    public int getCor_dis_p() {
         return cor_dis_p;
     }
 
-    public void setCor_dis_p(Integer cor_dis_p) {
+    public void setCor_dis_p(int cor_dis_p) {
         this.cor_dis_p = cor_dis_p;
     }
 
-    public Integer getCor_dis_air_tem() {
+    public int getCor_dis_air_tem() {
         return cor_dis_air_tem;
     }
 
-    public void setCor_dis_air_tem(Integer cor_dis_air_tem) {
+    public void setCor_dis_air_tem(int cor_dis_air_tem) {
         this.cor_dis_air_tem = cor_dis_air_tem;
     }
 
-    public Integer getCor_dis_s() {
+    public int getCor_dis_s() {
         return cor_dis_s;
     }
 
-    public void setCor_dis_s(Integer cor_dis_s) {
+    public void setCor_dis_s(int cor_dis_s) {
         this.cor_dis_s = cor_dis_s;
     }
 
-    public Integer getCor_dis_tem() {
+    public int getCor_dis_tem() {
         return cor_dis_tem;
     }
 
-    public void setCor_dis_tem(Integer cor_dis_tem) {
+    public void setCor_dis_tem(int cor_dis_tem) {
         this.cor_dis_tem = cor_dis_tem;
     }
 
-    public Integer getCor_dis_wg() {
+    public int getCor_dis_wg() {
         return cor_dis_wg;
     }
 
-    public void setCor_dis_wg(Integer cor_dis_wg) {
+    public void setCor_dis_wg(int cor_dis_wg) {
         this.cor_dis_wg = cor_dis_wg;
     }
 
-    public Integer getCor_dis_mil() {
+    public int getCor_dis_mil() {
         return cor_dis_mil;
     }
 
-    public void setCor_dis_mil(Integer cor_dis_mil) {
+    public void setCor_dis_mil(int cor_dis_mil) {
         this.cor_dis_mil = cor_dis_mil;
     }
 
-    public Integer getDis_deg() {
+    public int getDis_deg() {
         return dis_deg;
     }
 
-    public void setDis_deg(Integer dis_deg) {
+    public void setDis_deg(int dis_deg) {
         this.dis_deg = dis_deg;
     }
 
-    public Integer getB() {
+    public int getB() {
         return b;
     }
 
-    public void setB(Integer b) {
+    public void setB(int b) {
         this.b = b;
     }
 
-    public Integer getDeg() {
+    public int getDeg() {
         return deg;
     }
 
-    public void setDeg(Integer deg) {
+    public void setDeg(int deg) {
         this.deg = deg;
     }
 
@@ -233,51 +233,51 @@ public class MachineDetail {
         this.land_deg = land_deg;
     }
 
-    public Integer getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 
-    public void setSpeed(Integer speed) {
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 
-    public Integer getFlight_time() {
+    public int getFlight_time() {
         return flight_time;
     }
 
-    public void setFlight_time(Integer flight_time) {
+    public void setFlight_time(int flight_time) {
         this.flight_time = flight_time;
     }
 
-    public Integer getErr_dis() {
+    public int getErr_dis() {
         return err_dis;
     }
 
-    public void setErr_dis(Integer err_dis) {
+    public void setErr_dis(int err_dis) {
         this.err_dis = err_dis;
     }
 
-    public Integer getErr_h() {
+    public int getErr_h() {
         return err_h;
     }
 
-    public void setErr_h(Integer err_h) {
+    public void setErr_h(int err_h) {
         this.err_h = err_h;
     }
 
-    public Integer getErr_dir() {
+    public int getErr_dir() {
         return err_dir;
     }
 
-    public void setErr_dir(Integer err_dir) {
+    public void setErr_dir(int err_dir) {
         this.err_dir = err_dir;
     }
 
-    public Integer getState() {
+    public int getState() {
         return state;
     }
 
-    public void setState(Integer state) {
+    public void setState(int state) {
         this.state = state;
     }
 

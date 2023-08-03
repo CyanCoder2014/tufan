@@ -1,8 +1,6 @@
 package com.cyancoder.panel.machine;
 
-import com.cyancoder.model.FireLoad;
-import com.cyancoder.model.MachineDetail;
-import com.cyancoder.model.OperationSingleton;
+import com.cyancoder.model.*;
 import com.cyancoder.service.CalculateElevationItems;
 import com.cyancoder.service.CalculateGisItems;
 import com.cyancoder.service.ElevationFind;
@@ -16,7 +14,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.util.Objects;
+import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 public class MachinePanel extends JPanel {
 
@@ -136,20 +137,13 @@ public class MachinePanel extends JPanel {
         selectType.setEnabled(false);
 
 
-        machineService.fetchMachines();
-        macSelectArray = new String[]{"توپ 10 ام 46"};//////===
 
+
+        ArrayList<Machine> machines = machineService.fetchMachines();
+        List<String> field1List = machines.stream().map(Machine::getName).toList();
+        macSelectArray = field1List.toArray(new String[0]);
         DefaultComboBoxModel<String> macSelectModel = new DefaultComboBoxModel<>(macSelectArray);
         selectMac.setModel(macSelectModel);
-
-
-//        typeSelectArray = new String[]{"خرج کامل"};//////===
-        machineService.fetchMachineTypes("1",null);
-
-
-        DefaultComboBoxModel<String> selectTypeModel = new DefaultComboBoxModel<>(typeSelectArray);
-        selectType.setModel(selectTypeModel);
-
 
 
 
@@ -202,6 +196,13 @@ public class MachinePanel extends JPanel {
         selectMac.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                ArrayList<MachineType> machineTypes = machineService.fetchMachineTypes((String) selectMac.getSelectedItem(),null);
+                List<String> field1List = machineTypes.stream().map(MachineType::getName).toList();
+                typeSelectArray = field1List.toArray(new String[0]);
+                DefaultComboBoxModel<String> selectTypeModel = new DefaultComboBoxModel<>(typeSelectArray);
+                selectType.setModel(selectTypeModel);
+
                 selectType.setEnabled(true);
             }
         });
