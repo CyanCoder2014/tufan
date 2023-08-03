@@ -215,9 +215,9 @@ public class ManageMac extends javax.swing.JFrame {
                     saveUser(fname, lname, id);
                     DefaultTableModel model = (DefaultTableModel) tblStudents.getModel();
                     Object[] row = new Object[4];
-                    row[0] = fname;
+                    row[0] = id;
                     row[1] = lname;
-                    row[2] = id;
+                    row[2] = lname;
                     model.addRow(row);
                 } else {
                     alert("Please provide a different id number", "Similar id found");
@@ -279,9 +279,9 @@ public class ManageMac extends javax.swing.JFrame {
         // TODO add your handling code here:
         int i = tblStudents.getSelectedRow();
         TableModel model = tblStudents.getModel();
-        txtFname.setText(model.getValueAt(i, 0).toString());
-        txtLname.setText(model.getValueAt(i, 1).toString());
-        txtId.setText(model.getValueAt(i, 2).toString());
+        txtFname.setText(model.getValueAt(i, 1).toString());
+        txtLname.setText(model.getValueAt(i, 2).toString());
+        txtId.setText(model.getValueAt(i, 0).toString());
     }//GEN-LAST:event_tblStudentsMouseClicked
 
     //handles delete button action
@@ -338,7 +338,7 @@ public class ManageMac extends javax.swing.JFrame {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tufan-g11", "adminMG", "maghsoud71");
-            String sql = "UPDATE `student`SET fname='" + fname + "',lname='" + lname + "'WHERE id_number='" + id + "'";
+            String sql = "UPDATE `student`SET name='" + fname + "',note='" + lname + "'WHERE id='" + id + "'";
             st = con.createStatement();
             st.execute(sql);
         } catch (ClassNotFoundException | SQLException ex) {
@@ -352,7 +352,7 @@ public class ManageMac extends javax.swing.JFrame {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tufan-g11", "adminMG", "maghsoud71");
-            String sql = "DELETE FROM `student` WHERE id_number='" + id + "'";
+            String sql = "DELETE FROM `student` WHERE id='" + id + "'";
             st = con.createStatement();
             st.execute(sql);
         } catch (ClassNotFoundException | SQLException ex) {
