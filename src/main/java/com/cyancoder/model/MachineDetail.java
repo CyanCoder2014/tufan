@@ -7,9 +7,9 @@ public class MachineDetail {
     private  Long id;
     private  Long machine_types_id;
     private  int distance;  // برد
-    private  Double deg_mil;  // درجه میلیم
-    private  Double deg_bar;  // درجه بارابان
-    private  Double deg_bar_b;  // درجه بازوئی
+    private  double deg_mil;  // درجه میلیم
+    private  double deg_bar;  // درجه بارابان
+    private  double deg_bar_b;  // درجه بازوئی
     private  int top;  // قله مسیر گلوله
 
     private  int cor_dir;  // تصحیحات: سمت: انحراف
@@ -25,7 +25,7 @@ public class MachineDetail {
     private  int dis_deg;  // تغییر برد به ازای یک میلیم تغییر در زاویه درجه
     private  int b;  // دوشاخه
     private  int deg;  // زاویه درجه
-    private  Double land_deg;  // زاویه فرود
+    private  double land_deg;  // زاویه فرود
     private  int speed;  // سرعت نهایی
     private  int flight_time;  // زمان پرواز
     private  int err_dis;  // title
@@ -35,7 +35,7 @@ public class MachineDetail {
     private Date created_on;
 
 
-    public MachineDetail(Long id, Long machine_types_id, int distance, Double deg_mil, Double deg_bar, Double deg_bar_b, int top, int cor_dir, int cor_dir_w, int cor_dis_w, int cor_dis_p, int cor_dis_air_tem, int cor_dis_s, int cor_dis_tem, int cor_dis_wg, int cor_dis_mil, int dis_deg, int b, int deg, Double land_deg, int speed, int flight_time, int err_dis, int err_h, int err_dir, int state, Date created_on) {
+    public MachineDetail(Long id, Long machine_types_id, int distance, double deg_mil, double deg_bar, double deg_bar_b, int top, int cor_dir, int cor_dir_w, int cor_dis_w, int cor_dis_p, int cor_dis_air_tem, int cor_dis_s, int cor_dis_tem, int cor_dis_wg, int cor_dis_mil, int dis_deg, int b, int deg, double land_deg, int speed, int flight_time, int err_dis, int err_h, int err_dir, int state, Date created_on) {
         this.id = id;
         this.machine_types_id = machine_types_id;
         this.distance = distance;
@@ -65,7 +65,7 @@ public class MachineDetail {
         this.created_on = created_on;
     }
 
-    public MachineDetail(Long id, Long machine_types_id, int distance, Double deg_mil){
+    public MachineDetail(Long id, Long machine_types_id, int distance, double deg_mil){
         this.id = id;
         this.machine_types_id = machine_types_id;
         this.distance = distance;
@@ -97,27 +97,27 @@ public class MachineDetail {
         this.distance = distance;
     }
 
-    public Double getDeg_mil() {
+    public double getDeg_mil() {
         return deg_mil;
     }
 
-    public void setDeg_mil(Double deg_mil) {
+    public void setDeg_mil(double deg_mil) {
         this.deg_mil = deg_mil;
     }
 
-    public Double getDeg_bar() {
+    public double getDeg_bar() {
         return deg_bar;
     }
 
-    public void setDeg_bar(Double deg_bar) {
+    public void setDeg_bar(double deg_bar) {
         this.deg_bar = deg_bar;
     }
 
-    public Double getDeg_bar_b() {
+    public double getDeg_bar_b() {
         return deg_bar_b;
     }
 
-    public void setDeg_bar_b(Double deg_bar_b) {
+    public void setDeg_bar_b(double deg_bar_b) {
         this.deg_bar_b = deg_bar_b;
     }
 
@@ -225,11 +225,11 @@ public class MachineDetail {
         this.deg = deg;
     }
 
-    public Double getLand_deg() {
+    public double getLand_deg() {
         return land_deg;
     }
 
-    public void setLand_deg(Double land_deg) {
+    public void setLand_deg(double land_deg) {
         this.land_deg = land_deg;
     }
 
