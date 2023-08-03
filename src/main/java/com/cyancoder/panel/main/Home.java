@@ -52,7 +52,7 @@ public class Home extends JFrame{
 
         setContentPane(homePanel);
         setTitle("Tufan - G11");
-        setSize(1100,750);
+        setSize(1050,700);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
         applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);

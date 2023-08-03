@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.cyancoder.panel.main.Home">
   <grid id="27dc6" binding="homePanel" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="20" left="0" bottom="0" right="0"/>
+    <margin top="15" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="720" height="400"/>
     </constraints>
@@ -9,7 +9,7 @@
     <border type="none"/>
     <children>
       <grid id="90b7b" binding="topPanel" layout-manager="GridLayoutManager" row-count="1" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="25" left="25" bottom="25" right="25"/>
+        <margin top="5" left="25" bottom="5" right="25"/>
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>

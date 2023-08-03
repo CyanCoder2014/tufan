@@ -51,7 +51,7 @@ public class MachinePanel extends JPanel {
     JLabel fieldDistM = new JLabel();
     JLabel labelDistKm = new JLabel("برد (مسافت به کیلومتر):");
     JLabel fieldDistKm = new JLabel();
-    JLabel labelDirMil = new JLabel("سمت نقشه ای (گرا به میلیوم):");
+    JLabel labelDirMil = new JLabel("سمت نقشه ای (گرا به میلیم):");
     JLabel fieldDirMil = new JLabel();
     JLabel labelDirDeg = new JLabel("سمت نقشه ای (گرا به درجه):");
     JLabel fieldDirDeg = new JLabel();
@@ -71,13 +71,13 @@ public class MachinePanel extends JPanel {
     JCheckBox checkBoxMac = new JCheckBox();
     JLabel labelCheckBoxMac = new JLabel("قفل ویرایش توپ و خرج");
 
-    JLabel labelCorrectionDir = new JLabel("تصحیح سمت:");
+    JLabel labelCorrectionDir = new JLabel("تصحیح سمت (میلیم):");
     JLabel fieldCorrectionDir = new JLabel();
-    JLabel labelMacDir = new JLabel("سمت توپ:");
+    JLabel labelMacDir = new JLabel("سمت توپ (میلیم):");
     JLabel fieldMacDir = new JLabel();
 
 
-    JLabel labelDeg = new JLabel("درجه:");
+    JLabel labelDeg = new JLabel("درجه (میلیم):");
     JLabel fieldDeg = new JLabel();
     JLabel labelArrDir = new JLabel("سمت تیر:");
     JLabel fieldArrDir = new JLabel();
@@ -98,6 +98,9 @@ public class MachinePanel extends JPanel {
     JLabel labelCorrectionTitle = new JLabel("تصحیحات:");
 
     JButton btnCorrection = new JButton("ثبت تصحیحات");
+
+
+    JButton btnRemoveFireLoad = new JButton("حذف آتشبار");
 
 
     private final CalculateGisItems calculateGisItems;
@@ -175,10 +178,11 @@ public class MachinePanel extends JPanel {
                 if (checkBoxLoc.isSelected()) {
                     setDisablePointFields(false);
                     btnCalDir.setEnabled(false);
-
+                    btnRemoveFireLoad.setEnabled(false);
                 } else {
                     setDisablePointFields(true);
                     btnCalDir.setEnabled(true);
+                    btnRemoveFireLoad.setEnabled(true);
                 }
             }
         });
@@ -187,9 +191,11 @@ public class MachinePanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (checkBoxMac.isSelected()) {
                     setDisableMacFields(false);
+                    btnCalDirAndDeg.setEnabled(false);
 
                 } else {
                     setDisableMacFields(true);
+                    btnCalDirAndDeg.setEnabled(true);
                 }
             }
         });
@@ -273,6 +279,7 @@ public class MachinePanel extends JPanel {
 
         groupLayout.setHorizontalGroup(groupLayout.createSequentialGroup()
                 .addGroup(groupLayout.createParallelGroup()
+                        .addComponent(btnRemoveFireLoad)
                         .addComponent(labelLocTitle)
                         .addGroup(groupLayout.createSequentialGroup()
                                 .addComponent(labelMacX)
@@ -374,9 +381,11 @@ public class MachinePanel extends JPanel {
 
         groupLayout.setVerticalGroup(groupLayout.createParallelGroup()
                 .addGroup(groupLayout.createSequentialGroup()
-                        .addGap(10, 20, 30)
+                        .addGap(5, 10, 20)
+                        .addComponent(btnRemoveFireLoad)
+                        .addGap(3, 5, 8)
                         .addComponent(labelLocTitle)
-                        .addGap(10, 20, 30)
+                        .addGap(15, 20, 25)
                         .addGroup(groupLayout.createParallelGroup()
                                 .addComponent(labelMacX)
                                 .addComponent(fieldMacX, GroupLayout.DEFAULT_SIZE,
@@ -589,6 +598,7 @@ public class MachinePanel extends JPanel {
 
             setInvisibleElvFields(true);
             btnCalDir.setEnabled(false);
+            btnRemoveFireLoad.setEnabled(false);
 
             Long distance = calculateGisItems.calculateDistance(macX, macY, aimX, aimY);
             Long directionDeg = calculateGisItems.calculateDegDirection(macX, macY, aimX, aimY);
@@ -598,9 +608,12 @@ public class MachinePanel extends JPanel {
 
             Runnable runnable1 = () -> {
                  macElv = elevationFind.findPointElevation(macX, macY);
+                 System.out.println("macElv: "+macElv);
             };
             Runnable runnable2 = () -> {
                  aimElv = elevationFind.findPointElevation(aimX, aimY);
+                System.out.println("aimElv: "+aimElv);
+
             };
             Thread t1 = new Thread(runnable1,"t1 - elv");
             Thread t2 = new Thread(runnable2,"t2 - elv");
@@ -620,8 +633,11 @@ public class MachinePanel extends JPanel {
             fieldDistKm.setText(String.valueOf(distance / 1000));
             fieldDirMil.setText(String.valueOf(directionMil));
             fieldDirDeg.setText(String.valueOf(directionDeg));
+            System.out.println("before: "+0);
 
             if (macElv!=null && aimElv!=null) {
+                System.out.println("after: "+0);
+
                 Long elvDiff = calculateElevationItems.calculateElvDifference(macElv, aimElv);
                 Long levelDiff = calculateElevationItems.calculateLevelDifference(elvDiff, distance);
                 this.levelDiff = levelDiff;
@@ -675,6 +691,7 @@ public class MachinePanel extends JPanel {
 
             }
 
+            btnCalDirAndDeg.setEnabled(false);
             checkBoxMac.setSelected(true);
             setDisableMacFields(false);
 

@@ -180,10 +180,31 @@ public class MachineService {
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 MachineDetail machineDetail = new MachineDetail(
-                        Long.valueOf(rs.getString("id")),
-                        Long.valueOf(rs.getString("machine_types_id")),
-                        Integer.valueOf(rs.getString("distance")),
-                        Double.valueOf(rs.getString("deg_mil"))
+                        rs.getLong("id"),
+                        rs.getLong("machine_types_id"),
+                        rs.getInt("distance"),
+                        rs.getInt("deg_mil"),
+                        rs.getDouble("deg_bar"),
+                        rs.getDouble("deg_bar_b"),
+                        rs.getInt("top"),
+                        rs.getInt("cor_dir"),
+                        rs.getInt("cor_dir_w"),
+                        rs.getInt("cor_dis_w"),
+                        rs.getInt("cor_dis_p"),
+                        rs.getInt("cor_dis_air_tem"),
+                        rs.getInt("cor_dis_s"),
+                        rs.getInt("cor_dis_tem"),
+                        rs.getInt("cor_dis_wg"),
+                        rs.getInt("cor_dis_mil"),
+                        rs.getInt("dis_deg"),
+                        rs.getInt("b"),
+                        rs.getInt("deg"),
+                        rs.getDouble("land_deg"),
+                        rs.getInt("speed"),
+                        rs.getInt("flight_time"),
+                        rs.getInt("err_dis"),
+                        rs.getInt("err_h"),
+                        rs.getInt("err_dir")
                 );
                 machineDetails.add(machineDetail);
             }
