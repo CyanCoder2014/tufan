@@ -21,7 +21,7 @@ public class ManageMacType extends javax.swing.JFrame {
     Connection con;
     Statement st;
     Integer macId;
-    ArrayList<Machine> machines = new ArrayList<>();
+    ArrayList<MachineType> machines = new ArrayList<>();
 
     public ManageMacType(Integer macId) {
         this.macId = macId;
@@ -126,9 +126,9 @@ public class ManageMacType extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
 
-                int macId = Integer.parseInt(!txtId.getText().isEmpty()?txtId.getText().trim():"0");
-                if (macId != 0) {
-                    new ManageMacType(macId).setVisible(true);
+                int macTypeId = Integer.parseInt(!txtId.getText().isEmpty()?txtId.getText().trim():"0");
+                if (macTypeId != 0) {
+                    new ManageMacDetail(macTypeId).setVisible(true);
                 } else {
                     alert("موردی انتخاب نشده است!", "No row selected");
                 }
@@ -412,11 +412,11 @@ public class ManageMacType extends javax.swing.JFrame {
             st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                Machine machine = new Machine(rs.getLong("id"), rs.getString("name"), rs.getString("state"));
+                MachineType machine = new MachineType(rs.getLong("id"), rs.getLong("machine_id"), rs.getString("name"), rs.getInt("state"));
                 machines.add(machine);
             }
             DefaultTableModel model = (DefaultTableModel) tblMachines.getModel();
-            for (Machine machine : machines) {
+            for (MachineType machine : machines) {
 
                 Object[] row = new Object[4];
                 row[0] = machine.getId();
