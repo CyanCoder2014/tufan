@@ -11,10 +11,10 @@ public class Machine {
     private  Integer state;
     private Date created_on;
 
-    public Machine(Long id, String name, Integer state){
+    public Machine(Long id, String name, String note){
         this.id = id;
         this.name = name;
-        this.state = state;
+        this.note = note;
     }
     public Long getId() {
         return id;

@@ -144,16 +144,11 @@ public class MachinePanel extends JPanel {
         selectType.setEnabled(false);
 
 
-
-
         ArrayList<Machine> machines = machineService.fetchMachines();
         List<String> field1List = machines.stream().map(Machine::getName).toList();
         macSelectArray = field1List.toArray(new String[0]);
         DefaultComboBoxModel<String> macSelectModel = new DefaultComboBoxModel<>(macSelectArray);
         selectMac.setModel(macSelectModel);
-
-
-
 
 
         btnCalDir.addActionListener(new ActionListener() {
@@ -207,7 +202,7 @@ public class MachinePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                ArrayList<MachineType> machineTypes = machineService.fetchMachineTypes((String) selectMac.getSelectedItem(),null);
+                ArrayList<MachineType> machineTypes = machineService.fetchMachineTypes((String) selectMac.getSelectedItem(), null);
                 List<String> field1List = machineTypes.stream().map(MachineType::getName).toList();
                 typeSelectArray = field1List.toArray(new String[0]);
                 DefaultComboBoxModel<String> selectTypeModel = new DefaultComboBoxModel<>(typeSelectArray);
@@ -221,7 +216,7 @@ public class MachinePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                RemoveMachine dialog = new RemoveMachine(machinePanel,fireLoad);
+                RemoveMachine dialog = new RemoveMachine(machinePanel, fireLoad);
                 dialog.pack();
                 dialog.setVisible(true);
             }
@@ -621,16 +616,16 @@ public class MachinePanel extends JPanel {
             this.directionMil = directionMil;
 
             Runnable runnable1 = () -> {
-                 macElv = elevationFind.findPointElevation(macX, macY);
-                 System.out.println("macElv: "+macElv);
+                macElv = elevationFind.findPointElevation(macX, macY);
+                System.out.println("macElv: " + macElv);
             };
             Runnable runnable2 = () -> {
-                 aimElv = elevationFind.findPointElevation(aimX, aimY);
-                System.out.println("aimElv: "+aimElv);
+                aimElv = elevationFind.findPointElevation(aimX, aimY);
+                System.out.println("aimElv: " + aimElv);
 
             };
-            Thread t1 = new Thread(runnable1,"t1 - elv");
-            Thread t2 = new Thread(runnable2,"t2 - elv");
+            Thread t1 = new Thread(runnable1, "t1 - elv");
+            Thread t2 = new Thread(runnable2, "t2 - elv");
 
             t1.start();
             t2.start();
@@ -638,7 +633,8 @@ public class MachinePanel extends JPanel {
             try {
                 t1.join();
                 t2.join();
-            }catch (Exception ignored){}
+            } catch (Exception ignored) {
+            }
 
             fieldElvMac.setText(String.valueOf(macElv));
             fieldElvAim.setText(String.valueOf(aimElv));
@@ -647,10 +643,10 @@ public class MachinePanel extends JPanel {
             fieldDistKm.setText(String.valueOf(distance / 1000));
             fieldDirMil.setText(String.valueOf(directionMil));
             fieldDirDeg.setText(String.valueOf(directionDeg));
-            System.out.println("before: "+0);
+            System.out.println("before: " + 0);
 
-            if (macElv!=null && aimElv!=null) {
-                System.out.println("after: "+0);
+            if (macElv != null && aimElv != null) {
+                System.out.println("after: " + 0);
 
                 Long elvDiff = calculateElevationItems.calculateElvDifference(macElv, aimElv);
                 Long levelDiff = calculateElevationItems.calculateLevelDifference(elvDiff, distance);
@@ -667,12 +663,10 @@ public class MachinePanel extends JPanel {
                 operationSingleton.getFireLoad().set(operationSingleton.getFireLoad().indexOf(fireLoad), fireLoad);
                 checkBoxLoc.setSelected(true);
                 setDisablePointFields(false);
-            }
-            else{
+            } else {
                 btnCalDir.setEnabled(true);
                 JOptionPane.showMessageDialog(null, "مختصات خارج از محدوده نقشه ارتفاعی است!");
             }
-
 
 
         } else
@@ -683,7 +677,7 @@ public class MachinePanel extends JPanel {
     private void callBtnCalDirAndDeg() {
 
 
-        if (selectMac.getSelectedItem()!=null && selectType.getSelectedItem()!=null) {
+        if (selectMac.getSelectedItem() != null && selectType.getSelectedItem() != null) {
             MachineDetail machineDetail = machineService.getMachineDetails(
                     selectMac.getSelectedItem().toString(),
                     selectType.getSelectedItem().toString(),
@@ -703,7 +697,8 @@ public class MachinePanel extends JPanel {
                 fieldLandingDeg.setText(String.valueOf(machineDetail.getLand_deg()));
                 fieldMaxSpeed.setText(String.valueOf(machineDetail.getSpeed()));
 
-            }
+            } else
+                JOptionPane.showMessageDialog(null, "مسافت خارج از محدوده جدول توپ می باشد!");
 
             btnCalDirAndDeg.setEnabled(false);
             checkBoxMac.setSelected(true);
