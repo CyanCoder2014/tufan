@@ -47,17 +47,38 @@ public class ManageMacDetail extends javax.swing.JFrame {
         btnShowDetail = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
+
+        lDistance = new javax.swing.JLabel();
+        fDistance = new javax.swing.JTextField();
+
+        lDegMill = new javax.swing.JLabel();
+        fDegMill = new javax.swing.JTextField();
+
+        lCorDir = new javax.swing.JLabel();
+        fCorDir = new javax.swing.JTextField();
+
+        lFlightTime = new javax.swing.JLabel();
+        fFlightTime = new javax.swing.JTextField();
+
+
 //        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("تنظیمات توپ ها");
         setResizable(false);
         applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel1.setText("نام توپ");
+        lDistance.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        fDistance.setText("مسافت");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel2.setText("توضیحات");
+        lDegMill.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        fDegMill.setText("درجه میلیم");
+
+        lCorDir.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        fCorDir.setText("تصحیح انحراف سمت");
+
+        lFlightTime.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        fFlightTime.setText("زمان پرواز");
+
 
 //        jLabel3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
 //        jLabel3.setText("Reg Number");
@@ -73,7 +94,7 @@ public class ManageMacDetail extends javax.swing.JFrame {
 
                 },
                 new String[]{
-                        "شناسه", "نام توپ", "توضیحات"
+                        "مسافت", "درجه میلیم", "تصحیح انحراف سمت", "زمان پرواز"
                 }
         ) {
             boolean[] canEdit = new boolean[]{
@@ -443,5 +464,22 @@ public class ManageMacDetail extends javax.swing.JFrame {
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtState;
     private javax.swing.JTextField txtDistance;
-    // End of variables declaration//GEN-END:variables
+
+
+
+
+    private javax.swing.JLabel lDistance;
+    private javax.swing.JTextField fDistance;
+
+    private javax.swing.JLabel lDegMill;
+    private javax.swing.JTextField fDegMill;
+
+    private javax.swing.JLabel lCorDir;
+    private javax.swing.JTextField fCorDir;
+
+    private javax.swing.JLabel lFlightTime;
+    private javax.swing.JTextField fFlightTime;
+
+
+
 }
