@@ -1,10 +1,12 @@
 package com.cyancoder.panel.setting;
 
-import com.cyancoder.model.User;
+import com.cyancoder.model.Machine;
+import com.cyancoder.model.MachineType;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -18,70 +20,81 @@ public class ManageMacType extends javax.swing.JFrame {
      */
     Connection con;
     Statement st;
-    ArrayList<User> students = new ArrayList<>();
+    Integer macId;
+    ArrayList<Machine> machines = new ArrayList<>();
 
-    public ManageMacType() {
+    public ManageMacType(Integer macId) {
+        this.macId = macId;
         initComponents();
         fetch();
     }
 
+
     private void initComponents() {
 
-        txtFname = new javax.swing.JTextField();
+        txtId = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtLname = new javax.swing.JTextField();
-        txtId = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
+        txtState = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblStudents = new javax.swing.JTable();
+        tblMachines = new javax.swing.JTable();
         btnSave = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnDelete1 = new javax.swing.JButton();
-        btnDelete3 = new javax.swing.JButton();
+        btnShowDetail = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("تنظیمات خرج توپ");
-//        setResizable(false);
+//        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("تنظیمات توپ ها");
+        setResizable(false);
+        applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 
-        jLabel1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jLabel1.setText("First Name");
 
-        jLabel2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jLabel2.setText("Last Name");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setText("نام توپ");
 
-        jLabel3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jLabel3.setText("Reg Number");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setText("توضیحات");
 
-        tblStudents.setModel(new DefaultTableModel(
-            new Object [][] {
+//        jLabel3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+//        jLabel3.setText("Reg Number");
 
-            },
-            new String [] {
-                "First Name", "Last Name", "Id Number", "asdasdasd"
-            }
+
+        tblMachines.setFont(new java.awt.Font("Tahoma", 0, 12));
+        txtId.setFont(new java.awt.Font("Tahoma", 0, 12));
+        txtName.setFont(new java.awt.Font("Tahoma", 0, 12));
+        txtState.setFont(new java.awt.Font("Tahoma", 0, 12));
+
+        tblMachines.setModel(new DefaultTableModel(
+                new Object[][]{
+
+                },
+                new String[]{
+                        "شناسه", "نام توپ", "توضیحات"
+                }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
+            boolean[] canEdit = new boolean[]{
+                    false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
-        tblStudents.setCellSelectionEnabled(true);
-        tblStudents.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblMachines.setCellSelectionEnabled(true);
+        tblMachines.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblStudentsMouseClicked(evt);
+                tblMachinesMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblStudents);
-        if (tblStudents.getColumnModel().getColumnCount() > 0) {
-            tblStudents.getColumnModel().getColumn(2).setResizable(false);
+        jScrollPane1.setViewportView(tblMachines);
+        if (tblMachines.getColumnModel().getColumnCount() > 0) {
+            tblMachines.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        btnSave.setText("Save");
+        btnSave.setText("افزودن/کپی");
         btnSave.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnSave.setIconTextGap(0);
         btnSave.setInheritsPopupMenu(true);
@@ -91,15 +104,15 @@ public class ManageMacType extends javax.swing.JFrame {
             }
         });
 
-        btnUpdate.setText("Update");
-//        btnUpdate.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnUpdate.setText("ویرایش");
+        btnUpdate.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUpdateActionPerformed(evt);
             }
         });
 
-        btnDelete1.setText("Delete");
+        btnDelete1.setText("حذف");
         btnDelete1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnDelete1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,193 +120,225 @@ public class ManageMacType extends javax.swing.JFrame {
             }
         });
 
-        btnDelete3.setText("asdfasdfasdf");
-        btnDelete3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnDelete3.addActionListener(new java.awt.event.ActionListener() {
+        btnShowDetail.setText("نمایش تنظیمات خرج ها و جدول توپ");
+        btnShowDetail.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnShowDetail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDelete1ActionPerformed(evt);
+
+
+                int macId = Integer.parseInt(!txtId.getText().isEmpty()?txtId.getText().trim():"0");
+                if (macId != 0) {
+                    new ManageMacType(macId).setVisible(true);
+                } else {
+                    alert("موردی انتخاب نشده است!", "No row selected");
+                }
+
+
+
             }
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel4.setText("SIMPLE CRUD APPLICATION");
+        jLabel4.setText("افزودن و ویرایش توپ ها");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtFname, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+//                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                                    .addComponent(txtState, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                        .addComponent(txtState, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        )
+                                                        )
+                                                        .addComponent(btnShowDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(27, 27, 27)
+//                        .addComponent(btnShowDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(btnDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        ))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtLname, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(btnDelete3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    ))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(218, 218, 218)
-                .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(218, 218, 218)
+                                .addComponent(jLabel4)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtFname, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtLname, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnDelete3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(30, 30, 30)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(txtState, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(30, 30, 30)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+//                            .addComponent(txtState, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                )
+                                                .addComponent(btnShowDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(39, 39, 39)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+//                                .addComponent(btnShowDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(btnDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
+
+//        setAlignmentX(SwingConstants.RIGHT);
+        applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        tblMachines.setAlignmentX(SwingConstants.RIGHT);
+        tblMachines.applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        tblMachines.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+
     }
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        String fname = txtFname.getText().trim();
-        String lname = txtLname.getText().trim();
-        String id = txtId.getText().trim();
-        
-        if (!fname.isEmpty() && !lname.isEmpty() && !id.isEmpty()) {
+        Integer id = null; //txtId.getText().trim();
+        String name = txtName.getText().trim();
+        String state = txtState.getText().trim();
+
+        if (!name.isEmpty()) {
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/user", "root", "");
-                String sql = "select * from student where id_number='" + id + "'";
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tufan-g11", "adminMG", "maghsoud71");
+                String sql = "select * from machine_types where machine_id ="+macId+" and id='" + id + "'";
                 st = con.createStatement();
                 ResultSet rs = st.executeQuery(sql);
-                if (!rs.first()) {
-                    saveUser(fname, lname, id);
-                    DefaultTableModel model = (DefaultTableModel) tblStudents.getModel();
-                    Object[] row = new Object[4];
-                    row[0] = fname;
-                    row[1] = lname;
-                    row[2] = id;
-                    model.addRow(row);
-                } else {
-                    alert("Please provide a different id number", "Similar id found");
-                }
+//                if (!rs.next()) {
+                saveMachine(id, name);
+                DefaultTableModel model = (DefaultTableModel) tblMachines.getModel();
+//                Object[] row = new Object[4];
+//                row[0] = id;
+//                row[1] = name;
+//                row[2] = state;
+//                model.addRow(row);
+                model.setRowCount(0);
+                fetch();
+
+//                } else {
+//                    alert("Please provide a different id number", "Similar id found");
+//                }
 
                 clear();
             } catch (SQLException | ClassNotFoundException ex) {
-                Logger.getLogger(ManageMacType.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ManageMac.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 try {
                     con.close();
                     st.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(ManageMacType.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ManageMac.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } //        else if (!id.matches("^[0-9]{8}$")) {
         //            alert("please provide a valid id number", "Wrong id");
-        //        } 
+        //        }
         else {
-            alert("please fill in all the details");
+            alert("نام توپ به درستی وارد نشده است!");
         }
-    }
+    }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {
-        String fname = txtFname.getText().trim();
-        String lname = txtLname.getText().trim();
-        String id = txtId.getText().trim();
-        if (!fname.isEmpty() && !lname.isEmpty() && !id.isEmpty()) {
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        int id = Integer.parseInt(!txtId.getText().isEmpty()?txtId.getText().trim():"0");
+        String name = txtName.getText().trim();
+        String state = txtState.getText().trim();
+        if (id != 0 && !name.isEmpty()) {
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/user", "root", "");
-                String sql = "select * from student where id_number='" + id + "'";
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tufan-g11", "adminMG", "maghsoud71");
+                String sql = "select * from machine_types where machine_id ="+macId+" and id='" + id + "'";
                 st = con.createStatement();
                 ResultSet rs = st.executeQuery(sql);
-                if (rs.first()) {
-                    update(fname, lname, id);
-                    DefaultTableModel model = (DefaultTableModel) tblStudents.getModel();
-                    model.setRowCount(0);                   
+
+                System.out.println(sql);
+//                System.out.println(rs.relative(1));
+                if (rs.next()) {
+                    update(id, name);
+                    DefaultTableModel model = (DefaultTableModel) tblMachines.getModel();
+                    model.setRowCount(0);
                     fetch();
-                    alert("Update was successful");
-                    
+                    alert("ویرایش با موفقیت انجام شد");
+
                 } else {
-                    alert("There is no such student", "Update error");
+                    alert("توپ مورد نظر یافت نشد!", "Update error");
                     clear();
                 }
 
             } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(ManageMacType.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ManageMac.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            alert("There is nothing to update :(","No row selected");
+            alert("موردی برای ویرایش انتخاب نشده است!", "No row selected");
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     //set the values of a row to the textfields
-    private void tblStudentsMouseClicked(java.awt.event.MouseEvent evt) {
-        int i = tblStudents.getSelectedRow();
-        TableModel model = tblStudents.getModel();
-        txtFname.setText(model.getValueAt(i, 0).toString());
-        txtLname.setText(model.getValueAt(i, 1).toString());
-        txtId.setText(model.getValueAt(i, 2).toString());
-    }//GEN-LAST:event_tblStudentsMouseClicked
+    private void tblMachinesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMachinesMouseClicked
+        // TODO add your handling code here:
+        int i = tblMachines.getSelectedRow();
+        TableModel model = tblMachines.getModel();
+        txtId.setText(model.getValueAt(i, 0).toString());
+        txtName.setText(model.getValueAt(i, 1).toString());
+//        txtState.setText(model.getValueAt(i, 2).toString());
+    }//GEN-LAST:event_tblMachinesMouseClicked
 
     //handles delete button action
-    private void btnDelete1ActionPerformed(java.awt.event.ActionEvent evt) {
-        int i = tblStudents.getSelectedRow();
+    private void btnDelete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete1ActionPerformed
+        // TODO add your handling code here:
+        int i = tblMachines.getSelectedRow();
         if (i >= 0) {
             int option = JOptionPane.showConfirmDialog(rootPane,
-                    "Are you sure you want to Delete?", "Delete confirmation", JOptionPane.YES_NO_OPTION);
+                    "آیا از حذف این مورد مطمئن هستید؟", "Delete confirmation", JOptionPane.YES_NO_OPTION);
             if (option == 0) {
-                TableModel model = tblStudents.getModel();
+                TableModel model = tblMachines.getModel();
 
-                String id = model.getValueAt(i, 2).toString();
-                if (tblStudents.getSelectedRows().length == 1) {
+                Integer id = Integer.valueOf(model.getValueAt(i, 0).toString());
+                if (tblMachines.getSelectedRows().length == 1) {
                     delete(id);
-                    DefaultTableModel model1 = (DefaultTableModel) tblStudents.getModel();
+                    DefaultTableModel model1 = (DefaultTableModel) tblMachines.getModel();
                     model1.setRowCount(0);
                     fetch();
                     clear();
                 }
             }
         } else {
-            alert("Please select a row to delete");
+            alert("ابتدا مورد مورد نظر برای حذف را انتخاب کنید");
         }
     }//GEN-LAST:event_btnDelete1ActionPerformed
 
@@ -307,82 +352,82 @@ public class ManageMacType extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(rootPane, msg, title, JOptionPane.ERROR_MESSAGE);
     }
 
-    //method to save user to the db
-    public void saveUser(String fname, String lname, String id) {
+    //method to save machine to the db
+    public void saveMachine(Integer id, String name) {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/user", "root", "");
-            String sql = "INSERT INTO `student`(`fname`, `lname`, `id_number`) "
-                    + "VALUES ('" + fname + "','" + lname + "','" + id + "')";
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tufan-g11", "adminMG", "maghsoud71");
+            String sql = "INSERT INTO `machine_types`(`id`, `machine_id`, `name`) "
+                    + "VALUES (" + id + ","+ macId + ",'" + name + "')";
             st = con.createStatement();
             st.execute(sql);
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(ManageMacType.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ManageMac.class.getName()).log(Level.SEVERE, null, ex);
         }
 //        fetch();
     }
 
     //update the db
-    public void update(String fname, String lname, String id) {
+    public void update(Integer id, String name) {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/user", "root", "");
-            String sql = "UPDATE `student`SET fname='" + fname + "',lname='" + lname + "'WHERE id_number='" + id + "'";
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tufan-g11", "adminMG", "maghsoud71");
+            String sql = "UPDATE `machine_types`SET name='" + name + "' WHERE id='" + id + "'";
             st = con.createStatement();
             st.execute(sql);
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(ManageMacType.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ManageMac.class.getName()).log(Level.SEVERE, null, ex);
         }
 //        fetch();
     }
 
     //delete details in the db
-    public void delete(String id) {
+    public void delete(Integer id) {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/user", "root", "");
-            String sql = "DELETE FROM `student` WHERE id_number='" + id + "'";
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tufan-g11", "adminMG", "maghsoud71");
+            String sql = "DELETE FROM `machine_types` WHERE id='" + id + "'";
             st = con.createStatement();
             st.execute(sql);
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(ManageMacType.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ManageMac.class.getName()).log(Level.SEVERE, null, ex);
         }
 //        fetch();
     }
 
     //method to clear the txt fields
     private void clear() {
-        txtFname.setText("");
-        txtLname.setText("");
         txtId.setText("");
+        txtName.setText("");
+        txtState.setText("");
     }
 
-    //fetch 
+    //fetch
     private void fetch() {
-        students.clear();
+        machines.clear();
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/user", "root", "");
-            String sql = "select * from student";
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tufan-g11", "adminMG", "maghsoud71");
+            String sql = "select * from machine_types where machine_id ="+macId;
             st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                User user = new User(rs.getString("fname"), rs.getString("lname"), rs.getString("id_number"));
-                students.add(user);
+                Machine machine = new Machine(rs.getLong("id"), rs.getString("name"), rs.getString("state"));
+                machines.add(machine);
             }
-            DefaultTableModel model = (DefaultTableModel) tblStudents.getModel();
-            for (User user : students) {
+            DefaultTableModel model = (DefaultTableModel) tblMachines.getModel();
+            for (Machine machine : machines) {
 
                 Object[] row = new Object[4];
-                row[0] = user.getFname();
-                row[1] = user.getLname();
-                row[2] = user.getId();
+                row[0] = machine.getId();
+                row[1] = machine.getName();
+                row[2] = machine.getState();
 
                 model.addRow(row);
             }
 
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(ManageMacType.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ManageMac.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -391,15 +436,15 @@ public class ManageMacType extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
 
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new ManageMacType().setVisible(true);
+            new ManageMac().setVisible(true);
         });
     }
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete1;
-    private javax.swing.JButton btnDelete3;
+    private javax.swing.JButton btnShowDetail;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
@@ -407,8 +452,9 @@ public class ManageMacType extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblStudents;
-    private javax.swing.JTextField txtFname;
+    private javax.swing.JTable tblMachines;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtLname;
+    private javax.swing.JTextField txtState;
+    private javax.swing.JTextField txtName;
+    // End of variables declaration//GEN-END:variables
 }

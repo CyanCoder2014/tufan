@@ -1,6 +1,7 @@
 package com.cyancoder.panel.setting;
 
 import com.cyancoder.model.Machine;
+import com.cyancoder.model.MachineType;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -121,7 +122,18 @@ public class ManageMac extends javax.swing.JFrame {
         btnShowDetail.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnShowDetail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDelete1ActionPerformed(evt);
+
+
+
+                int macId = Integer.parseInt(!txtId.getText().isEmpty()?txtId.getText().trim():"0");
+                if (macId != 0) {
+                    new ManageMacType(macId).setVisible(true);
+                } else {
+                    alert("موردی انتخاب نشده است!", "No row selected");
+                }
+
+
+
             }
         });
 
@@ -262,7 +274,7 @@ public class ManageMac extends javax.swing.JFrame {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        int id = Integer.parseInt(txtId.getText().trim());
+        int id = Integer.parseInt(!txtId.getText().isEmpty()?txtId.getText().trim():"0");
         String name = txtName.getText().trim();
         String note = txtNote.getText().trim();
         if (id != 0 && !name.isEmpty() && !note.isEmpty()) {
