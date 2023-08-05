@@ -13,7 +13,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 <!--        <geotools.version>30-SNAPSHOT</geotools.version>-->
 <!--        <geotools.version>21.3</geotools.version>-->
-        <geotools.version>21.5</geotools.version>
+<!--        <geotools.version>21.5</geotools.version>-->
+        <geotools.version>22.0</geotools.version>
         <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
     <dependencies>

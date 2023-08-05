@@ -1,5 +1,6 @@
 package com.cyancoder.service;
 
+import com.cyancoder.config.BaseUrls;
 import com.cyancoder.model.GeneralFields;
 import com.cyancoder.model.OperationSingleton;
 import org.geotools.data.*;
@@ -12,13 +13,19 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 public class ElevationFind
 {
 
-    private static String baseLoc = "C:\\Tufan-Application";
+    private static String baseLoc = BaseUrls.baseLocWin;
     public Long findPointElevation(Double x, Double y) {
+
+        if (!Files.exists(Path.of(baseLoc))) {
+            baseLoc = BaseUrls.baseLocLnx;
+        }
 
         File file = new File(baseLoc+"/maps/provinces_dem/DEM_AZar_Sharghi.shp");
 
