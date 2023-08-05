@@ -13,7 +13,7 @@ INSERT IGNORE INTO `users`
 
 INSERT IGNORE INTO `machines`
 (`id`, `name`, `title`, `note`, `state`, `created_on`) VALUES
-(1, 't-130mm', 'توپ ۱۳۰ م.م', null, null, null);
+(1, 'توپ ۱۳۰ م.م - ام ۴۶', 'توپ ۱۳۰ م.م', 'گروه ۱۱', null, null);
 
 INSERT IGNORE INTO `machine_types`
 (`id`, `machine_id`, `name`, `state`, `created_on`) VALUES

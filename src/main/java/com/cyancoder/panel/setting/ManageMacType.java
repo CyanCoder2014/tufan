@@ -47,7 +47,7 @@ public class ManageMacType extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
 //        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("تنظیمات توپ ها");
+        setTitle("تنظیمات خرج توپ ها");
         setResizable(false);
         applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 
@@ -72,7 +72,7 @@ public class ManageMacType extends javax.swing.JFrame {
 
                 },
                 new String[]{
-                        "شناسه", "نام توپ", "توضیحات"
+                        "شناسه", " خرج توپ"
                 }
         ) {
             boolean[] canEdit = new boolean[]{
@@ -91,7 +91,7 @@ public class ManageMacType extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblMachines);
         if (tblMachines.getColumnModel().getColumnCount() > 0) {
-            tblMachines.getColumnModel().getColumn(2).setResizable(false);
+            tblMachines.getColumnModel().getColumn(1).setResizable(false);
         }
 
         btnSave.setText("افزودن/کپی");
@@ -120,7 +120,7 @@ public class ManageMacType extends javax.swing.JFrame {
             }
         });
 
-        btnShowDetail.setText("نمایش تنظیمات خرج ها و جدول توپ");
+        btnShowDetail.setText("نمایش تنظیمات جدول توپ");
         btnShowDetail.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnShowDetail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,7 +139,7 @@ public class ManageMacType extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel4.setText("افزودن و ویرایش توپ ها");
+        jLabel4.setText("افزودن و ویرایش خرج های توپ ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -156,12 +156,13 @@ public class ManageMacType extends javax.swing.JFrame {
                                                                 .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                         .addGroup(layout.createSequentialGroup()
                                                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+//                                                                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        )
 //                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 //                                    .addComponent(txtState, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                        .addComponent(txtState, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                                                                        .addComponent(txtState, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                         )
                                                         )
                                                         .addComponent(btnShowDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -196,8 +197,9 @@ public class ManageMacType extends javax.swing.JFrame {
                                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGap(30, 30, 30)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(txtState, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+//                                                        .addComponent(txtState, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                )
                                                 .addGap(30, 30, 30)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 //                            .addComponent(txtState, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -269,7 +271,7 @@ public class ManageMacType extends javax.swing.JFrame {
         //            alert("please provide a valid id number", "Wrong id");
         //        }
         else {
-            alert("نام توپ به درستی وارد نشده است!");
+            alert("نام خرج به درستی وارد نشده است!");
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -392,7 +394,7 @@ public class ManageMacType extends javax.swing.JFrame {
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ManageMac.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        fetch();
+        fetch();
     }
 
     //method to clear the txt fields
@@ -421,7 +423,7 @@ public class ManageMacType extends javax.swing.JFrame {
                 Object[] row = new Object[4];
                 row[0] = machine.getId();
                 row[1] = machine.getName();
-                row[2] = machine.getState();
+//                row[2] = machine.getState();
 
                 model.addRow(row);
             }

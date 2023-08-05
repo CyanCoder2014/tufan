@@ -62,22 +62,22 @@ public class ManageMacDetail extends javax.swing.JFrame {
 
 
 //        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("تنظیمات توپ ها");
+        setTitle("تنظیمات جدول توپ ها");
         setResizable(false);
         applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 
 
         lDistance.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        fDistance.setText("مسافت");
+        lDistance.setText("مسافت");
 
         lDegMill.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        fDegMill.setText("درجه میلیم");
+        lDegMill.setText("درجه میلیم");
 
         lCorDir.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        fCorDir.setText("تصحیح انحراف سمت");
+        lCorDir.setText("تصحیح انحراف سمت");
 
         lFlightTime.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        fFlightTime.setText("زمان پرواز");
+        lFlightTime.setText("زمان پرواز");
 
 
 //        jLabel3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
@@ -94,7 +94,7 @@ public class ManageMacDetail extends javax.swing.JFrame {
 
                 },
                 new String[]{
-                        "مسافت", "درجه میلیم", "تصحیح انحراف سمت", "زمان پرواز"
+                        "شناسه","مسافت", "درجه میلیم", "تصحیح انحراف سمت", "زمان پرواز"
                 }
         ) {
             boolean[] canEdit = new boolean[]{
@@ -147,7 +147,7 @@ public class ManageMacDetail extends javax.swing.JFrame {
 
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel4.setText("افزودن و ویرایش توپ ها");
+        jLabel4.setText("افزودن و ویرایش مشخصات جدول توپ ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -158,21 +158,35 @@ public class ManageMacDetail extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(txtDistance, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-//                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                                    .addComponent(txtState, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                        .addComponent(txtState, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        )
-                                                        )
-                                                        .addComponent(btnShowDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+
+
+                                                         .addGroup(layout.createSequentialGroup()
+                                                         .addComponent(lDistance, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(18, 18, 18)
+                                                          .addComponent(fDistance, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                         )
+                                                                .addGroup(layout.createSequentialGroup()
+                                                                        .addComponent(lDegMill, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addGap(18, 18, 18)
+                                                                        .addComponent(fDegMill, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                )
+                                                                .addGroup(layout.createSequentialGroup()
+                                                                        .addComponent(lCorDir, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addGap(18, 18, 18)
+                                                                        .addComponent(fCorDir, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                )
+                                                                .addGroup(layout.createSequentialGroup()
+                                                                        .addComponent(lFlightTime, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addGap(18, 18, 18)
+                                                                        .addComponent(fFlightTime, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                )
+
+
+
+
+
+//                                                        .addComponent(btnShowDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                )
 
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE))
                                         .addGroup(layout.createSequentialGroup()
@@ -199,19 +213,38 @@ public class ManageMacDetail extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
+
+
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(txtDistance, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(lDistance, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(fDistance, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                )
                                                 .addGap(30, 30, 30)
+
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(txtState, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(lDegMill, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(fDegMill, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                )
+                                                .addGap(30, 30, 30)
+
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(lCorDir, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(fCorDir, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                )
+                                                .addGap(30, 30, 30)
+
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(lFlightTime, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(fFlightTime, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                )
+
+
                                                 .addGap(30, 30, 30)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 //                            .addComponent(txtState, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
 //                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 )
-                                                .addComponent(btnShowDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                                .addComponent(btnShowDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(39, 39, 39)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -237,18 +270,19 @@ public class ManageMacDetail extends javax.swing.JFrame {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         Integer id = null; //txtId.getText().trim();
-        String name = txtDistance.getText().trim();
-        String state = txtState.getText().trim();
-
-        if (!name.isEmpty()) {
+        int distance = Integer.parseInt(!fDistance.getText().isEmpty()?fDistance.getText().trim():"0");
+        int degMill = Integer.parseInt(!fDegMill.getText().isEmpty()?fDegMill.getText().trim():"0");
+        int corDir = Integer.parseInt(!fCorDir.getText().isEmpty()?fCorDir.getText().trim():"0");
+        int flightTime = Integer.parseInt(!fFlightTime.getText().isEmpty()?fFlightTime.getText().trim():"0");
+        if (distance!=0) {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tufan-g11", "adminMG", "maghsoud71");
-                String sql = "select * from machine_details where machine_types_id ="+macTypeId+" and id='" + id + "'";
+                String sql = "select * from machine_details where machine_types_id ="+macTypeId+" and id='" + id + "' order by distance";
                 st = con.createStatement();
                 ResultSet rs = st.executeQuery(sql);
 //                if (!rs.next()) {
-                saveMachine(id, name);
+                saveMachine(id, distance, degMill, corDir, flightTime);
                 DefaultTableModel model = (DefaultTableModel) tblMachines.getModel();
 //                Object[] row = new Object[4];
 //                row[0] = id;
@@ -277,16 +311,18 @@ public class ManageMacDetail extends javax.swing.JFrame {
         //            alert("please provide a valid id number", "Wrong id");
         //        }
         else {
-            alert("نام توپ به درستی وارد نشده است!");
+            alert("برد در جدول توپ به درستی وارد نشده است!");
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         int id = Integer.parseInt(!txtId.getText().isEmpty()?txtId.getText().trim():"0");
-        String name = txtDistance.getText().trim();
-        String state = txtState.getText().trim();
-        if (id != 0 && !name.isEmpty()) {
+        int distance = Integer.parseInt(!fDistance.getText().isEmpty()?fDistance.getText().trim():"0");
+        int degMill = Integer.parseInt(!fDegMill.getText().isEmpty()?fDegMill.getText().trim():"0");
+        int corDir = Integer.parseInt(!fCorDir.getText().isEmpty()?fCorDir.getText().trim():"0");
+        int flightTime = Integer.parseInt(!fFlightTime.getText().isEmpty()?fFlightTime.getText().trim():"0");
+        if (id != 0 && distance!=0) {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tufan-g11", "adminMG", "maghsoud71");
@@ -297,14 +333,14 @@ public class ManageMacDetail extends javax.swing.JFrame {
                 System.out.println(sql);
 //                System.out.println(rs.relative(1));
                 if (rs.next()) {
-                    update(id, name);
+                    update(id, distance, degMill, corDir, flightTime);
                     DefaultTableModel model = (DefaultTableModel) tblMachines.getModel();
                     model.setRowCount(0);
                     fetch();
                     alert("ویرایش با موفقیت انجام شد");
 
                 } else {
-                    alert("توپ مورد نظر یافت نشد!", "Update error");
+                    alert("مشخصات توپ مورد نظر یافت نشد!", "Update error");
                     clear();
                 }
 
@@ -322,8 +358,10 @@ public class ManageMacDetail extends javax.swing.JFrame {
         int i = tblMachines.getSelectedRow();
         TableModel model = tblMachines.getModel();
         txtId.setText(model.getValueAt(i, 0).toString());
-        txtDistance.setText(model.getValueAt(i, 1).toString());
-//        txtState.setText(model.getValueAt(i, 2).toString());
+        fDistance.setText(model.getValueAt(i, 1).toString());
+        fDegMill.setText(model.getValueAt(i, 2).toString());
+        fCorDir.setText(model.getValueAt(i, 3).toString());
+        fFlightTime.setText(model.getValueAt(i, 4).toString());
     }//GEN-LAST:event_tblMachinesMouseClicked
 
     //handles delete button action
@@ -361,12 +399,12 @@ public class ManageMacDetail extends javax.swing.JFrame {
     }
 
     //method to save machine to the db
-    public void saveMachine(Integer id, String name) {
+    public void saveMachine(Integer id,Integer distance,Integer degMill,Integer corDir,Integer flightTime) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tufan-g11", "adminMG", "maghsoud71");
-            String sql = "INSERT INTO `machine_details`(`id`, `machine_types_id`, `distance`) "
-                    + "VALUES (" + id + ","+ macTypeId + ",'" + name + "')";
+            String sql = "INSERT INTO `machine_details`(`id`, `machine_types_id`, `distance`, `deg_mil`, `cor_dir`, `flight_time`) "
+                    + "VALUES (" + id + ","+ macTypeId + "," + distance +"," + degMill + "," + corDir + "," + flightTime + ")";
             st = con.createStatement();
             st.execute(sql);
         } catch (ClassNotFoundException | SQLException ex) {
@@ -376,17 +414,17 @@ public class ManageMacDetail extends javax.swing.JFrame {
     }
 
     //update the db
-    public void update(Integer id, String name) {
+    public void update(Integer id,Integer distance,Integer degMill,Integer corDir,Integer flightTime) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tufan-g11", "adminMG", "maghsoud71");
-            String sql = "UPDATE `machine_types`SET name='" + name + "' WHERE id='" + id + "'";
+            String sql = "UPDATE `machine_details`SET distance=" + distance +" , deg_mil=" +corDir+" , cor_dir=" +degMill+" , flight_time=" +flightTime+ " WHERE id=" + id + "";
             st = con.createStatement();
             st.execute(sql);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ManageMacDetail.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        fetch();
+        fetch();
     }
 
     //delete details in the db
@@ -394,13 +432,13 @@ public class ManageMacDetail extends javax.swing.JFrame {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tufan-g11", "adminMG", "maghsoud71");
-            String sql = "DELETE FROM `machine_types` WHERE id='" + id + "'";
+            String sql = "DELETE FROM `machine_details` WHERE id='" + id + "'";
             st = con.createStatement();
             st.execute(sql);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ManageMacDetail.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        fetch();
+        fetch();
     }
 
     //method to clear the txt fields
@@ -408,6 +446,10 @@ public class ManageMacDetail extends javax.swing.JFrame {
         txtId.setText("");
         txtDistance.setText("");
         txtState.setText("");
+        fDistance.setText("");
+        fDegMill.setText("");
+        fCorDir.setText("");
+        fFlightTime.setText("");
     }
 
     //fetch
@@ -416,20 +458,24 @@ public class ManageMacDetail extends javax.swing.JFrame {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tufan-g11", "adminMG", "maghsoud71");
-            String sql = "select * from machine_details where machine_types_id ="+macTypeId;
+            String sql = "select * from machine_details where machine_types_id ="+macTypeId +" order by distance";
             st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                MachineDetail machine = new MachineDetail(rs.getLong("id"), rs.getLong("machine_types_id"), rs.getInt("distance"), rs.getInt("state"));
+                MachineDetail machine = new MachineDetail(rs.getLong("id"), rs.getLong("machine_types_id")
+                            , rs.getInt("distance"), rs.getInt("deg_mil"),
+                        rs.getInt("cor_dir"), rs.getInt("flight_time"));
                 machines.add(machine);
             }
             DefaultTableModel model = (DefaultTableModel) tblMachines.getModel();
             for (MachineDetail machine : machines) {
 
-                Object[] row = new Object[4];
+                Object[] row = new Object[5];
                 row[0] = machine.getId();
                 row[1] = machine.getDistance();
-                row[2] = machine.getState();
+                row[2] = machine.getDeg_mil();
+                row[3] = machine.getCor_dir();
+                row[4] = machine.getFlight_time();
 
                 model.addRow(row);
             }

@@ -391,7 +391,7 @@ public class ManageMac extends javax.swing.JFrame {
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ManageMac.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        fetch();
+        fetch();
     }
 
     //method to clear the txt fields
