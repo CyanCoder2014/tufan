@@ -25,13 +25,13 @@ public class MachinePanel extends JPanel {
     JLabel labelLocTitle = new JLabel("مختصات آتشبار و هدف:");
 
     JLabel labelMacX = new JLabel("طول جغرافیایی آتشبار:");
-    JFormattedTextField fieldMacX = new JFormattedTextField(getMaskFormatter("##.###"));
+    JFormattedTextField fieldMacX = new JFormattedTextField(getMaskFormatter("##.######"));
     JLabel labelMacY = new JLabel("عرض جغرافیایی آتشبار:");
-    JFormattedTextField fieldMacY = new JFormattedTextField(getMaskFormatter("##.###"));
+    JFormattedTextField fieldMacY = new JFormattedTextField(getMaskFormatter("##.######"));
     JLabel labelAimX = new JLabel("طول جغرافیایی هدف:");
-    JFormattedTextField fieldAimX = new JFormattedTextField(getMaskFormatter("##.###"));
+    JFormattedTextField fieldAimX = new JFormattedTextField(getMaskFormatter("##.######"));
     JLabel labelAimY = new JLabel("عرض جغرافیایی هدف:");
-    JFormattedTextField fieldAimY = new JFormattedTextField(getMaskFormatter("##.###"));
+    JFormattedTextField fieldAimY = new JFormattedTextField(getMaskFormatter("##.######"));
 
     JButton btnCalDir = new JButton("محاسبه برد و گرا (سمت نقشه‌ای)");
 
