@@ -1,6 +1,11 @@
 package com.cyancoder.service;
 
 
+import org.geotools.geometry.DirectPosition2D;
+import org.geotools.referencing.CRS;
+import org.geotools.referencing.GeodeticCalculator;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+
 import java.awt.*;
 import java.util.Locale;
 
@@ -20,20 +25,50 @@ public class CalculateGisItems {
         return (long) (earthRadius * Math.acos(Math.sin(lat1)*Math.sin(lat2) + Math.cos(lat1)*Math.cos(lat2)*Math.cos(lon1 - lon2)));
     }
 
+    public static double radToBearing(double rad) {
+        return (Math.toDegrees(rad) + 360) % 360;
+    }
+
     public Long calculateDegDirection(Double originX, Double originY,Double targetX,Double targetY){
 
-        double longitude1 = originX;
-        double longitude2 = targetX;
-        double latitude1 = Math.toRadians(originY);
-        double latitude2 = Math.toRadians(targetY);
-        double longDiff= Math.toRadians(longitude2-longitude1);
-        double y= Math.sin(longDiff)*Math.cos(latitude2);
-        double x=Math.cos(latitude1)*Math.sin(latitude2)-Math.sin(latitude1)*Math.cos(latitude2)*Math.cos(longDiff);
 
-        return (long) ((Math.toDegrees(Math.atan2(y, x))+360)%360);
 
-//        double xDiff = targetX - originX;
-//        double yDiff = targetY - originY;
+
+
+
+//        originY = Math.toRadians(originY);
+//        originX = Math.toRadians(originX);
+//        targetY = Math.toRadians(targetY);
+//        targetX = Math.toRadians(targetX);
+//
+//        double dy = targetX - originX;
+//        double dx = Math.cos(Math.PI / 180 * originX) * (targetX - originX);
+//        double angle33 = Math.atan2(dy, dx);
+//        System.out.println("angle33");
+//        System.out.println(Math.round(180+Math.toDegrees(angle33)));
+//
+//
+//
+        double dLon = (targetX - originX);
+        double θ = Math.atan2(sin(dLon)*cos(targetY), cos(originY)*sin(targetY) - sin(originY)*cos(targetY)*cos(dLon));
+
+
+        System.out.println(θ);
+
+        double y = Math.sin(dLon) * Math.cos(targetY);
+        double x = Math.cos(originY) * Math.sin(targetY) - Math.sin(originY)
+                * Math.cos(targetY) * Math.cos(dLon);
+//
+////        System.out.println(x*1000+" "+y*1000);
+//        double brng = Math.atan(y/ x);
+//
+//        brng = Math.toDegrees(brng);
+//        brng = (brng + 360) % 360;
+//        brng = 360 - brng; // count degrees counter-clockwise - remove to make clockwise
+//
+//        return (long) ((long) 360+90 - 124);
+
+
 //
 //        xDiff = 45.828174 - 37.686414;
 //        yDiff = 37.738009 - 45.851462;
@@ -67,18 +102,43 @@ public class CalculateGisItems {
 //            angle += 360;
 
 
+        Double lat1 = (originY);
+        Double lon1 = (originX);
+        Double lat2 = (targetY);
+        Double lon2 = (targetX);
+
+
+
+        double xDiff = lon2 - lon1;
+        double yDiff = lat2 - lat1;
 
 
 //        double angle = (double) Math.toDegrees(Math.atan(abs(xDiff)/abs(yDiff)));
-//
-//        if(xDiff > 0 && yDiff < 0 )
-//            angle = 180 - Math.abs(angle);
-//        if(xDiff < 0 && yDiff < 0 )
-//            angle = 180 + Math.abs(angle);
-//        if(xDiff < 0 && yDiff > 0 )
-//            angle = 360 - Math.abs(angle);
-//
+
+        double angle = Math.round(Math.toDegrees(θ));
+
+        if(xDiff > 0 && yDiff < 0 )
+            angle = 180 - Math.abs(angle);
+        if(xDiff < 0 && yDiff < 0 )
+            angle = 180 + Math.abs(angle);
+        if(xDiff < 0 && yDiff > 0 )
+            angle = 360 - Math.abs(angle);
+
+
+//        psi = atan2(
+//                2*(qw*qz + qx*qy),
+//                1-2*(qy*qy + qz*qz)
+//        )
+
+
+//        CoordinateReferenceSystem crs = CRS.decode("EPSG:32632");
+//        GeodeticCalculator gc = new GeodeticCalculator();
+//        gc.setStartingPosition(new DirectPosition2D(crs, p1.getX(), p1.getY()));
+//        gc.setDestinationPosition(new DirectPosition2D(crs, p2.getX(), p2.getY()));
+//        return gc.getAzimuth();
+
 //        return Math.round(angle);
+        return (long) angle;
     }
 
     public Long calculateMilDirection(Double originX, Double originY,Double targetX,Double targetY){
@@ -90,7 +150,7 @@ public class CalculateGisItems {
 
 
 
-    public static double distance(double lat1,
+    public  double distance(double lat1,
                                   double lat2, double lon1,
                                   double lon2)
     {
@@ -129,6 +189,20 @@ public class CalculateGisItems {
                 45.828174,37.738009 ));
         System.out.println(calculateGisItems.calculateDistance(45.851462, 37.686414,
                 45.828174,37.738009 ));
+
+
+//        System.out.println(calculateGisItems.calculateDegDirection(572970.0, 4177080.0,
+//                5755074.0,4171364.0 ));
+//        System.out.println(calculateGisItems.calculateMilDirection(572970.0, 4177080.0,
+//                5755074.0,4171364.0  ));
+//        System.out.println(calculateGisItems.calculateDistance(572970.0, 4177080.0,
+//                5755074.0,4171364.0 ));
+
+
+//        System.out.println(calculateGisItems.Deg2UTM(45.851462, 37.686414 ));
+
+
+
     }
 
 
@@ -138,9 +212,10 @@ public class CalculateGisItems {
     double Northing;
     int Zone;
     char Letter;
-    private void Deg2UTM(double Lat,double Lon)
+    private double Deg2UTM(double Lat,double Lon)
     {
-        Zone= (int) Math.floor(Lon/6+31);
+//        Zone= (int) Math.floor(Lon/6+31);
+        Zone= 38;
         if (Lat<-72)
             Letter='C';
         else if (Lat<-64)
@@ -187,6 +262,7 @@ public class CalculateGisItems {
         if (Letter<'M')
             Northing = Northing + 10000000;
         Northing=Math.round(Northing*100)*0.01;
+        return Easting;
     }
 
 
