@@ -31,8 +31,20 @@ public class CalculateGisItems {
 
     public Long calculateDegDirection(Double originX, Double originY,Double targetX,Double targetY){
 
+
+         originY = Math.toRadians(originY);
+         originX = Math.toRadians(originX);
+         targetY = Math.toRadians(targetY);
+         targetX = Math.toRadians(targetX);
+
+
         double dLon = (targetX - originX);
         double θ = Math.atan2(sin(dLon)*cos(targetY), cos(originY)*sin(targetY) - sin(originY)*cos(targetY)*cos(dLon));
+
+
+//        A = arcsin ( sin (90 – lat2) * sin (lon2 – lon1) / sin (b) );
+
+
 
         Double lat1 = (originY);
         Double lon1 = (originX);
