@@ -114,7 +114,7 @@ public class MachinePanel extends JPanel {
     private Long macElv;
     private Long aimElv;
 
-    private Long distance;
+    private Double distance;
     private Long directionMil = 0L;
     private Long levelDiff;
     private JPanel machinePanel;
@@ -609,8 +609,8 @@ public class MachinePanel extends JPanel {
             btnCalDir.setEnabled(false);
             btnRemoveFireLoad.setEnabled(false);
 
-            Long distance = calculateGisItems.calculateDistance(macX, macY, aimX, aimY);
-            Long directionDeg = calculateGisItems.calculateDegDirection(macX, macY, aimX, aimY);
+            Double distance = calculateGisItems.calculateDistance(macX, macY, aimX, aimY);
+            Long directionDeg = Math.round(calculateGisItems.calculateDegDirection(macX, macY, aimX, aimY));
             Long directionMil = calculateGisItems.calculateMilDirection(macX, macY, aimX, aimY);
             this.distance = distance;
             this.directionMil = directionMil;
@@ -639,8 +639,8 @@ public class MachinePanel extends JPanel {
             fieldElvMac.setText(String.valueOf(macElv));
             fieldElvAim.setText(String.valueOf(aimElv));
 
-            fieldDistM.setText(String.valueOf(distance));
-            fieldDistKm.setText(String.valueOf(distance / 1000));
+            fieldDistM.setText(String.valueOf(Math.round(distance)));
+            fieldDistKm.setText(String.valueOf(Math.round(distance/100) / 10));
             fieldDirMil.setText(String.valueOf(directionMil));
             fieldDirDeg.setText(String.valueOf(directionDeg));
             System.out.println("before: " + 0);
@@ -681,7 +681,7 @@ public class MachinePanel extends JPanel {
             MachineDetail machineDetail = machineService.getMachineDetails(
                     selectMac.getSelectedItem().toString(),
                     selectType.getSelectedItem().toString(),
-                    this.distance);
+                    Math.round(this.distance));
 
 
             if (machineDetail != null) {
