@@ -9,12 +9,12 @@ public class CalculateElevationItems {
 
     }
 
-    public Long calculateLevelDifference(Long elvDif, Long distance){
+    public Long calculateLevelDifference(Long elvDif, Double distance){
 
         long res = 0L;
 
         if (distance != 0 && elvDif != 0)
-            res =elvDif/(distance/1000);
+            res =Math.round(elvDif/(distance/1000));
 
         return res;
     }

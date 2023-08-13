@@ -12,9 +12,9 @@ mysql\bin\mysqld --defaults-file=mysql\bin\my.ini --standalone
 @REM goto finish
 
 @REM :error
-echo.
-echo MySQL konnte nicht gestartet werden
-echo MySQL could not be started
+@REM echo.
+@REM echo MySQL konnte nicht gestartet werden
+@REM echo MySQL could not be started
 @REM pause
 
 @REM :finish

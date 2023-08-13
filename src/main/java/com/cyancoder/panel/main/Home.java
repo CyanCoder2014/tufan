@@ -1,5 +1,6 @@
 package com.cyancoder.panel.main;
 
+import com.cyancoder.config.BaseUrls;
 import com.cyancoder.model.OperationSingleton;
 import com.cyancoder.panel.machine.AddMachine;
 import com.cyancoder.panel.machine.MachinePanel;
@@ -12,6 +13,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class Home extends JFrame{
 
@@ -43,11 +46,15 @@ public class Home extends JFrame{
     private JLabel labelHomeTitle;
     private JButton btnAbout;
 
-    private static String baseLoc = "C:\\Tufan-Application";
+    private static String baseLoc = BaseUrls.baseLocWin;
 
     public static Home staticHome;
 
     public Home() {
+
+        if (!Files.exists(Path.of(baseLoc))) {
+            baseLoc = BaseUrls.baseLocLnx;
+        }
 
         staticHome = this;
 

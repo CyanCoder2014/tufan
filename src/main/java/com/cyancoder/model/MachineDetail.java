@@ -6,13 +6,13 @@ public class MachineDetail {
 
     private  Long id;
     private  Long machine_types_id;
-    private  int distance;  // برد
-    private  int deg_mil;  // درجه میلیم
+    private  int distance;  //************** برد
+    private  int deg_mil;  //************** درجه میلیم
     private  double deg_bar;  // درجه بارابان
     private  double deg_bar_b;  // درجه بازوئی
     private  int top;  // قله مسیر گلوله
 
-    private  int cor_dir;  // تصحیحات: سمت: انحراف
+    private  int cor_dir;  //************** تصحیحات: سمت: انحراف
     private  int cor_dir_w;  // تصحیحات: سمت: باد 10 متر در ثانیه
     private  int cor_dis_w;  //  تصحیحات: برد: باد بردی 10 متر در ثانیه
     private  int cor_dis_p;  //  تصحیحات: عنوان
@@ -27,7 +27,7 @@ public class MachineDetail {
     private  int deg;  // زاویه درجه
     private  double land_deg;  // زاویه فرود
     private  int speed;  // سرعت نهایی
-    private  int flight_time;  // زمان پرواز
+    private  int flight_time;  //************** زمان پرواز
     private  int err_dis;  // title
     private  int err_h;  // title
     private  int err_dir;  // title
@@ -67,11 +67,13 @@ public class MachineDetail {
 //        this.created_on = created_on;
     }
 
-    public MachineDetail(Long id, Long machine_types_id, int distance, int deg_mil){
+    public MachineDetail(Long id, Long machine_types_id, int distance, int deg_mil, int cor_dir, int flight_time){
         this.id = id;
         this.machine_types_id = machine_types_id;
         this.distance = distance;
         this.deg_mil = deg_mil;
+        this.cor_dir = cor_dir;
+        this.flight_time = flight_time;
     }
 
 

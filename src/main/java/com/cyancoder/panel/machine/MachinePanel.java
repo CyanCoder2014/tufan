@@ -25,13 +25,13 @@ public class MachinePanel extends JPanel {
     JLabel labelLocTitle = new JLabel("مختصات آتشبار و هدف:");
 
     JLabel labelMacX = new JLabel("طول جغرافیایی آتشبار:");
-    JFormattedTextField fieldMacX = new JFormattedTextField(getMaskFormatter("##.###"));
+    JFormattedTextField fieldMacX = new JFormattedTextField(getMaskFormatter("##.######"));
     JLabel labelMacY = new JLabel("عرض جغرافیایی آتشبار:");
-    JFormattedTextField fieldMacY = new JFormattedTextField(getMaskFormatter("##.###"));
+    JFormattedTextField fieldMacY = new JFormattedTextField(getMaskFormatter("##.######"));
     JLabel labelAimX = new JLabel("طول جغرافیایی هدف:");
-    JFormattedTextField fieldAimX = new JFormattedTextField(getMaskFormatter("##.###"));
+    JFormattedTextField fieldAimX = new JFormattedTextField(getMaskFormatter("##.######"));
     JLabel labelAimY = new JLabel("عرض جغرافیایی هدف:");
-    JFormattedTextField fieldAimY = new JFormattedTextField(getMaskFormatter("##.###"));
+    JFormattedTextField fieldAimY = new JFormattedTextField(getMaskFormatter("##.######"));
 
     JButton btnCalDir = new JButton("محاسبه برد و گرا (سمت نقشه‌ای)");
 
@@ -114,7 +114,7 @@ public class MachinePanel extends JPanel {
     private Long macElv;
     private Long aimElv;
 
-    private Long distance;
+    private Double distance;
     private Long directionMil = 0L;
     private Long levelDiff;
     private JPanel machinePanel;
@@ -609,8 +609,8 @@ public class MachinePanel extends JPanel {
             btnCalDir.setEnabled(false);
             btnRemoveFireLoad.setEnabled(false);
 
-            Long distance = calculateGisItems.calculateDistance(macX, macY, aimX, aimY);
-            Long directionDeg = calculateGisItems.calculateDegDirection(macX, macY, aimX, aimY);
+            Double distance = calculateGisItems.calculateDistance(macX, macY, aimX, aimY);
+            Long directionDeg = Math.round(calculateGisItems.calculateDegDirection(macX, macY, aimX, aimY));
             Long directionMil = calculateGisItems.calculateMilDirection(macX, macY, aimX, aimY);
             this.distance = distance;
             this.directionMil = directionMil;
@@ -639,8 +639,8 @@ public class MachinePanel extends JPanel {
             fieldElvMac.setText(String.valueOf(macElv));
             fieldElvAim.setText(String.valueOf(aimElv));
 
-            fieldDistM.setText(String.valueOf(distance));
-            fieldDistKm.setText(String.valueOf(distance / 1000));
+            fieldDistM.setText(String.valueOf(Math.round(distance)));
+            fieldDistKm.setText(String.valueOf(Math.round(distance/100) / 10));
             fieldDirMil.setText(String.valueOf(directionMil));
             fieldDirDeg.setText(String.valueOf(directionDeg));
             System.out.println("before: " + 0);
@@ -681,7 +681,7 @@ public class MachinePanel extends JPanel {
             MachineDetail machineDetail = machineService.getMachineDetails(
                     selectMac.getSelectedItem().toString(),
                     selectType.getSelectedItem().toString(),
-                    this.distance);
+                    Math.round(this.distance));
 
 
             if (machineDetail != null) {

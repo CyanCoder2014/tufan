@@ -4,10 +4,13 @@ package com.cyancoder.service;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.cyancoder.config.BaseUrls;
 import com.cyancoder.frame.PointMapFrame;
 import com.cyancoder.model.OperationSingleton;
 import com.cyancoder.model.PointModel;
@@ -37,9 +40,13 @@ public class ShowMap {
     private static final Logger LOGGER = org.geotools.util.logging.Logging.getLogger(ShowMap.class);
 
 
-    private static String baseLoc = "C:\\Tufan-Application";
+    private static String baseLoc = BaseUrls.baseLocWin;
 
     public static void showMap() throws SchemaException, IOException {
+
+        if (!Files.exists(Path.of(baseLoc))) {
+            baseLoc = BaseUrls.baseLocLnx;
+        }
 
         Layer admLayer = setPolLayer(baseLoc+"/maps/IRN_adm/IRN_adm2.shp",Color.ORANGE.darker(),Color.decode("#f9d19d"),0.3f);
         Layer watAreaLayer = setPolLayer(baseLoc+"/maps/IRN_wat/IRN_water_areas_dcw.shp",Color.decode("#0077ff"),Color.decode("#0099ff"),0.8f);
