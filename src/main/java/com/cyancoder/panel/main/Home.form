@@ -80,7 +80,7 @@
         </constraints>
         <properties>
           <font name="Tahoma" size="16" style="1"/>
-          <text value="نرم افزار هدایت آتش طوفان    "/>
+          <text value="نرم افزار هاتم (هدایت آتش تمرکزی)    "/>
         </properties>
       </component>
       <grid id="f776" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">

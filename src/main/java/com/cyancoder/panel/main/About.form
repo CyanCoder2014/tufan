@@ -55,7 +55,7 @@
             </constraints>
             <properties>
               <font size="16" style="1"/>
-              <text value="نرم افزار هدایت آتش طوفان - گروه 11 توپخانه نزاجا"/>
+              <text value="نرم افزار هدایت آتش هاتم - گروه 11 توپخانه نزاجا"/>
             </properties>
           </component>
           <component id="e2904" class="javax.swing.JLabel">

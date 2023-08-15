@@ -1,8 +1,6 @@
 SET NAMES 'utf8';
 SET CHARACTER SET utf8;
 
-mysqli_set_charset($this->connect,'utf8');
-
 CREATE TABLE if not exists `users` (
     id INT(11) NOT NULL AUTO_INCREMENT,
     username varchar(255) NOT NULL,
