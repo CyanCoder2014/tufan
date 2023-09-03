@@ -6,6 +6,7 @@ import com.cyancoder.service.CalculateGisItems;
 import com.cyancoder.service.ElevationFind;
 import com.cyancoder.service.MachineService;
 import org.apache.commons.lang3.ArrayUtils;
+import org.geotools.swing.control.JIntegerField;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
@@ -35,19 +36,19 @@ public class MachinePanel extends JPanel {
 
 
 
-    String[] pointTypeSelectArray = new String[]{"UTM" , "مختصات جغرافیایی (درجه)"};
+    String[] pointTypeSelectArray = new String[]{"مختصات UTM" , "مختصات جغرافیایی (درجه)"};
     JComboBox<String> selectPointType = new JComboBox<>(pointTypeSelectArray);
     JLabel labelZoneUTM = new JLabel(":zone");
-    JFormattedTextField fieldZoneUTM = new JFormattedTextField(getMaskFormatter("#"));
+    JFormattedTextField fieldZoneUTM = new JFormattedTextField(getMaskFormatter("##"));
 
     JLabel labelMacXUTM = new JLabel("طول UTM آتشبار:");
-    JFormattedTextField fieldMacXUTM = new JFormattedTextField(getMaskFormatter("#######"));
+    JIntegerField fieldMacXUTM = new JIntegerField();
     JLabel labelMacYUTM = new JLabel("عرض UTM آتشبار:");
-    JFormattedTextField fieldMacYUTM = new JFormattedTextField(getMaskFormatter("#######"));
+    JIntegerField fieldMacYUTM = new JIntegerField();
     JLabel labelAimXUTM = new JLabel("طول UTM هدف:");
-    JFormattedTextField fieldAimXUTM = new JFormattedTextField(getMaskFormatter("#######"));
+    JIntegerField fieldAimXUTM = new JIntegerField();
     JLabel labelAimYUTM = new JLabel("عرض UTM هدف:");
-    JFormattedTextField fieldAimYUTM = new JFormattedTextField(getMaskFormatter("#######"));
+    JIntegerField fieldAimYUTM = new JIntegerField();
 
 
 
@@ -161,6 +162,8 @@ public class MachinePanel extends JPanel {
 
         selectType.setEnabled(false);
 
+        changePointTypeFields(false);
+        fieldZoneUTM.setValue(38);
 
         ArrayList<Machine> machines = machineService.fetchMachines();
         List<String> field1List = machines.stream().map(Machine::getName).toList();
@@ -239,6 +242,23 @@ public class MachinePanel extends JPanel {
                 dialog.setVisible(true);
             }
         });
+
+
+        selectPointType.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String pointType = (String) selectPointType.getSelectedItem();
+
+                if (pointType.equals("مختصات UTM"))
+                    changePointTypeFields(false);
+                else
+                    changePointTypeFields(true);
+
+
+            }
+        });
+
+
 
     }
 
@@ -596,6 +616,8 @@ public class MachinePanel extends JPanel {
         fieldMacYUTM.setEnabled(isDisable);
         fieldAimXUTM.setEnabled(isDisable);
         fieldAimYUTM.setEnabled(isDisable);
+        fieldZoneUTM.setEnabled(isDisable);
+        selectPointType.setEnabled(isDisable);
 
     }
 
@@ -676,6 +698,33 @@ public class MachinePanel extends JPanel {
         Double aimXUTM = Double.valueOf(fieldAimXUTM.getText());
         Double aimYUTM = Double.valueOf(fieldAimYUTM.getText());
 
+        if(selectPointType.getSelectedItem().toString().equals("مختصات UTM")){
+            int zone = (int) fieldZoneUTM.getValue();
+            PointModel pointModelMac = calculateGisItems.UTM2Deg(zone, 'S' ,macXUTM, macYUTM);
+            macX = pointModelMac.getLongitude();
+            macY = pointModelMac.getLatitude();
+            PointModel pointModelAim = calculateGisItems.UTM2Deg(zone, 'S' ,aimXUTM, aimYUTM);
+            aimX = pointModelAim.getLongitude();
+            aimY = pointModelAim.getLatitude();
+            fieldMacX.setValue(macX);
+            fieldMacY.setValue(macY);
+            fieldAimX.setValue(aimX);
+            fieldAimY.setValue(aimY);
+        }else {
+            int zone = (int) fieldZoneUTM.getValue();
+            PointModel pointModelMacUTM = calculateGisItems.Deg2UTM(zone,macY, macX);
+            macXUTM = pointModelMacUTM.getLongitude();
+            macYUTM = pointModelMacUTM.getLatitude();
+            PointModel pointModelAimUTM = calculateGisItems.Deg2UTM(zone,aimY, aimX);
+            aimXUTM = pointModelAimUTM.getLongitude();
+            aimYUTM = pointModelAimUTM.getLatitude();
+            fieldMacXUTM.setValue((int) Math.round(macXUTM));
+            fieldMacYUTM.setValue((int) Math.round(macYUTM));
+            fieldAimXUTM.setValue((int) Math.round(aimXUTM));
+            fieldAimYUTM.setValue((int) Math.round(aimYUTM));
+        }
+
+
         if ((43.000 < macX && macX < 63.300) &&
                 (25.000 < macY && macY < 40.000) &&
                 (43.000 < aimX && aimX < 63.300) &&
@@ -691,12 +740,16 @@ public class MachinePanel extends JPanel {
             this.distance = distance;
             this.directionMil = directionMil;
 
+            Double finalMacX = macX;
+            Double finalMacY = macY;
             Runnable runnable1 = () -> {
-                macElv = elevationFind.findPointElevation(macX, macY);
+                macElv = elevationFind.findPointElevation(finalMacX, finalMacY);
                 System.out.println("macElv: " + macElv);
             };
+            Double finalAimX = aimX;
+            Double finalAimY = aimY;
             Runnable runnable2 = () -> {
-                aimElv = elevationFind.findPointElevation(aimX, aimY);
+                aimElv = elevationFind.findPointElevation(finalAimX, finalAimY);
                 System.out.println("aimElv: " + aimElv);
 
             };
@@ -799,15 +852,26 @@ public class MachinePanel extends JPanel {
 
     private void changePointTypeFields(boolean isVisible) {
 
+        labelMacX.setVisible(isVisible);
         fieldMacX.setVisible(isVisible);
+        labelMacY.setVisible(isVisible);
         fieldMacY.setVisible(isVisible);
+        labelAimX.setVisible(isVisible);
         fieldAimX.setVisible(isVisible);
+        labelAimY.setVisible(isVisible);
         fieldAimY.setVisible(isVisible);
 
+        labelMacXUTM.setVisible(!isVisible);
         fieldMacXUTM.setVisible(!isVisible);
+        labelMacYUTM.setVisible(!isVisible);
         fieldMacYUTM.setVisible(!isVisible);
+        labelAimXUTM.setVisible(!isVisible);
         fieldAimXUTM.setVisible(!isVisible);
+        labelAimYUTM.setVisible(!isVisible);
         fieldAimYUTM.setVisible(!isVisible);
+
+        labelZoneUTM.setVisible(!isVisible);
+        fieldZoneUTM.setVisible(!isVisible);
 
     }
 

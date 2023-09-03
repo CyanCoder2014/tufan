@@ -1,6 +1,7 @@
 package com.cyancoder.service;
 
 
+import com.cyancoder.model.PointModel;
 import org.geotools.geometry.DirectPosition2D;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.GeodeticCalculator;
@@ -191,13 +192,13 @@ public class CalculateGisItems {
 
 
         System.out.println("UTM2Deg:");
-        calculateGisItems.UTM2Deg("38 S 0575074 4171364");
+        calculateGisItems.UTM2Deg(38, 'S' ,0575074, 4171364);
         System.out.println(calculateGisItems.longitude);
         System.out.println(calculateGisItems.latitude);
-        calculateGisItems.UTM2Deg("38 S 0572970 4177070");
+//        calculateGisItems.UTM2Deg("38 S 0572970 4177070");
         System.out.println(calculateGisItems.longitude);
         System.out.println(calculateGisItems.latitude);
-        calculateGisItems.UTM2Deg("38 S 0572970 4177080");
+//        calculateGisItems.UTM2Deg("38 S 0572970 4177080");
         System.out.println(calculateGisItems.longitude);
         System.out.println(calculateGisItems.latitude);
 
@@ -210,9 +211,9 @@ public class CalculateGisItems {
     int Zone;
     char Letter;
 
-    private double Deg2UTM(double Lat, double Lon) {
+    public PointModel Deg2UTM(int zone, double Lat, double Lon) {
 //        Zone= (int) Math.floor(Lon/6+31);
-        Zone = 38;
+        Zone = zone!=0?zone:38;
         if (Lat < -72)
             Letter = 'C';
         else if (Lat < -64)
@@ -259,19 +260,18 @@ public class CalculateGisItems {
         if (Letter < 'M')
             Northing = Northing + 10000000;
         Northing = Math.round(Northing * 100) * 0.01;
-        return Easting;
+        return new PointModel(Northing,Easting);
     }
 
 
     double latitude;
     double longitude;
 
-    private void UTM2Deg(String UTM) {
-        String[] parts = UTM.split(" ");
-        int Zone = Integer.parseInt(parts[0]);
-        char Letter = parts[1].toUpperCase(Locale.ENGLISH).charAt(0);
-        double Easting = Double.parseDouble(parts[2]);
-        double Northing = Double.parseDouble(parts[3]);
+    public PointModel UTM2Deg(int zone, char letter, double x, double y) {
+        int Zone = zone;
+        char Letter = letter;
+        double Easting = x;
+        double Northing = y;
         double Hem;
         if (Letter > 'M')
             Hem = 'N';
@@ -288,6 +288,8 @@ public class CalculateGisItems {
         longitude = Math.atan((Math.exp((Easting - 500000) / (0.9996 * 6399593.625 / Math.sqrt((1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) * (1 - 0.006739496742 * Math.pow((Easting - 500000) / (0.9996 * 6399593.625 / Math.sqrt((1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))), 2) / 2 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2) / 3)) - Math.exp(-(Easting - 500000) / (0.9996 * 6399593.625 / Math.sqrt((1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) * (1 - 0.006739496742 * Math.pow((Easting - 500000) / (0.9996 * 6399593.625 / Math.sqrt((1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))), 2) / 2 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2) / 3))) / 2 / Math.cos((north - 0.9996 * 6399593.625 * (north / 6366197.724 / 0.9996 - 0.006739496742 * 3 / 4 * (north / 6366197.724 / 0.9996 + Math.sin(2 * north / 6366197.724 / 0.9996) / 2) + Math.pow(0.006739496742 * 3 / 4, 2) * 5 / 3 * (3 * (north / 6366197.724 / 0.9996 + Math.sin(2 * north / 6366197.724 / 0.9996) / 2) + Math.sin(2 * north / 6366197.724 / 0.9996) * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) / 4 - Math.pow(0.006739496742 * 3 / 4, 3) * 35 / 27 * (5 * (3 * (north / 6366197.724 / 0.9996 + Math.sin(2 * north / 6366197.724 / 0.9996) / 2) + Math.sin(2 * north / 6366197.724 / 0.9996) * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) / 4 + Math.sin(2 * north / 6366197.724 / 0.9996) * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2) * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) / 3)) / (0.9996 * 6399593.625 / Math.sqrt((1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) * (1 - 0.006739496742 * Math.pow((Easting - 500000) / (0.9996 * 6399593.625 / Math.sqrt((1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))), 2) / 2 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) + north / 6366197.724 / 0.9996)) * 180 / Math.PI + Zone * 6 - 183;
         longitude = Math.round(longitude * 10000000);
         longitude = longitude / 10000000;
+
+        return new PointModel(latitude,longitude);
     }
 
 
