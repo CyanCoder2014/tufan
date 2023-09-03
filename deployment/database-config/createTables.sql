@@ -19,6 +19,10 @@ CREATE TABLE if not exists `operations` (
     name varchar(255) NOT NULL,
     map_name varchar(255) NULL DEFAULT NULL,
     map_url varchar(255) NULL DEFAULT NULL,
+    dir_cor INT(11) NULL DEFAULT NULL,
+    tem_a INT(11) NULL DEFAULT NULL,
+    tem_m INT(11) NULL DEFAULT NULL,
+    pr INT(11) NULL DEFAULT NULL,
     note varchar(255) NULL DEFAULT NULL,
 
     state INT(11) UNSIGNED NULL DEFAULT NULL,

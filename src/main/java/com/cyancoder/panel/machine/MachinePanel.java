@@ -33,6 +33,24 @@ public class MachinePanel extends JPanel {
     JLabel labelAimY = new JLabel("عرض جغرافیایی هدف:");
     JFormattedTextField fieldAimY = new JFormattedTextField(getMaskFormatter("##.######"));
 
+
+
+    String[] pointTypeSelectArray = new String[]{"UTM" , "مختصات جغرافیایی (درجه)"};
+    JComboBox<String> selectPointType = new JComboBox<>(pointTypeSelectArray);
+    JLabel labelZoneUTM = new JLabel(":zone");
+    JFormattedTextField fieldZoneUTM = new JFormattedTextField(getMaskFormatter("#"));
+
+    JLabel labelMacXUTM = new JLabel("طول UTM آتشبار:");
+    JFormattedTextField fieldMacXUTM = new JFormattedTextField(getMaskFormatter("#######"));
+    JLabel labelMacYUTM = new JLabel("عرض UTM آتشبار:");
+    JFormattedTextField fieldMacYUTM = new JFormattedTextField(getMaskFormatter("#######"));
+    JLabel labelAimXUTM = new JLabel("طول UTM هدف:");
+    JFormattedTextField fieldAimXUTM = new JFormattedTextField(getMaskFormatter("#######"));
+    JLabel labelAimYUTM = new JLabel("عرض UTM هدف:");
+    JFormattedTextField fieldAimYUTM = new JFormattedTextField(getMaskFormatter("#######"));
+
+
+
     JButton btnCalDir = new JButton("محاسبه برد و گرا (سمت نقشه‌ای)");
 
     JLabel labelCheckBoxLoc = new JLabel("قفل ویرایش مختصات");
@@ -291,16 +309,35 @@ public class MachinePanel extends JPanel {
                         .addComponent(btnRemoveFireLoad)
                         .addComponent(labelLocTitle)
                         .addGroup(groupLayout.createSequentialGroup()
+                                .addComponent(labelLocTitle)
+                                .addGap(50, 60, 80)
+                                .addComponent(selectPointType)
+                                .addGap(30, 40, 50)
+                                .addComponent(labelZoneUTM)
+                                .addComponent(fieldZoneUTM)
+
+                        )
+                        .addGroup(groupLayout.createSequentialGroup()
                                 .addComponent(labelMacX)
                                 .addComponent(fieldMacX)
                                 .addComponent(labelMacY)
                                 .addComponent(fieldMacY)
+
+                                .addComponent(labelMacXUTM)
+                                .addComponent(fieldMacXUTM)
+                                .addComponent(labelMacYUTM)
+                                .addComponent(fieldMacYUTM)
                         )
                         .addGroup(groupLayout.createSequentialGroup()
                                 .addComponent(labelAimX)
                                 .addComponent(fieldAimX)
                                 .addComponent(labelAimY)
                                 .addComponent(fieldAimY)
+
+                                .addComponent(labelAimXUTM)
+                                .addComponent(fieldAimXUTM)
+                                .addComponent(labelAimYUTM)
+                                .addComponent(fieldAimYUTM)
 
                         )
 
@@ -393,7 +430,18 @@ public class MachinePanel extends JPanel {
                         .addGap(5, 10, 20)
                         .addComponent(btnRemoveFireLoad)
                         .addGap(3, 5, 8)
-                        .addComponent(labelLocTitle)
+
+                        .addGroup(groupLayout.createParallelGroup()
+
+                                .addComponent(labelLocTitle)
+
+                        .addComponent(selectPointType, GroupLayout.DEFAULT_SIZE,
+                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelZoneUTM)
+                                        .addComponent(fieldZoneUTM, GroupLayout.DEFAULT_SIZE,
+                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        )
+
                         .addGap(15, 20, 25)
                         .addGroup(groupLayout.createParallelGroup()
                                 .addComponent(labelMacX)
@@ -402,6 +450,15 @@ public class MachinePanel extends JPanel {
                                 .addComponent(labelMacY)
                                 .addComponent(fieldMacY, GroupLayout.DEFAULT_SIZE,
                                         GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+
+
+                                .addComponent(labelMacXUTM)
+                                .addComponent(fieldMacXUTM, GroupLayout.DEFAULT_SIZE,
+                                        GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelMacYUTM)
+                                .addComponent(fieldMacYUTM, GroupLayout.DEFAULT_SIZE,
+                                        GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+
                         )
                         .addGroup(groupLayout.createParallelGroup()
                                 .addComponent(labelAimX)
@@ -410,6 +467,15 @@ public class MachinePanel extends JPanel {
                                 .addComponent(labelAimY)
                                 .addComponent(fieldAimY, GroupLayout.DEFAULT_SIZE,
                                         GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+
+                                .addComponent(labelAimXUTM)
+                                .addComponent(fieldAimXUTM, GroupLayout.DEFAULT_SIZE,
+                                        GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelAimYUTM)
+                                .addComponent(fieldAimYUTM, GroupLayout.DEFAULT_SIZE,
+                                        GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+
+
                         )
                         .addGap(10, 20, 30)
                         .addGroup(groupLayout.createParallelGroup()
@@ -526,6 +592,11 @@ public class MachinePanel extends JPanel {
         fieldAimX.setEnabled(isDisable);
         fieldAimY.setEnabled(isDisable);
 
+        fieldMacXUTM.setEnabled(isDisable);
+        fieldMacYUTM.setEnabled(isDisable);
+        fieldAimXUTM.setEnabled(isDisable);
+        fieldAimYUTM.setEnabled(isDisable);
+
     }
 
     private void setDisableMacFields(boolean isEnabled) {
@@ -599,6 +670,11 @@ public class MachinePanel extends JPanel {
         Double macY = Double.valueOf(fieldMacY.getText());
         Double aimX = Double.valueOf(fieldAimX.getText());
         Double aimY = Double.valueOf(fieldAimY.getText());
+
+        Double macXUTM = Double.valueOf(fieldMacXUTM.getText());
+        Double macYUTM = Double.valueOf(fieldMacYUTM.getText());
+        Double aimXUTM = Double.valueOf(fieldAimXUTM.getText());
+        Double aimYUTM = Double.valueOf(fieldAimYUTM.getText());
 
         if ((43.000 < macX && macX < 63.300) &&
                 (25.000 < macY && macY < 40.000) &&
@@ -716,5 +792,26 @@ public class MachinePanel extends JPanel {
         Corrections correctionsForm = new Corrections(this);
 
     }
+
+
+
+
+
+    private void changePointTypeFields(boolean isVisible) {
+
+        fieldMacX.setVisible(isVisible);
+        fieldMacY.setVisible(isVisible);
+        fieldAimX.setVisible(isVisible);
+        fieldAimY.setVisible(isVisible);
+
+        fieldMacXUTM.setVisible(!isVisible);
+        fieldMacYUTM.setVisible(!isVisible);
+        fieldAimXUTM.setVisible(!isVisible);
+        fieldAimYUTM.setVisible(!isVisible);
+
+    }
+
+
+
 
 }
