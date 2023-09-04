@@ -70,9 +70,9 @@ public class MachinePanel extends JPanel {
     JLabel fieldDistM = new JLabel();
     JLabel labelDistKm = new JLabel("برد (مسافت به کیلومتر):");
     JLabel fieldDistKm = new JLabel();
-    JLabel labelDirMil = new JLabel("سمت نقشه ای (گرا به میلیم):");
+    JLabel labelDirMil = new JLabel("گرا به میلیم ( سمت نقشه ای):");
     JLabel fieldDirMil = new JLabel();
-    JLabel labelDirDeg = new JLabel("سمت نقشه ای (گرا به درجه):");
+    JLabel labelDirDeg = new JLabel("گرا به درجه (سمت نقشه ای):");
     JLabel fieldDirDeg = new JLabel();
 
 
@@ -96,9 +96,9 @@ public class MachinePanel extends JPanel {
     JLabel fieldMacDir = new JLabel();
 
 
-    JLabel labelDeg = new JLabel("درجه (میلیم):");
+    JLabel labelDeg = new JLabel("تصحیح درجه (میلیم):");
     JLabel fieldDeg = new JLabel();
-    JLabel labelArrDir = new JLabel("سمت تیر:");
+    JLabel labelArrDir = new JLabel("درجه توپ (میلیم):");
     JLabel fieldArrDir = new JLabel();
 
 
@@ -737,11 +737,11 @@ public class MachinePanel extends JPanel {
             Double distance = calculateGisItems.calculateDistance(macX, macY, aimX, aimY);
             Long directionDeg = Math.round(calculateGisItems.calculateDegDirection(macX, macY, aimX, aimY,0));
             Long directionMil = calculateGisItems.calculateMilDirection(macX, macY, aimX, aimY,0);
-            int corDeg = operationSingleton.getDir_cor();
+            double corDeg = operationSingleton.getDir_cor();
             Long directionDegCorrected = Math.round(calculateGisItems.calculateDegDirection(macX, macY, aimX, aimY,corDeg));
             Long directionMilCorrected  = calculateGisItems.calculateMilDirection(macX, macY, aimX, aimY,corDeg);
             this.distance = distance;
-            this.directionMil = directionMil;
+            this.directionMil = directionMilCorrected;
 
             Double finalMacX = macX;
             Double finalMacY = macY;
@@ -819,7 +819,7 @@ public class MachinePanel extends JPanel {
             if (machineDetail != null) {
 
                 fieldCorrectionDir.setText(String.valueOf(machineDetail.getCor_dir()));
-                fieldMacDir.setText(String.valueOf(this.directionMil + machineDetail.getCor_dir()));
+                fieldMacDir.setText(String.valueOf(this.directionMil - machineDetail.getCor_dir()));
 
                 fieldDeg.setText(String.valueOf(machineDetail.getDeg_mil()));
                 fieldArrDir.setText(String.valueOf(this.levelDiff + machineDetail.getDeg_mil()));
@@ -877,6 +877,202 @@ public class MachinePanel extends JPanel {
         fieldZoneUTM.setVisible(!isVisible);
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void setCorrections(int mx, int my) {
+
+
+        Double macX = Double.valueOf(fieldMacX.getText());
+        Double macY = Double.valueOf(fieldMacY.getText());
+        Double aimX = Double.valueOf(fieldAimX.getText());
+        Double aimY = Double.valueOf(fieldAimY.getText());
+
+        Double macXUTM = Double.valueOf(fieldMacXUTM.getText());
+        Double macYUTM = Double.valueOf(fieldMacYUTM.getText());
+        Double aimXUTM = Double.valueOf(fieldAimXUTM.getText());
+        Double aimYUTM = Double.valueOf(fieldAimYUTM.getText());
+
+
+
+
+
+        if(selectPointType.getSelectedItem().toString().equals("مختصات UTM")){
+            int zone = (int) fieldZoneUTM.getValue();
+            PointModel pointModelMac = calculateGisItems.UTM2Deg(zone, 'S' ,macXUTM, macYUTM);
+            macX = pointModelMac.getLongitude();
+            macY = pointModelMac.getLatitude();
+            PointModel pointModelAim = calculateGisItems.UTM2Deg(zone, 'S' ,aimXUTM, aimYUTM);
+            aimX = pointModelAim.getLongitude();
+            aimY = pointModelAim.getLatitude();
+            fieldMacX.setValue(macX);
+            fieldMacY.setValue(macY);
+            fieldAimX.setValue(aimX);
+            fieldAimY.setValue(aimY);
+        }else {
+            int zone = (int) fieldZoneUTM.getValue();
+            PointModel pointModelMacUTM = calculateGisItems.Deg2UTM(zone,macY, macX);
+            macXUTM = pointModelMacUTM.getLongitude();
+            macYUTM = pointModelMacUTM.getLatitude();
+            PointModel pointModelAimUTM = calculateGisItems.Deg2UTM(zone,aimY, aimX);
+            aimXUTM = pointModelAimUTM.getLongitude();
+            aimYUTM = pointModelAimUTM.getLatitude();
+            fieldMacXUTM.setValue((int) Math.round(macXUTM));
+            fieldMacYUTM.setValue((int) Math.round(macYUTM));
+            fieldAimXUTM.setValue((int) Math.round(aimXUTM));
+            fieldAimYUTM.setValue((int) Math.round(aimYUTM));
+        }
+
+
+        PointModel newPointMac = calculateGisItems.changeLoc(macX, macY, (double) mx, (double) my);
+        PointModel newPointAim = calculateGisItems.changeLoc(aimX, aimY, (double) mx, (double) my);
+
+        macX = newPointMac.getX();
+        macY = newPointMac.getY();
+        aimX = newPointAim.getX();
+        aimY = newPointAim.getY();
+
+
+        if ((43.000 < macX && macX < 63.300) &&
+                (25.000 < macY && macY < 40.000) &&
+                (43.000 < aimX && aimX < 63.300) &&
+                (25.000 < aimY && aimY < 40.000)) {
+
+            setInvisibleElvFields(true);
+            btnCalDir.setEnabled(false);
+            btnRemoveFireLoad.setEnabled(false);
+
+            Double distance = calculateGisItems.calculateDistance(macX, macY, aimX, aimY);
+            Long directionDeg = Math.round(calculateGisItems.calculateDegDirection(macX, macY, aimX, aimY,0));
+            Long directionMil = calculateGisItems.calculateMilDirection(macX, macY, aimX, aimY,0);
+            double corDeg = operationSingleton.getDir_cor();
+            Long directionDegCorrected = Math.round(calculateGisItems.calculateDegDirection(macX, macY, aimX, aimY,corDeg));
+            Long directionMilCorrected  = calculateGisItems.calculateMilDirection(macX, macY, aimX, aimY,corDeg);
+            this.distance = distance;
+            this.directionMil = directionMilCorrected;
+
+            Double finalMacX = macX;
+            Double finalMacY = macY;
+            Runnable runnable1 = () -> {
+                macElv = elevationFind.findPointElevation(finalMacX, finalMacY);
+                System.out.println("macElv: " + macElv);
+            };
+            Double finalAimX = aimX;
+            Double finalAimY = aimY;
+            Runnable runnable2 = () -> {
+                aimElv = elevationFind.findPointElevation(finalAimX, finalAimY);
+                System.out.println("aimElv: " + aimElv);
+
+            };
+            Thread t1 = new Thread(runnable1, "t1 - elv");
+            Thread t2 = new Thread(runnable2, "t2 - elv");
+
+            t1.start();
+            t2.start();
+
+            try {
+                t1.join();
+                t2.join();
+            } catch (Exception ignored) {
+            }
+
+            fieldElvMac.setText(String.valueOf(macElv));
+            fieldElvAim.setText(String.valueOf(aimElv));
+
+            fieldDistM.setText(String.valueOf(Math.round(distance)));
+            fieldDistKm.setText(String.valueOf(Math.round(distance/100) / 10));
+            fieldDirMil.setText(directionMilCorrected +" ("+directionMil+")");
+            fieldDirDeg.setText(directionDegCorrected +" ("+directionDeg+")");
+
+
+
+            fieldDistM.setForeground(Color.RED);
+            fieldDistKm.setForeground(Color.RED);
+            fieldDirMil.setForeground(Color.RED);
+            fieldDirDeg.setForeground(Color.RED);
+
+
+
+            if (macElv != null && aimElv != null) {
+                System.out.println("after: " + 0);
+
+                Long elvDiff = calculateElevationItems.calculateElvDifference(macElv, aimElv);
+                Long levelDiff = calculateElevationItems.calculateLevelDifference(elvDiff, distance);
+                this.levelDiff = levelDiff;
+
+                fieldDiffElv.setText(String.valueOf(elvDiff));
+                fieldTElv.setText(String.valueOf(levelDiff));
+
+                fireLoad.setOriginX(macX);
+                fireLoad.setOriginY(macY);
+                fireLoad.setTargetX(aimX);
+                fireLoad.setTargetY(aimY);
+                operationSingleton.getFireLoad().indexOf(fireLoad);
+                operationSingleton.getFireLoad().set(operationSingleton.getFireLoad().indexOf(fireLoad), fireLoad);
+                checkBoxLoc.setSelected(true);
+                setDisablePointFields(false);
+            } else {
+                btnCalDir.setEnabled(true);
+                JOptionPane.showMessageDialog(null, "مختصات خارج از محدوده نقشه ارتفاعی است!");
+            }
+
+
+        } else
+            JOptionPane.showMessageDialog(null, "مختصات به درستی وارد نشده است!");
+
+
+        if (selectMac.getSelectedItem() != null && selectType.getSelectedItem() != null) {
+            MachineDetail machineDetail = machineService.getMachineDetails(
+                    selectMac.getSelectedItem().toString(),
+                    selectType.getSelectedItem().toString(),
+                    Math.round(this.distance));
+
+
+            if (machineDetail != null) {
+
+                fieldCorrectionDir.setText(String.valueOf(machineDetail.getCor_dir()));
+                fieldMacDir.setText(String.valueOf(this.directionMil - machineDetail.getCor_dir()));
+
+                fieldDeg.setText(String.valueOf(machineDetail.getDeg_mil()));
+                fieldArrDir.setText(String.valueOf(this.levelDiff + machineDetail.getDeg_mil()));
+
+                fieldFlightTime.setText(String.valueOf(machineDetail.getFlight_time()));
+                fieldLandingTop.setText(String.valueOf(machineDetail.getTop()));
+                fieldLandingDeg.setText(String.valueOf(machineDetail.getLand_deg()));
+                fieldMaxSpeed.setText(String.valueOf(machineDetail.getSpeed()));
+
+
+//                fieldCorrectionDir.setForeground(Color.RED);
+                fieldMacDir.setForeground(Color.RED);
+//                fieldDeg.setForeground(Color.RED);
+                fieldArrDir.setForeground(Color.RED);
+
+
+            } else
+                JOptionPane.showMessageDialog(null, "مسافت خارج از محدوده جدول توپ می باشد!");
+
+            btnCalDirAndDeg.setEnabled(false);
+            checkBoxMac.setSelected(true);
+            setDisableMacFields(false);
+
+            setInvisibleMacFields(true);
+            setInvisibleCorrectionFields(true);
+        } else
+            JOptionPane.showMessageDialog(null, "مشخصات توپ و خرج به درستی وارد نشده است!");
+
+    }
+
 
 
 

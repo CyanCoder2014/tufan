@@ -8,6 +8,8 @@ public class PointModel extends Point2D.Double {
     public PointModel(double latitude,double longitude){
         setLatitude(latitude);
         setLongitude(longitude);
+        super.x = latitude;
+        super.y = longitude;
     }
 
     private  double latitude;

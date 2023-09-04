@@ -17,7 +17,7 @@ public class OperationSingleton {
     private String mapName;
     private String mapUrl;
 
-    private int dir_cor;
+    private double dir_cor;
     private int tem_a;
 
 
@@ -97,11 +97,11 @@ public class OperationSingleton {
 
 
 
-    public int getDir_cor() {
+    public double getDir_cor() {
         return dir_cor;
     }
 
-    public void setDir_cor(int dir_cor) {
+    public void setDir_cor(double dir_cor) {
         this.dir_cor = dir_cor;
     }
 

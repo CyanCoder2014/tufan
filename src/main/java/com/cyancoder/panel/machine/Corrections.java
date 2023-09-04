@@ -4,6 +4,8 @@ import org.geotools.swing.control.JIntegerField;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Corrections extends JFrame {
     private JIntegerField fieldCorRight;
@@ -29,5 +31,16 @@ public class Corrections extends JFrame {
         UIManager.put("Field.font", fontTahoma);
 
 
+        btnSubmitCorrections.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                int mx = fieldCorRight.getValue()-fieldCorLeft.getValue();
+                int my = fieldCorMore.getValue()-fieldCorLess.getValue();
+                machinePanel.setCorrections(mx,my);
+                setVisible(false);
+
+            }
+        });
     }
 }

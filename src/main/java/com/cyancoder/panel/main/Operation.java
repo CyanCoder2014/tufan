@@ -49,7 +49,7 @@ public class Operation extends JFrame {
                 operationSingleton.setTem_a(Integer.parseInt(fieldTemA.getText()));
                 operationSingleton.setTem_m(Integer.parseInt(fieldTemM.getText()));
                 operationSingleton.setPr(Integer.parseInt(fieldPr.getText()));
-                operationSingleton.setDir_cor(Integer.parseInt(fieldDirCor.getText()));
+                operationSingleton.setDir_cor(Double.parseDouble(fieldDirCor.getText()));
                 Home.staticHome.getTextField1().setText(operationSingleton.getName());
                 staticOperation.setVisible(false);
             }

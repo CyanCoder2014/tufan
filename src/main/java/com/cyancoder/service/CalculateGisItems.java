@@ -28,7 +28,7 @@ public class CalculateGisItems {
     }
 
 
-    public double calculateDegDirection(Double originX, Double originY, Double targetX, Double targetY,int cor) {
+    public double calculateDegDirection(Double originX, Double originY, Double targetX, Double targetY,double cor) {
 
         originY = Math.toRadians(originY);
         originX = Math.toRadians(originX);
@@ -50,17 +50,17 @@ public class CalculateGisItems {
 
         double angle = (Math.toDegrees(θ));
 
-        if (xDiff > 0 && yDiff < 0)
+        if ((xDiff > 0 && yDiff < 0) || (xDiff == 0 && yDiff < 0))
             angle = 180 - Math.abs(angle);
-        if (xDiff < 0 && yDiff < 0)
+        if ((xDiff < 0 && yDiff < 0))
             angle = 180 + Math.abs(angle);
-        if (xDiff < 0 && yDiff > 0)
+        if ((xDiff < 0 && yDiff > 0) || (xDiff < 0 && yDiff == 0))
             angle = 360 - Math.abs(angle);
 
         return (double) angle - cor; ////// temp: magnetic adjust (489mil/27.5deg)
     }
 
-    public Long calculateMilDirection(Double originX, Double originY, Double targetX, Double targetY,int cor) {
+    public Long calculateMilDirection(Double originX, Double originY, Double targetX, Double targetY,double cor) {
 
         return Math.round(calculateDegDirection(originX, originY, targetX, targetY, cor) * 17.777778);
     }
@@ -143,6 +143,11 @@ public class CalculateGisItems {
         //OffsetPosition, decimal degrees
         Double newY = lat + (dn/R) * 180/PI;
         Double newX = lon + (de/(R*cos(PI*lat/180))) * 180/PI;
+
+
+        System.out.println("changeLoc");
+        System.out.println(newY);
+        System.out.println(newX);
 
         PointModel point = new PointModel(newX, newY);
         return point;
