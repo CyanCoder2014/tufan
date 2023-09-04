@@ -28,7 +28,7 @@ public class CalculateGisItems {
     }
 
 
-    public double calculateDegDirection(Double originX, Double originY, Double targetX, Double targetY) {
+    public double calculateDegDirection(Double originX, Double originY, Double targetX, Double targetY,int cor) {
 
         originY = Math.toRadians(originY);
         originX = Math.toRadians(originX);
@@ -57,12 +57,12 @@ public class CalculateGisItems {
         if (xDiff < 0 && yDiff > 0)
             angle = 360 - Math.abs(angle);
 
-        return (double) angle - 27.5; ////// temp: magnetic adjust (489mil)
+        return (double) angle - cor; ////// temp: magnetic adjust (489mil/27.5deg)
     }
 
-    public Long calculateMilDirection(Double originX, Double originY, Double targetX, Double targetY) {
+    public Long calculateMilDirection(Double originX, Double originY, Double targetX, Double targetY,int cor) {
 
-        return Math.round(calculateDegDirection(originX, originY, targetX, targetY) * 17.777778);
+        return Math.round(calculateDegDirection(originX, originY, targetX, targetY, cor) * 17.777778);
     }
 
 
@@ -129,7 +129,7 @@ public class CalculateGisItems {
     }
 
 
-    public Point2D.Double changeLoc(Double x, Double y, Double mx, Double my){
+    public PointModel changeLoc(Double x, Double y, Double mx, Double my){
 
         Double lat = y;
         Double lon = x;
@@ -144,65 +144,12 @@ public class CalculateGisItems {
         Double newY = lat + (dn/R) * 180/PI;
         Double newX = lon + (de/(R*cos(PI*lat/180))) * 180/PI;
 
-        Point2D.Double point = new Point2D.Double(newX, newY);
+        PointModel point = new PointModel(newX, newY);
         return point;
 
     }
 
     public static void main(String[] args) {
-        CalculateGisItems calculateGisItems = new CalculateGisItems();
-        System.out.println(calculateGisItems.calculateDegDirection(45.851462, 37.686414,
-                45.828174, 37.738009));
-        System.out.println(calculateGisItems.calculateMilDirection(45.851462, 37.686414,
-                45.828174, 37.738009));
-        System.out.println(calculateGisItems.calculateDistance(45.851462, 37.686414,
-                45.828174, 37.738009));
-
-        System.out.println("new x,y");
-        System.out.println(calculateGisItems.changeLoc( 45.828174,  37.738009,  -500D,  100D).toString());
-//        45.82249433891175, 37.738907315284116
-        System.out.println(calculateGisItems.calculateDegDirection(45.851462, 37.686414,
-                calculateGisItems.changeLoc( 45.828174,  37.738009,  -500D,  100D).x,
-                calculateGisItems.changeLoc( 45.828174,  37.738009,  -500D,  100D).y
-                ));
-        System.out.println(calculateGisItems.calculateMilDirection(45.851462, 37.686414,
-                calculateGisItems.changeLoc( 45.828174,  37.738009,  -500D,  100D).x,
-                calculateGisItems.changeLoc( 45.828174,  37.738009,  -500D,  100D).y
-        ));
-        System.out.println(calculateGisItems.calculateDistance(45.851462, 37.686414,
-                calculateGisItems.changeLoc( 45.828174,  37.738009,  -500D,  100D).x,
-                calculateGisItems.changeLoc( 45.828174,  37.738009,  -500D,  100D).y
-        ));
-
-
-
-
-        System.out.println("UTM:");
-        System.out.println(calculateGisItems.calculateDegDirectionUTM(0575074.0, 4171364.0,
-                0572970.0, 4177070.0));
-        System.out.println(calculateGisItems.calculateDegDirectionUTM(572970.0, 4177080.0,
-                5755074.0, 4171364.0));
-        System.out.println(calculateGisItems.calculateMilDirectionUTM(572970.0, 4177080.0,
-                5755074.0, 4171364.0));
-//        System.out.println(calculateGisItems.calculateDistance(572970.0, 4177080.0,
-//                5755074.0,4171364.0 ));
-
-
-//        System.out.println(calculateGisItems.Deg2UTM(45.851462, 37.686414 ));
-
-
-        System.out.println("UTM2Deg:");
-        calculateGisItems.UTM2Deg(38, 'S' ,0575074, 4171364);
-        System.out.println(calculateGisItems.longitude);
-        System.out.println(calculateGisItems.latitude);
-//        calculateGisItems.UTM2Deg("38 S 0572970 4177070");
-        System.out.println(calculateGisItems.longitude);
-        System.out.println(calculateGisItems.latitude);
-//        calculateGisItems.UTM2Deg("38 S 0572970 4177080");
-        System.out.println(calculateGisItems.longitude);
-        System.out.println(calculateGisItems.latitude);
-
-
     }
 
 

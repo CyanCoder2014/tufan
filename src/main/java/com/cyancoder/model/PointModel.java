@@ -1,6 +1,8 @@
 package com.cyancoder.model;
 
-public class PointModel {
+import java.awt.geom.Point2D;
+
+public class PointModel extends Point2D.Double {
 
 
     public PointModel(double latitude,double longitude){

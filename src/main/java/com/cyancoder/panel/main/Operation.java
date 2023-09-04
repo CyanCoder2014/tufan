@@ -20,7 +20,11 @@ public class Operation extends JFrame {
 
     private JPanel panel1;
     private JTextField textField1;
-    private JComboBox comboBox1;
+    private JComboBox selectOperation;
+    private JTextField fieldTemA;
+    private JTextField fieldTemM;
+    private JTextField fieldPr;
+    private JTextField fieldDirCor;
 
     public static Operation staticOperation;
 
@@ -32,7 +36,7 @@ public class Operation extends JFrame {
 
         setContentPane(panel1);
         setTitle("ثبت عملیات");
-        setSize(500,250);
+        setSize(500,400);
 //        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         setVisible(true);
@@ -42,6 +46,10 @@ public class Operation extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 operationSingleton.setName(textField1.getText());
+                operationSingleton.setTem_a(Integer.parseInt(fieldTemA.getText()));
+                operationSingleton.setTem_m(Integer.parseInt(fieldTemM.getText()));
+                operationSingleton.setPr(Integer.parseInt(fieldPr.getText()));
+                operationSingleton.setDir_cor(Integer.parseInt(fieldDirCor.getText()));
                 Home.staticHome.getTextField1().setText(operationSingleton.getName());
                 staticOperation.setVisible(false);
             }

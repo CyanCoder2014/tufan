@@ -735,8 +735,11 @@ public class MachinePanel extends JPanel {
             btnRemoveFireLoad.setEnabled(false);
 
             Double distance = calculateGisItems.calculateDistance(macX, macY, aimX, aimY);
-            Long directionDeg = Math.round(calculateGisItems.calculateDegDirection(macX, macY, aimX, aimY));
-            Long directionMil = calculateGisItems.calculateMilDirection(macX, macY, aimX, aimY);
+            Long directionDeg = Math.round(calculateGisItems.calculateDegDirection(macX, macY, aimX, aimY,0));
+            Long directionMil = calculateGisItems.calculateMilDirection(macX, macY, aimX, aimY,0);
+            int corDeg = operationSingleton.getDir_cor();
+            Long directionDegCorrected = Math.round(calculateGisItems.calculateDegDirection(macX, macY, aimX, aimY,corDeg));
+            Long directionMilCorrected  = calculateGisItems.calculateMilDirection(macX, macY, aimX, aimY,corDeg);
             this.distance = distance;
             this.directionMil = directionMil;
 
@@ -770,8 +773,8 @@ public class MachinePanel extends JPanel {
 
             fieldDistM.setText(String.valueOf(Math.round(distance)));
             fieldDistKm.setText(String.valueOf(Math.round(distance/100) / 10));
-            fieldDirMil.setText(String.valueOf(directionMil));
-            fieldDirDeg.setText(String.valueOf(directionDeg));
+            fieldDirMil.setText(directionMilCorrected +" ("+directionMil+")");
+            fieldDirDeg.setText(directionDegCorrected +" ("+directionDeg+")");
             System.out.println("before: " + 0);
 
             if (macElv != null && aimElv != null) {

@@ -1,18 +1,15 @@
 package com.cyancoder.panel.machine;
 
-import com.cyancoder.panel.machine.MachinePanel;
 import org.geotools.swing.control.JIntegerField;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Corrections extends JFrame {
-    private JIntegerField textField1;
-    private JIntegerField textField2;
-    private JIntegerField textField3;
-    private JIntegerField textField4;
-    private JIntegerField textField5;
-    private JIntegerField textField6;
+    private JIntegerField fieldCorRight;
+    private JIntegerField fieldCorLeft;
+    private JIntegerField fieldCorLess;
+    private JIntegerField fieldCorMore;
     private JButton btnSubmitCorrections;
     private JPanel correctionPanel;
 
