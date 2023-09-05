@@ -12,7 +12,7 @@ if not exist "%InstallationPath%\maps" xcopy /s "%SourcePath%\maps\*.*" "%Instal
 if not exist "%InstallationPath%\images" xcopy /s "%SourcePath%\images\*.*" "%InstallationPath%\images\*"
 if not exist "%InstallationPath%\tufan.jar" xcopy /s "%SourcePath%\tufan.jar" "%InstallationPath%\*"
 
-if not exist "%MySQLPath%\mysql" xcopy /s "%SourcePath%\install-files\xampp\*.*" "%MySQLPath%\*"
+@REM if not exist "%MySQLPath%\mysql" xcopy /s "%SourcePath%\install-files\xampp\*.*" "%MySQLPath%\*"
 
 
 if _%1_==_payload_  goto :payload
