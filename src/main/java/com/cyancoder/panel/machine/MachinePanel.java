@@ -5,7 +5,6 @@ import com.cyancoder.service.CalculateElevationItems;
 import com.cyancoder.service.CalculateGisItems;
 import com.cyancoder.service.ElevationFind;
 import com.cyancoder.service.MachineService;
-import org.apache.commons.lang3.ArrayUtils;
 import org.geotools.swing.control.JIntegerField;
 
 import javax.swing.*;
@@ -17,7 +16,6 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class MachinePanel extends JPanel {
@@ -122,6 +120,12 @@ public class MachinePanel extends JPanel {
     JButton btnRemoveFireLoad = new JButton("حذف آتشبار");
 
 
+
+
+    JButton btnAirCor = new JButton("تصحیحات هواشناسی");
+    JButton btnObstacle = new JButton("حداقل ارتقاع (تراز مانع)");
+
+
     private final CalculateGisItems calculateGisItems;
     private final ElevationFind elevationFind;
     private final CalculateElevationItems calculateElevationItems;
@@ -137,6 +141,12 @@ public class MachinePanel extends JPanel {
     private Long directionMil = 0L;
     private Long levelDiff;
     private JPanel machinePanel;
+
+
+    private Double macX;
+    private Double macY;
+    private Double aimX;
+    private Double aimY;
 
 
     public MachinePanel(FireLoad fireLoad) {
@@ -171,6 +181,9 @@ public class MachinePanel extends JPanel {
         DefaultComboBoxModel<String> macSelectModel = new DefaultComboBoxModel<>(macSelectArray);
         selectMac.setModel(macSelectModel);
 
+
+        btnAirCor.setEnabled(false);
+        btnObstacle.setEnabled(false);
 
         btnCalDir.addActionListener(new ActionListener() {
             @Override
@@ -257,9 +270,6 @@ public class MachinePanel extends JPanel {
 
             }
         });
-
-
-
     }
 
     private MaskFormatter getMaskFormatter(String format) {
@@ -402,6 +412,10 @@ public class MachinePanel extends JPanel {
                 )
                 .addGap(10, 20, 70)
                 .addGroup(groupLayout.createParallelGroup()
+                        .addGroup(groupLayout.createSequentialGroup()
+                        .addComponent(btnAirCor)
+                        .addComponent(btnObstacle))
+
                         .addComponent(labelMacSelectTitle)
                         .addGroup(groupLayout.createSequentialGroup()
                                 .addComponent(labelSelectMac)
@@ -542,6 +556,12 @@ public class MachinePanel extends JPanel {
 
 
                 .addGroup(groupLayout.createSequentialGroup()
+                        .addGap(10, 20, 30)
+
+                        .addGroup(groupLayout.createParallelGroup()
+                                .addComponent(btnAirCor)
+                                .addComponent(btnObstacle))
+
                         .addGap(10, 20, 30)
                         .addComponent(labelMacSelectTitle)
                         .addGap(10, 20, 30)
@@ -685,20 +705,25 @@ public class MachinePanel extends JPanel {
         btnCorrection.setVisible(isVisible);
     }
 
-
     private void callBtnCalDir() {
 
-        Double macX = Double.valueOf(fieldMacX.getText());
-        Double macY = Double.valueOf(fieldMacY.getText());
-        Double aimX = Double.valueOf(fieldAimX.getText());
-        Double aimY = Double.valueOf(fieldAimY.getText());
+        Double macX = 0.0;
+        Double macY = 0.0;
+        Double aimX = 0.0;
+        Double aimY = 0.0;
 
-        Double macXUTM = Double.valueOf(fieldMacXUTM.getText());
-        Double macYUTM = Double.valueOf(fieldMacYUTM.getText());
-        Double aimXUTM = Double.valueOf(fieldAimXUTM.getText());
-        Double aimYUTM = Double.valueOf(fieldAimYUTM.getText());
+        Double macXUTM = 0.0;
+        Double macYUTM = 0.0;
+        Double aimXUTM = 0.0;
+        Double aimYUTM = 0.0;
 
         if(selectPointType.getSelectedItem().toString().equals("مختصات UTM")){
+
+            macXUTM = Double.valueOf(fieldMacXUTM.getText());
+            macYUTM = Double.valueOf(fieldMacYUTM.getText());
+            aimXUTM = Double.valueOf(fieldAimXUTM.getText());
+            aimYUTM = Double.valueOf(fieldAimYUTM.getText());
+
             int zone = (int) fieldZoneUTM.getValue();
             PointModel pointModelMac = calculateGisItems.UTM2Deg(zone, 'S' ,macXUTM, macYUTM);
             macX = pointModelMac.getLongitude();
@@ -711,6 +736,11 @@ public class MachinePanel extends JPanel {
             fieldAimX.setValue(aimX);
             fieldAimY.setValue(aimY);
         }else {
+             macX = Double.valueOf(fieldMacX.getText());
+             macY = Double.valueOf(fieldMacY.getText());
+             aimX = Double.valueOf(fieldAimX.getText());
+             aimY = Double.valueOf(fieldAimY.getText());
+
             int zone = (int) fieldZoneUTM.getValue();
             PointModel pointModelMacUTM = calculateGisItems.Deg2UTM(zone,macY, macX);
             macXUTM = pointModelMacUTM.getLongitude();
@@ -849,10 +879,6 @@ public class MachinePanel extends JPanel {
 
     }
 
-
-
-
-
     private void changePointTypeFields(boolean isVisible) {
 
         labelMacX.setVisible(isVisible);
@@ -878,49 +904,28 @@ public class MachinePanel extends JPanel {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     public void setCorrections(int mx, int my) {
 
+        if(this.macX==null)
+            this.macX = Double.valueOf(fieldMacX.getText());
+        if(this.macY==null)
+            this.macY = Double.valueOf(fieldMacY.getText());
+        if(this.aimX==null)
+            this.aimX = Double.valueOf(fieldAimX.getText());
+        if(this.aimY==null)
+            this.aimY = Double.valueOf(fieldAimY.getText());
 
-        Double macX = Double.valueOf(fieldMacX.getText());
-        Double macY = Double.valueOf(fieldMacY.getText());
-        Double aimX = Double.valueOf(fieldAimX.getText());
-        Double aimY = Double.valueOf(fieldAimY.getText());
+        Double macX = this.macX;
+        Double macY = this.macY;
+        Double aimX = this.aimX;
+        Double aimY = this.aimY;
 
-        Double macXUTM = Double.valueOf(fieldMacXUTM.getText());
-        Double macYUTM = Double.valueOf(fieldMacYUTM.getText());
-        Double aimXUTM = Double.valueOf(fieldAimXUTM.getText());
-        Double aimYUTM = Double.valueOf(fieldAimYUTM.getText());
-
-
+        Double macXUTM;
+        Double macYUTM;
+        Double aimXUTM;
+        Double aimYUTM;
 
 
-
-        if(selectPointType.getSelectedItem().toString().equals("مختصات UTM")){
-            int zone = (int) fieldZoneUTM.getValue();
-            PointModel pointModelMac = calculateGisItems.UTM2Deg(zone, 'S' ,macXUTM, macYUTM);
-            macX = pointModelMac.getLongitude();
-            macY = pointModelMac.getLatitude();
-            PointModel pointModelAim = calculateGisItems.UTM2Deg(zone, 'S' ,aimXUTM, aimYUTM);
-            aimX = pointModelAim.getLongitude();
-            aimY = pointModelAim.getLatitude();
-            fieldMacX.setValue(macX);
-            fieldMacY.setValue(macY);
-            fieldAimX.setValue(aimX);
-            fieldAimY.setValue(aimY);
-        }else {
             int zone = (int) fieldZoneUTM.getValue();
             PointModel pointModelMacUTM = calculateGisItems.Deg2UTM(zone,macY, macX);
             macXUTM = pointModelMacUTM.getLongitude();
@@ -932,14 +937,12 @@ public class MachinePanel extends JPanel {
             fieldMacYUTM.setValue((int) Math.round(macYUTM));
             fieldAimXUTM.setValue((int) Math.round(aimXUTM));
             fieldAimYUTM.setValue((int) Math.round(aimYUTM));
-        }
 
-
-        PointModel newPointMac = calculateGisItems.changeLoc(macX, macY, (double) mx, (double) my);
+//        PointModel newPointMac = calculateGisItems.changeLoc(macX, macY, (double) mx, (double) my);
         PointModel newPointAim = calculateGisItems.changeLoc(aimX, aimY, (double) mx, (double) my);
 
-        macX = newPointMac.getX();
-        macY = newPointMac.getY();
+//        macX = newPointMac.getX();
+//        macY = newPointMac.getY();
         aimX = newPointAim.getX();
         aimY = newPointAim.getY();
 
@@ -1072,8 +1075,6 @@ public class MachinePanel extends JPanel {
             JOptionPane.showMessageDialog(null, "مشخصات توپ و خرج به درستی وارد نشده است!");
 
     }
-
-
 
 
 
