@@ -22,7 +22,7 @@ INSERT IGNORE INTO `machine_types`
 
 
 INSERT IGNORE INTO `machine_details`
-(`id`, `machine_types_id`, `distance`, `deg_mil`    , `deg_bar`, `deg_bar_b`, `top`,    `cor_dir`,      `cor_dir_w`, `cor_dis_w`, `cor_dis_p`, `cor_dis_air_tem`, `cor_dis_s`, `cor_dis_tem`, `cor_dis_wg`, `cor_dis_mil`,              `dis_deg`, `b`, `deg`, `land_deg`, `speed`, `flight_time`, `err_dis`, `err_h`, `err_dir`, `state`, `created_on`) VALUES
+    (`id`, `machine_types_id`, `distance`, `deg_mil`    , `deg_bar`, `deg_bar_b`, `top`,    `cor_dir`,      `cor_dir_w`, `cor_dis_w`, `cor_dis_p`, `cor_dis_air_tem`, `cor_dis_s`, `cor_dis_tem`, `cor_dis_wg`, `cor_dis_mil`,              `dis_deg`, `b`, `deg`, `land_deg`, `speed`, `flight_time`, `err_dis`, `err_h`, `err_dir`, `state`, `created_on`) VALUES
 (null, 1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 , null, 0, null, null, null, null, null),
 (null, 1 ,200 ,1 ,null ,null ,null ,0,null ,null ,null ,null ,null ,null ,null ,null ,null ,null ,null ,null , null, 0.2, null, null, null, null, null),
 (null, 1 ,400 ,2 ,null ,null ,null ,0,null ,null ,null ,null ,null ,null ,null ,null ,null ,null ,null ,null , null, null, null, null, null, null, null),
